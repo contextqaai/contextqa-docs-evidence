@@ -5,6 +5,7 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     strategy:
       matrix:
         python-version: ['3.12', '3.13']
@@ -13,10 +14,19 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: ${{ matrix.python-version }}
+      - name: Install and exercise packaged command
+        run: |
+          python -m pip install --no-deps .
+          python -I -c "import cqa_artifacts; assert 'site-packages' in cqa_artifacts.__file__"
+          cqa-artifacts init "${RUNNER_TEMP}/installed-wrapper" --title "Synthetic installed-package smoke"
+          cqa-artifacts add-step "${RUNNER_TEMP}/installed-wrapper" --title "Review synthetic state" --instruction "Synthetic text only; no browser execution or observed assertion is claimed."
+          cqa-artifacts approve "${RUNNER_TEMP}/installed-wrapper" --reviewer "CI synthetic fixture; not customer approval" --confirm-rights-and-reviewed-content
+          cqa-artifacts export "${RUNNER_TEMP}/installed-wrapper" --out "${RUNNER_TEMP}/installed-export" --base-url https://docs.example.com/synthetic
       - run: python -m unittest discover -s tests -v
       - run: python examples/demo.py "${RUNNER_TEMP}/cqa-evidence-demo"
   ai:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

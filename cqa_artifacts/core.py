@@ -194,6 +194,23 @@ def import_trace(root: Path, source: Path) -> dict:
                         if len(events) > 20000:
                             raise Rejected("Trace event count exceeds limit")
         names = {i.filename for i in infos}
+        frame_members = []
+        for event in events:
+            if event.get("type") != "screencast-frame":
+                continue
+            if "file" in event:
+                # Newer traces name an exact, flat screencast ZIP member.
+                # Do not allow arbitrary archive paths, even when they exist.
+                member = event["file"]
+                if not isinstance(member, str) or not re.fullmatch(r"screencast/[A-Za-z0-9_@.-]{1,200}\.(?:jpeg|jpg|png|webp)", member):
+                    raise Rejected("Invalid screencast frame reference")
+            else:
+                name = event.get("sha1", "")
+                if not isinstance(name, str) or not re.fullmatch(r"[A-Za-z0-9_.-]{1,120}", name):
+                    continue
+                member = "resources/" + name
+            if member in names:
+                frame_members.append(member)
         safe_actions = {"click": "Click a control", "fill": "Fill a field", "goto": "Navigate to a page", "press": "Press a key", "check": "Select a checkbox", "selectOption": "Select an option"}
         data = manifest(root)
         for event in events:
@@ -206,12 +223,9 @@ def import_trace(root: Path, source: Path) -> dict:
                     count += 1
         data["source"] = "playwright-trace"
         save(root, data)
-        for event in events:
-            if event.get("type") == "screencast-frame":
-                name = str(event.get("sha1", ""))
-                if re.fullmatch(r"[A-Za-z0-9_.-]{1,120}", name) and "resources/" + name in names:
-                    add_media_bytes(root, z.read("resources/" + name), "screenshot")
-                    frames += 1
+        for member in frame_members:
+            add_media_bytes(root, z.read(member), "screenshot")
+            frames += 1
         if (root / "private").is_symlink():
             raise Rejected("Private directory must not be a symlink")
         trace_path = root / "private" / "source-trace.zip"

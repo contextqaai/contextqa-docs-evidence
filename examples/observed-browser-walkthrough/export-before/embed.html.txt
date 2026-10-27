@@ -1,0 +1,1 @@
+<iframe src="https://docs.example.com/local-synthetic/before/index.html" title="Local browser walkthrough — baseline, task not executed" sandbox="" referrerpolicy="no-referrer" loading="lazy" width="100%" height="720"></iframe>
