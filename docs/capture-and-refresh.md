@@ -27,3 +27,7 @@ Compare the two reviewed exports. The current tool detects text/media-hash chang
 Have the documentation owner approve a draft/PR in the destination platform. Test all image/video links and any iframe on the actual host; CSP, X-Frame-Options and documentation sanitizers may block embeds. Use the approved static walkthrough as the iframe target, never an authenticated product session or raw trace viewer.
 
 Record which app version the published guide describes, when it was validated and who owns its next refresh. Keep old guides where version-specific customers need them. Apply a defined evidence retention/deletion policy. A future release webhook, dependency map and docs PR publisher are roadmap items, not operating features in this prototype.
+
+## Related ContextQA resources
+
+See [verified ContextQA guides and articles](contextqa-resources.md) for capture, visual baseline review and MCP workflows.

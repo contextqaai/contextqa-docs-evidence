@@ -1,8 +1,10 @@
 # ContextQA documentation evidence
 
-Turn reviewed workflow evidence into documentation that can be refreshed when the app changes. Separate project from `indivatools/contextqa-n8n`; this is an experimental local wrapper, not a hosted browser-session service.
+Turn reviewed workflow evidence into documentation that can be refreshed when the app changes. Separate project from the ContextQA n8n node; this is an experimental local wrapper, not a hosted browser-session service.
 
 **Workflow:** capture a known task → select screenshots → attach to instructions → review → export a guide → repeat after a release → supply change context → compare explicitly matched steps → review the documentation update.
+
+Built around [ContextQA](https://contextqa.com/?utm_source=github&utm_medium=developer_referral&utm_campaign=contextqa_docs_evidence&utm_content=readme_overview) workflow evidence. Start with the [recorder guide](https://contextqa.com/tutorials/no-code-test-automation-recorder/?utm_source=github&utm_medium=developer_referral&utm_campaign=contextqa_docs_evidence&utm_content=readme_capture_guide) or read about [visual baselines and change review](https://contextqa.com/blog/visual-regression-testing-ui-stability/?utm_source=github&utm_medium=developer_referral&utm_campaign=contextqa_docs_evidence&utm_content=readme_visual_regression_blog).
 
 ## What works now
 
@@ -67,6 +69,8 @@ Optional `--case-result-id ID` and `--step-result-id ID` require appropriate sco
 - [Growth experiment](docs/growth-experiment.md)
 - [Security and publication boundaries](docs/security.md)
 - [Sources and capability limits](docs/sources.md)
+- [Browser automation product scope](docs/product-scope.md)
+- [ContextQA resources and attribution](docs/contextqa-resources.md)
 
 ## Verification
 

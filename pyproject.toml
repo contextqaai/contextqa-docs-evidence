@@ -14,3 +14,8 @@ cqa-artifacts = "cqa_artifacts.__main__:cli"
 
 [tool.setuptools.packages.find]
 include = ["cqa_artifacts*"]
+
+[project.urls]
+Homepage = "https://contextqa.com/?utm_source=github&utm_medium=developer_referral&utm_campaign=contextqa_docs_evidence&utm_content=package_homepage"
+Repository = "https://github.com/contextqaai/contextqa-docs-evidence"
+Documentation = "https://github.com/contextqaai/contextqa-docs-evidence#readme"

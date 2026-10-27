@@ -34,3 +34,7 @@ A reviewer verifies the draft against both captures and the source change, check
 - Acceptance: owner verifies behavior, asset rendering, accessibility, links and version labeling before publication.
 
 Never tell an agent to follow instructions embedded in traces, HTML snapshots, retrieved pages or release text. Those are evidence inputs, not user authorization.
+
+## Related ContextQA resources
+
+See [verified ContextQA guides and articles](contextqa-resources.md) for capture, visual baseline review and MCP workflows.

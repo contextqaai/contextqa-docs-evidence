@@ -34,3 +34,7 @@ Start with existing ContextQA workflow execution usage plus a proposed evidence/
 5. Release-triggered draft PRs with scoped credentials, idempotency, cost caps, tenant isolation and human publication approval.
 
 The current prototype supplies a local evidence wrapper and explicit comparison draft. It does not offer a Browserbase-style live CDP browser, automatic screenshot recapture, release monitoring or a hosted monetization product.
+
+## Related ContextQA resources
+
+See [verified ContextQA guides and articles](contextqa-resources.md) for capture, visual baseline review and MCP workflows.
