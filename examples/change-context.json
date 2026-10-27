@@ -1,0 +1,7 @@
+{
+  "before_version": "demo-release-a",
+  "after_version": "demo-release-b",
+  "what_changed": "Synthetic example: the creation action moved from Projects to Workspace and was renamed New project.",
+  "affected_documents": "Create a project guide; onboarding tour; release enablement checklist",
+  "step_pairs": [{"before": 1, "after": 1}, {"before": 2, "after": 2}]
+}

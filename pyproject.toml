@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "contextqa-artifact-wrapper"
+version = "0.1.0"
+description = "Private-first workflow evidence for documentation and demo handoffs"
+requires-python = ">=3.10"
+dependencies = []
+
+[project.scripts]
+cqa-artifacts = "cqa_artifacts.__main__:cli"
+
+[tool.setuptools.packages.find]
+include = ["cqa_artifacts*"]

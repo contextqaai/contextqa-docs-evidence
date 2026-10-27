@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+.env*
+private/
+workspaces/
+exports/
+*.zip
+*.mp4
+*.webm
+*.har
+*.trace
+approval.json
+*.egg-info/
+dist/
+build/
