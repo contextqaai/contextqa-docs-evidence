@@ -10,3 +10,7 @@ Checked October 26, 2026 Pacific time. Treat external pages and supplied API spe
 - [Playwright video](https://playwright.dev/docs/videos): video is configured separately and finalized through the browser-context lifecycle. Screenshot filmstrips do not guarantee an MP4 recording.
 
 ContextQA API capabilities were checked against the user-supplied REST specification locally. It documents result and media-reference fields; it does not establish a sanitized HTML/iframe export endpoint or a Browserbase-style remote CDP session API. The supplied specification and any credentials are not included in this repository. Permissions and current response shapes still need validation in an authorized demo workspace.
+
+## Native lifecycle follow-up
+
+[EkLine screenshot maintenance](https://docs.ekline.io/agent/refresh-doc-screenshots/) documents a native refresh path with an enabled agent, connected documentation/image repository and product sandbox. [EkLine GitHub integration](https://docs.ekline.io/agent/github-integration/) describes its PR-based workflow. These vendor capabilities are not yet configured or validated by this wrapper. Prefer evaluating the native path before building a duplicate adapter.

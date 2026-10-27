@@ -1,0 +1,18 @@
+{
+  "platform": "ekline",
+  "target": "ekline itself",
+  "status": "awaiting_non_google_sign_in",
+  "native_session_created": false,
+  "native_project_created": false,
+  "screenshots_captured": false,
+  "revision_compared": false,
+  "outputs_exported": false,
+  "native_pr_created": false,
+  "publicly_published": false,
+  "scheduled_automation_enabled": false,
+  "blocked_on": [
+    "non-Google sign-in",
+    "available account features"
+  ],
+  "sample_is_completed": false
+}

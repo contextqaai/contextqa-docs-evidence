@@ -72,6 +72,16 @@ Optional `--case-result-id ID` and `--step-result-id ID` require appropriate sco
 - [Browser automation product scope](docs/product-scope.md)
 - [ContextQA resources and attribution](docs/contextqa-resources.md)
 
+## Native platform lifecycle examples
+
+The examples use **Layerpath itself** and **EkLine itself** as their documentation targets:
+
+- [Layerpath authoring lifecycle](examples/layerpath-lifecycle/README.md): real creation/editor workflow, private tour, controlled revision and evidence refresh.
+- [EkLine documentation lifecycle](examples/ekline-lifecycle/README.md): real Docs Agent session, reviewed draft, controlled revision and scoped PR/screenshot refresh.
+- [What remains to finish automation](docs/completion-requirements.md): required access, implementation and acceptance evidence for each missing capability.
+
+**Status:** native execution awaits non-Google sign-in and feature access. These are executable runbooks, not receipts claiming completed native projects. The text-only synthetic demo below is a separate wrapper check.
+
 ## Verification
 
 ```sh
