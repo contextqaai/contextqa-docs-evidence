@@ -1,10 +1,12 @@
 # ContextQA documentation evidence
 
-Turn reviewed workflow evidence into documentation that can be refreshed when the app changes. Separate project from the ContextQA n8n node; this is an experimental local wrapper, not a hosted browser-session service.
+ContextQA Docs Evidence helps solutions engineers and technical writers turn reviewed workflow evidence into documentation they can refresh when the app changes. Run this experimental local wrapper to review and export a guide; browser capture comes from a separate producer.
 
 **Workflow:** capture a known task → select screenshots → attach to instructions → review → export a guide → repeat after a release → supply change context → compare explicitly matched steps → review the documentation update.
 
 Built around [ContextQA](https://contextqa.com/?utm_source=github&utm_medium=developer_referral&utm_campaign=contextqa_docs_evidence&utm_content=readme_overview) workflow evidence. Start with the [recorder guide](https://contextqa.com/tutorials/no-code-test-automation-recorder/?utm_source=github&utm_medium=developer_referral&utm_campaign=contextqa_docs_evidence&utm_content=readme_capture_guide) or read about [visual baselines and change review](https://contextqa.com/blog/visual-regression-testing-ui-stability/?utm_source=github&utm_medium=developer_referral&utm_campaign=contextqa_docs_evidence&utm_content=readme_visual_regression_blog).
+
+**Release status:** private candidate; an open-source license and public release are pending owner approval. Core local samples make no model or ContextQA SaaS calls. Optional AI and hosted execution use separate credentials and may incur provider charges.
 
 ## What works now
 
@@ -80,7 +82,7 @@ The examples use **Layerpath itself** and **EkLine itself** as their documentati
 - [EkLine documentation lifecycle](examples/ekline-lifecycle/README.md): real Docs Agent session, reviewed draft, controlled revision and scoped PR/screenshot refresh.
 - [What remains to finish automation](docs/completion-requirements.md): required access, implementation and acceptance evidence for each missing capability.
 
-**Status:** native execution awaits non-Google sign-in and feature access. These are executable runbooks, not receipts claiming completed native projects. The text-only synthetic demo below is a separate wrapper check.
+**Status:** the user reported sign-in complete for both platforms; feature access and native lifecycle execution remain unverified. These are executable runbooks, not receipts claiming completed native projects. The text-only synthetic demo below is a separate wrapper check.
 
 ## Verification
 
@@ -90,3 +92,11 @@ python3 examples/demo.py /tmp/cqa-docs-evidence-demo
 ```
 
 The demo uses synthetic instructions only; it does not claim to record a real app or create video. Source code and documentation may be shared separately from customer evidence. No open-source license has been granted in this private prototype.
+
+## Optional AI with your own key
+
+Use OpenAI, Claude/Anthropic or an OpenAI-compatible provider from your own local process. [Provider configuration, consent, usage metrics and privacy](docs/ai.md). AI drafts require explicit sharing approval and never execute browser actions, approve evidence or publish content. Keys stay in environment variables or your secret manager.
+
+## Product strategy and release plan
+
+[Growth strategy and two-recipe specification](docs/GTM.md) · [Capability evidence](docs/capability-register.md) · [Prioritized implementation backlog](docs/backlog.md) · [Audience and fair comparisons](docs/comparisons.md). These are local release drafts; proposed API flows, commands and commercial claims are explicitly gated. No public open-source release or hosted service is implied.

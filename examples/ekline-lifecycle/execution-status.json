@@ -1,7 +1,7 @@
 {
   "platform": "ekline",
   "target": "ekline itself",
-  "status": "awaiting_non_google_sign_in",
+  "status": "awaiting_feature_verification_and_native_execution",
   "native_session_created": false,
   "native_project_created": false,
   "screenshots_captured": false,
@@ -11,8 +11,10 @@
   "publicly_published": false,
   "scheduled_automation_enabled": false,
   "blocked_on": [
-    "non-Google sign-in",
-    "available account features"
+    "available account features not verified",
+    "native lifecycle not executed"
   ],
-  "sample_is_completed": false
+  "sample_is_completed": false,
+  "user_reported_sign_in": "ready",
+  "sign_in_observation": "User reported both ready; native editor feature access and lifecycle execution not verified."
 }
