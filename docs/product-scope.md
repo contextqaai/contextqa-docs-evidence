@@ -1,5 +1,10 @@
 # What has been built, and what remains
 
+## October 27 implementation update
+
+The Python ContextQA adapter is now implemented locally and transport-mock tested: 26 contract-derived JSON authoring/result operations, an explicit one-attempt saved-plan trigger with fsynced intent/accepted-run journal, bounded strict-result polling, selected run→case→step/suite membership checks, optional private run→plan/profile snapshots and review-required guide import. See [ContextQA API usage](contextqa-api.md) and [platform configuration](contextqa-platform.md). This supersedes earlier statements that *no adapter is implemented*; the contract-derived live behavior, tenant acceptance, billing/metering and actual configured data/prerequisite/browser/parallel execution remain unverified. Native partner publishing and remote media downloads remain absent. The new no-key API-to-guide sample is simulated transport, not live evidence. Historical receipts below retain their original scope/date.
+
+
 The current project is a documentation-evidence wrapper. It is not a deployed replacement for hosted browser infrastructure. ContextQA already exposes workflow/test execution and result capabilities, but this repository only reads explicitly selected results and processes local evidence.
 
 | Capability | Current implementation | Additional work for a browser automation product |

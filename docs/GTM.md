@@ -1,5 +1,10 @@
 # ContextQA developer recipes — strategy and release specification
 
+## October 27 implementation update
+
+The Python ContextQA adapter is now implemented locally and transport-mock tested: 26 contract-derived JSON authoring/result operations, an explicit one-attempt saved-plan trigger with fsynced intent/accepted-run journal, bounded strict-result polling, selected run→case→step/suite membership checks, optional private run→plan/profile snapshots and review-required guide import. See [ContextQA API usage](contextqa-api.md) and [platform configuration](contextqa-platform.md). This supersedes earlier statements that *no adapter is implemented*; the contract-derived live behavior, tenant acceptance, billing/metering and actual configured data/prerequisite/browser/parallel execution remain unverified. Native partner publishing and remote media downloads remain absent. The new no-key API-to-guide sample is simulated transport, not live evidence. Historical receipts below retain their original scope/date.
+
+
 Prepared 2026-10-26, America/Los_Angeles. Status: **local planning and implementation draft, not a launch approval**. Applies only to `contextqaai/contextqa-test-forge`, `contextqaai/contextqa-browser-cloud` and `contextqaai/contextqa-docs-evidence`. No publishing, deployment, account purchase, outreach or production change is authorized by this document. No `indivatools` resource is part of this work.
 
 ## 1. Executive recommendation
@@ -196,7 +201,7 @@ These questions affect live execution, commercial claims or release—not local 
 
 ## Repository-specific application: contextqa-docs-evidence
 
-Reviewed evidence/rendering utility for the adjacent documentation audience. Existing-result reads and local exports work; hosted execution, recapture and native partner publication are not implemented.
+Reviewed evidence/rendering utility for the adjacent documentation audience. ContextQA contract-derived authoring, guarded saved-plan execution, bounded polling and reviewed selected-result guide import are implemented locally with mocks. Live tenant acceptance, recapture and native partner publication are not established.
 
 Current human-facing campaign: `contextqa_docs_evidence`. Do not use this campaign on technical URLs. Useful local commands and implemented capabilities are in this repository's README. The common strategy does not turn proposed commands or endpoints into shipped behavior. Read [prioritized backlog](backlog.md), [audience and fair comparisons](comparisons.md) and [optional AI provider configuration](ai.md).
 

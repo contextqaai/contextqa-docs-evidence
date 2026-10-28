@@ -317,10 +317,32 @@ def clean_export(root: Path) -> dict:
             raise Rejected("Every imported action needs audience-specific reviewed instructions")
         if any(i not in known for i in step.get("media", [])):
             raise Rejected("Unknown attached media")
-        steps.append({"title": redact(step["title"]), "instruction": redact(step["instruction"]), "media": step.get("media", [])})
+        cleaned = {"title": redact(step["title"]), "instruction": redact(step["instruction"]), "media": step.get("media", [])}
+        for field in ("case_result_id", "step_result_id"):
+            if field in step:
+                if type(step[field]) is not int or step[field] < 1:
+                    raise Rejected("Invalid ContextQA result reference")
+                cleaned[field] = step[field]
+        steps.append(cleaned)
     if not steps:
         raise Rejected("Add at least one reviewed step")
-    return {"schema": 1, "title": redact(data["title"]), "steps": steps, "media": media}
+    result = {"schema": 1, "title": redact(data["title"]), "steps": steps, "media": media}
+    if "execution" in data:
+        execution = data["execution"]
+        required = {"run_id", "transport", "collected_at", "status", "result", "verdict", "case_result_ids", "step_result_ids", "source_sha256", "media_downloaded"}
+        if not isinstance(execution, dict) or set(execution) != required:
+            raise Rejected("Invalid ContextQA execution provenance")
+        if type(execution["run_id"]) is not int or execution["run_id"] < 1 or execution["transport"] not in ("ContextQA API", "simulated"):
+            raise Rejected("Invalid ContextQA execution provenance")
+        if execution["verdict"] not in ("passed", "failed", "inconclusive") or not re.fullmatch(r"[a-f0-9]{64}", str(execution["source_sha256"])):
+            raise Rejected("Invalid ContextQA execution provenance")
+        if not isinstance(execution["collected_at"], str) or any(execution[field] is not None and not isinstance(execution[field], str) for field in ("status", "result")) or execution["media_downloaded"] is not False:
+            raise Rejected("Invalid ContextQA execution provenance types")
+        for field in ("case_result_ids", "step_result_ids"):
+            if not isinstance(execution[field], list) or len(execution[field]) > 100 or any(type(i) is not int or i < 1 for i in execution[field]):
+                raise Rejected("Invalid ContextQA result references")
+        result["execution"] = {key: redact(value) if isinstance(value, str) else value for key, value in execution.items()}
+    return result
 
 
 def export_digest(data: dict) -> str:
@@ -335,7 +357,7 @@ def approve(root: Path, reviewer: str, confirmed: bool) -> str:
     return sha
 
 
-def render(data: dict) -> str:
+def _render(data: dict) -> str:
     e = html.escape
     media = {m["id"]: m for m in data["media"]}
     sections = []
@@ -347,6 +369,20 @@ def render(data: dict) -> str:
             content.append(f'<img src="{src}" alt="Reviewed screenshot for step {number}" loading="lazy">' if m["kind"] == "screenshot" else f'<video controls preload="metadata" src="{src}"></video>')
         sections.append(f'<section id="step-{number}"><h2>{number}. {e(step["title"])}</h2><p>{e(step["instruction"])}</p>{"".join(content)}<nav>' + (f'<a href="#step-{number-1}">Previous</a> ' if number > 1 else '') + (f'<a href="#step-{number+1}">Next</a>' if number < len(data["steps"]) else '<a href="#top">Start again</a>') + '</nav></section>')
     return '<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src &#39;none&#39;; img-src &#39;self&#39;; media-src &#39;self&#39;; style-src &#39;unsafe-inline&#39;; base-uri &#39;none&#39;; form-action &#39;none&#39;; frame-src &#39;none&#39;"><title>' + e(data["title"]) + '</title><style>body{font:18px/1.6 system-ui;max-width:960px;margin:40px auto;padding:20px;color:#162035}section{padding:24px 0;border-bottom:1px solid #ddd}img,video{max-width:100%;height:auto}a{color:#1559a8;margin-right:24px}nav{margin:20px 0}</style><main id="top"><h1>' + e(data["title"]) + '</h1><p>Reviewed static walkthrough. This does not control a live customer browser.</p>' + ''.join(sections) + '</main></html>'
+
+
+def execution_note(data: dict) -> str:
+    info = data.get("execution")
+    if not info:
+        return ""
+    label = "SIMULATED TRANSPORT — no live ContextQA execution" if info["transport"] == "simulated" else "ContextQA API result snapshot"
+    return f'{label}; run {info["run_id"]}; status {info["status"]}; result {info["result"]}; assessment {info["verdict"]}; collected {info["collected_at"]}. Media is included only when separately obtained, reviewed and attached.'
+
+
+def render(data: dict) -> str:
+    page = _render(data)
+    note = execution_note(data)
+    return page.replace('<main id="top">', '<main id="top"><p>' + html.escape(note) + '</p>', 1) if note else page
 
 
 def markdown_plain(value: str) -> str:
@@ -374,6 +410,8 @@ def export(root: Path, target: Path, base_url: str) -> dict:
     write_json(target / "review-receipt.json", {"digest": export_digest(data), "rights_and_media_review_confirmed": True})
     (target / "index.html").write_text(render(data))
     lines = ["# " + markdown_plain(data["title"]), "", "Reviewed workflow evidence; verify the target product version before publishing.", ""]
+    if data.get("execution"):
+        lines += [markdown_plain(execution_note(data)), ""]
     for n, step in enumerate(data["steps"], 1):
         lines += [f'## {n}. {markdown_plain(step["title"])}', "", markdown_plain(step["instruction"]), ""]
         for mid in step["media"]:

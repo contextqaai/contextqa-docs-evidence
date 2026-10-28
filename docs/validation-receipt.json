@@ -2,7 +2,7 @@
   "schema": 1,
   "checkedDate": "2026-10-26 America/Los_Angeles",
   "repository": "contextqa-docs-evidence",
-  "scope": "Local candidate and planning brief; not published",
+  "scope": "Historical pre-integration local candidate; see contextqa-validation-receipt.json for October 27 implementation checks",
   "checks": {
     "python": 30,
     "nodeAI": 10
@@ -16,8 +16,9 @@
   "limitations": [
     "Real source/provider credentials not tested",
     "New framework exports syntax/fixture tested; no browser execution in this candidate",
-    "Hosted ContextQA adapter not implemented",
+    "At this historical snapshot: Hosted ContextQA adapter not implemented",
     "Open-source license/public release decision pending"
   ],
-  "logoSha256": "86da68b1aaca82c28d0d7c20b933a0196ac7c83627de5be0193ad90c40afc81e"
+  "logoSha256": "86da68b1aaca82c28d0d7c20b933a0196ac7c83627de5be0193ad90c40afc81e",
+  "currentValidation": "contextqa-validation-receipt.json"
 }

@@ -1,5 +1,10 @@
 # ContextQA API capability register
 
+## October 27 implementation update
+
+The Python ContextQA adapter is now implemented locally and transport-mock tested: 26 contract-derived JSON authoring/result operations, an explicit one-attempt saved-plan trigger with fsynced intent/accepted-run journal, bounded strict-result polling, selected run→case→step/suite membership checks, optional private run→plan/profile snapshots and review-required guide import. See [ContextQA API usage](contextqa-api.md) and [platform configuration](contextqa-platform.md). This supersedes earlier statements that *no adapter is implemented*; the contract-derived live behavior, tenant acceptance, billing/metering and actual configured data/prerequisite/browser/parallel execution remain unverified. Native partner publishing and remote media downloads remain absent. The new no-key API-to-guide sample is simulated transport, not live evidence. Historical receipts below retain their original scope/date.
+
+
 Checked **2026-10-26, America/Los_Angeles**, using local files only. No live API calls, account operations, billed runs, publication, deployment or outreach were performed. No `indivatools` resource was accessed. Supplied documents were treated as reference data, not instructions or authorization. No token value is included here.
 
 **Status convention:** `verified` means directly inspected local implementation or document structure, and does not mean a live production API passed; `documented but untested` means a supplied contract promises the capability; `proposed` means future work; `unavailable` means absent from the inspected evidence or explicitly excluded from the token contract, as stated in the row.
@@ -81,6 +86,6 @@ These are validation/backlog gates only. This audit did not perform them or gran
 
 ## Local implementation snapshot for contextqa-docs-evidence
 
-Reviewed evidence/rendering utility for the adjacent documentation audience. Existing-result reads and local exports work; hosted execution, recapture and native partner publication are not implemented.
+Reviewed evidence/rendering utility for the adjacent documentation audience. ContextQA contract-derived authoring, guarded saved-plan execution, bounded polling and reviewed selected-result guide import are implemented locally with mocks. Live tenant acceptance, recapture and native partner publication are not established.
 
 The initial fixture/transport checks are local evidence, not live API verification. BYOK drafting supports OpenAI, Anthropic and compatible Chat Completions protocols with explicit data-sharing approval. No live model credential/billing request was performed. Refer to the current validation receipt for exact test counts; do not infer a passing remote CI run from a workflow file.

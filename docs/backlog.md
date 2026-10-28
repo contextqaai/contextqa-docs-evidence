@@ -1,5 +1,10 @@
 # ContextQA repository implementation backlog
 
+## October 27 implementation update
+
+The Python ContextQA adapter is now implemented locally and transport-mock tested: 26 contract-derived JSON authoring/result operations, an explicit one-attempt saved-plan trigger with fsynced intent/accepted-run journal, bounded strict-result polling, selected run→case→step/suite membership checks, optional private run→plan/profile snapshots and review-required guide import. See [ContextQA API usage](contextqa-api.md) and [platform configuration](contextqa-platform.md). This supersedes earlier statements that *no adapter is implemented*; the contract-derived live behavior, tenant acceptance, billing/metering and actual configured data/prerequisite/browser/parallel execution remain unverified. Native partner publishing and remote media downloads remain absent. The new no-key API-to-guide sample is simulated transport, not live evidence. Historical receipts below retain their original scope/date.
+
+
 Planning snapshot: October 26, 2026 Pacific time. Applies the supplied GTM brief to the three recently added, authorized `contextqaai` projects. This is a local specification, not authorization to publish source, deploy, spend, contact people, install apps or run paid services. No `indivatools` resources were inspected.
 
 Priority: **P0** makes a first release truthful and useful; **P1** improves activation and commercial learning; **P2** needs demand evidence. Effort is person-days (pd), a planning estimate, not elapsed work already performed. Assign named people to these owner roles before implementation. Shared work is counted once. Do not expand scope simply to satisfy every proposed feature.
