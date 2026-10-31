@@ -34,7 +34,11 @@ def compare(before: Path, after: Path, context: Path, out: Path):
             raise core.Rejected('A pair must contain at least one step')
         previous = old['steps'][a-1] if a else None
         current = new['steps'][b-1] if b else None
-        status = 'added' if not previous else 'removed' if not current else 'changed' if previous != current else 'unchanged'
+        # Result IDs naturally change on every recapture; they are provenance,
+        # not a documentation change. Keep them in the report, not the comparison.
+        def content(step):
+            return {k: v for k, v in step.items() if k not in ('case_result_id', 'step_result_id')}
+        status = 'added' if not previous else 'removed' if not current else 'changed' if content(previous) != content(current) else 'unchanged'
         rows.append({'before_step': a, 'after_step': b, 'status': status,
                      'before': previous, 'after': current})
     if len(seen_old) != len(old['steps']) or len(seen_new) != len(new['steps']):
@@ -52,6 +56,7 @@ def compare(before: Path, after: Path, context: Path, out: Path):
             destination = out / item['path']
             shutil.copyfile(core.asset_file(source, item['path']), destination)
             os.chmod(destination, 0o600)
+    core.write_brand(out)
     comparison_steps = []
     for row in rows:
         for label, step in [('Before', row['before']), ('After', row['after'])]:

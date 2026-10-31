@@ -117,3 +117,15 @@ For refresh, recapture the same selected saved workflow under two documented ver
 ## Tests and boundaries
 
 The tests exercise every one of the 26 catalog routes with mocked transport, schema/permission flags, bounded queries/responses, secret/error suppression, journal order/reuse/ambiguity, strict verdicts, parent mismatches, artifact-reference privacy and simulated API-to-guide export. The separate real-media test in [real-testing.md](real-testing.md) exercises actual screenshot packaging, not SaaS API acceptance. Current live tenant, metering, data-profile, prerequisite, browser-matrix and parallel-capacity acceptance remain unperformed. Native Layerpath/EkLine publication remains a separate task.
+
+## October 30: selected media retrieval
+
+`fetch-media` now supports an explicitly selected private artifact reference. It does not infer screenshot-to-step matching, forward the ContextQA API token, use a cookie jar, or follow redirects. First inspect the source result and its exact storage hostname privately; then:
+
+```sh
+python3 -m cqa_artifacts fetch-media workspaces/live-guide --reference-index 0 --kind screenshot --allow-host REVIEWED_STORAGE_HOST
+```
+
+The index is zero-based in `private/artifact-references.json`. The host must exactly match that reference and resolve to public addresses. Downloads are bounded to 256 MiB and checked for supported media signatures. This is a trusted operator tool, not a hostile-tenant network sandbox. A signed URL stays private. Failure is not retried. Downloaded media remains unattached until an operator inspects it and explicitly uses `attach`. Text redaction does not redact screenshot pixels or audio. Storage hosts requiring cookies/custom authorization are unsupported.
+
+Earlier statements that no remote download exists describe the previous version. The new function has transport tests; live artifact retrieval acceptance is recorded separately from API read access.

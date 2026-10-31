@@ -241,7 +241,7 @@ class ContextQAContractTests(unittest.TestCase):
         self.assertEqual(data["execution"]["transport"], "simulated")
         self.assertEqual(data["steps"][0]["step_result_id"], 903)
         self.assertEqual(data["media"], [])
-        self.assertEqual(list((destination / "guide/assets").iterdir()), [])
+        self.assertEqual([p.name for p in (destination / "guide/assets").iterdir()], ["contextqa-logo.svg"])
         for filename in ("guide.md", "index.html", "manifest.json"):
             content = (destination / "guide" / filename).read_text()
             self.assertNotIn("SIMULATED_PRIVATE", content)

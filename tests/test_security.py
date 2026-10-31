@@ -46,7 +46,7 @@ class EvidenceBoundary(unittest.TestCase):
         names = [p.name for p in self.out.rglob("*")]
         self.assertNotIn("raw.json", names)
         self.assertFalse(any(unselected in name for name in names))
-        self.assertEqual(len(list((self.out / "assets").iterdir())), 1)
+        self.assertEqual(len(list((self.out / "assets").glob("*.png"))), 1)
 
     def test_text_is_redacted_and_not_active_html_or_markdown(self):
         self.step('<script>alert(1)</script> token_demo.secret123 jane@example.com https://secret.example/?key=x [click](javascript:alert(1))')

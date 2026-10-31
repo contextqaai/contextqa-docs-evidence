@@ -162,6 +162,64 @@ def attach(root: Path, number: int, media_id: str) -> None:
     save(root, data)
 
 
+def capture_context(value: dict) -> dict:
+    """Operator-supplied labels, never a substitute for execution evidence."""
+    from datetime import datetime
+    allowed = {"workflow_id", "app_version", "captured_at", "environment", "capture_method", "runner_mode", "commit_sha", "source_pr"}
+    if not isinstance(value, dict) or not value or set(value) - allowed:
+        raise Rejected("Capture context contains unsupported fields")
+    for key, item in value.items():
+        if not isinstance(item, str) or not item.strip() or len(item) > 200:
+            raise Rejected("Capture context values must be short nonempty strings")
+        if key == "captured_at":
+            try:
+                stamp = datetime.fromisoformat(item.replace("Z", "+00:00"))
+                if stamp.tzinfo is None:
+                    raise ValueError()
+            except ValueError:
+                raise Rejected("Capture time must be an ISO timestamp with timezone") from None
+        if key == "commit_sha" and not re.fullmatch(r"[a-f0-9]{40}", item):
+            raise Rejected("Commit must be a full Git SHA")
+    return {key: redact(item) for key, item in value.items()}
+
+
+def set_context(root: Path, value: dict) -> None:
+    checked = capture_context(value)
+    data = manifest(root)
+    data["capture_context"] = checked
+    save(root, data)
+
+
+def checked_annotations(items, step, media):
+    if not isinstance(items, list) or len(items) > 20:
+        raise Rejected("Select at most 20 annotations per step")
+    result = []
+    for item in items:
+        if not isinstance(item, dict) or set(item) != {"media_id", "x", "y", "width", "height", "label"}:
+            raise Rejected("Annotation requires media_id, x, y, width, height and label")
+        mid = item["media_id"]
+        if not isinstance(mid, str) or mid not in step["media"] or media.get(mid, {}).get("kind") != "screenshot":
+            raise Rejected("Annotate only screenshots attached to this step")
+        import math
+        if any(type(item[k]) not in (int, float) or not math.isfinite(item[k]) or not 0 <= item[k] <= 100 for k in ("x", "y", "width", "height")):
+            raise Rejected("Annotation coordinates must be finite percentages")
+        if item["width"] <= 0 or item["height"] <= 0 or item["x"] + item["width"] > 100 or item["y"] + item["height"] > 100:
+            raise Rejected("Annotation rectangle must fit the screenshot")
+        if not isinstance(item["label"], str) or not item["label"].strip() or len(item["label"]) > 120:
+            raise Rejected("Annotation needs a short label")
+        result.append(dict(item, label=redact(item["label"])))
+    return result
+
+
+def annotate(root: Path, number: int, items: list) -> None:
+    data = manifest(root)
+    if not 1 <= number <= len(data["steps"]):
+        raise Rejected("Step not found")
+    step = data["steps"][number - 1]
+    step["annotations"] = checked_annotations(items, step, {m["id"]: m for m in data["media"]})
+    save(root, data)
+
+
 def import_trace(root: Path, source: Path) -> dict:
     """Read a bounded Playwright archive; never extract DOM, sources or network bodies."""
     archive = regular_file(source, MAX_TRACE)
@@ -318,6 +376,8 @@ def clean_export(root: Path) -> dict:
         if any(i not in known for i in step.get("media", [])):
             raise Rejected("Unknown attached media")
         cleaned = {"title": redact(step["title"]), "instruction": redact(step["instruction"]), "media": step.get("media", [])}
+        if "annotations" in step:
+            cleaned["annotations"] = checked_annotations(step["annotations"], step, {m["id"]: m for m in media})
         for field in ("case_result_id", "step_result_id"):
             if field in step:
                 if type(step[field]) is not int or step[field] < 1:
@@ -327,6 +387,8 @@ def clean_export(root: Path) -> dict:
     if not steps:
         raise Rejected("Add at least one reviewed step")
     result = {"schema": 1, "title": redact(data["title"]), "steps": steps, "media": media}
+    if "capture_context" in data:
+        result["capture_context"] = capture_context(data["capture_context"])
     if "execution" in data:
         execution = data["execution"]
         required = {"run_id", "transport", "collected_at", "status", "result", "verdict", "case_result_ids", "step_result_ids", "source_sha256", "media_downloaded"}
@@ -366,7 +428,18 @@ def _render(data: dict) -> str:
         for key in step["media"]:
             m = media[key]
             src = e(m["path"], quote=True)
-            content.append(f'<img src="{src}" alt="Reviewed screenshot for step {number}" loading="lazy">' if m["kind"] == "screenshot" else f'<video controls preload="metadata" src="{src}"></video>')
+            if m["kind"] == "screenshot":
+                boxes = []
+                labels = []
+                for annotation in step.get("annotations", []):
+                    if annotation["media_id"] != key:
+                        continue
+                    label = e(annotation["label"])
+                    boxes.append(f'<span class="annotation" style="left:{annotation["x"]}%;top:{annotation["y"]}%;width:{annotation["width"]}%;height:{annotation["height"]}%" aria-label="{label}"><b>{len(labels)+1}</b></span>')
+                    labels.append(f'<li>{label}</li>')
+                content.append(f'<figure><div class="frame"><img src="{src}" alt="Reviewed screenshot for step {number}" loading="lazy">{"".join(boxes)}</div>' + ('<figcaption><ol>' + ''.join(labels) + '</ol></figcaption>' if labels else '') + '</figure>')
+            else:
+                content.append(f'<video controls preload="metadata" src="{src}"></video>')
         sections.append(f'<section id="step-{number}"><h2>{number}. {e(step["title"])}</h2><p>{e(step["instruction"])}</p>{"".join(content)}<nav>' + (f'<a href="#step-{number-1}">Previous</a> ' if number > 1 else '') + (f'<a href="#step-{number+1}">Next</a>' if number < len(data["steps"]) else '<a href="#top">Start again</a>') + '</nav></section>')
     return '<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src &#39;none&#39;; img-src &#39;self&#39;; media-src &#39;self&#39;; style-src &#39;unsafe-inline&#39;; base-uri &#39;none&#39;; form-action &#39;none&#39;; frame-src &#39;none&#39;"><title>' + e(data["title"]) + '</title><style>body{font:18px/1.6 system-ui;max-width:960px;margin:40px auto;padding:20px;color:#162035}section{padding:24px 0;border-bottom:1px solid #ddd}img,video{max-width:100%;height:auto}a{color:#1559a8;margin-right:24px}nav{margin:20px 0}</style><main id="top"><h1>' + e(data["title"]) + '</h1><p>Reviewed static walkthrough. This does not control a live customer browser.</p>' + ''.join(sections) + '</main></html>'
 
@@ -379,8 +452,20 @@ def execution_note(data: dict) -> str:
     return f'{label}; run {info["run_id"]}; status {info["status"]}; result {info["result"]}; assessment {info["verdict"]}; collected {info["collected_at"]}. Media is included only when separately obtained, reviewed and attached.'
 
 
+def write_brand(target: Path) -> None:
+    source = Path(__file__).parent / "brand/contextqa-logo.svg"
+    shutil.copyfile(source, target / "assets/contextqa-logo.svg")
+    os.chmod(target / "assets/contextqa-logo.svg", 0o600)
+
+
 def render(data: dict) -> str:
     page = _render(data)
+    page = page.replace('<main id="top">', '<main id="top"><div style="background:#101828;padding:16px 24px;border-radius:12px"><img src="assets/contextqa-logo.svg" alt="ContextQA" style="width:180px;max-height:56px"></div>', 1)
+    page = page.replace('</style>', 'figure{margin:20px 0}.frame{position:relative;display:inline-block;line-height:0;max-width:100%}.frame img{display:block}.annotation{position:absolute;box-sizing:border-box;border:3px solid #b31b41;pointer-events:none}.annotation b{position:absolute;left:0;top:0;background:#b31b41;color:white;font:700 14px/1.5 system-ui;padding:0 5px}.capture-context{padding:16px;background:#f2f5fa;font-size:14px}</style>')
+    context = data.get("capture_context")
+    if context:
+        labels = '; '.join(k.replace('_', ' ') + ': ' + v for k, v in context.items())
+        page = page.replace('<main id="top">', '<main id="top"><p class="capture-context">Capture labels (operator supplied): ' + html.escape(labels) + '</p>', 1)
     note = execution_note(data)
     return page.replace('<main id="top">', '<main id="top"><p>' + html.escape(note) + '</p>', 1) if note else page
 
@@ -406,18 +491,27 @@ def export(root: Path, target: Path, base_url: str) -> dict:
         destination = target / item["path"]
         shutil.copyfile(asset_file(root, item["path"]), destination)
         os.chmod(destination, 0o600)
+    write_brand(target)
     write_json(target / "manifest.json", data)
     write_json(target / "review-receipt.json", {"digest": export_digest(data), "rights_and_media_review_confirmed": True})
     (target / "index.html").write_text(render(data))
     lines = ["# " + markdown_plain(data["title"]), "", "Reviewed workflow evidence; verify the target product version before publishing.", ""]
     if data.get("execution"):
         lines += [markdown_plain(execution_note(data)), ""]
+    if data.get("capture_context"):
+        lines += ["Capture labels (operator supplied):", ""]
+        lines += [f'- {markdown_plain(k.replace("_", " "))}: {markdown_plain(v)}' for k, v in data["capture_context"].items()]
+        lines += [""]
     for n, step in enumerate(data["steps"], 1):
         lines += [f'## {n}. {markdown_plain(step["title"])}', "", markdown_plain(step["instruction"]), ""]
         for mid in step["media"]:
             m = next(m for m in data["media"] if m["id"] == mid)
             prefix = "!" if m["kind"] == "screenshot" else ""
             lines += [f'{prefix}[{m["kind"]} for step {n}]({m["path"]})', ""]
+        if step.get("annotations"):
+            lines += [f'[View annotated screenshots](index.html#step-{n})', ""]
+            lines += [f'- {markdown_plain(a["label"])}' for a in step["annotations"]]
+            lines += [""]
     (target / "guide.md").write_text("\n".join(lines))
     src = html.escape(base_url.rstrip('/') + '/index.html', quote=True)
     (target / "embed.html.txt").write_text(f'<iframe src="{src}" title="{html.escape(data["title"], quote=True)}" sandbox="" referrerpolicy="no-referrer" loading="lazy" width="100%" height="720"></iframe>\n')

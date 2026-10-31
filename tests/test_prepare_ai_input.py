@@ -113,7 +113,7 @@ class PrepareAIInputTests(unittest.TestCase):
         self.assertFalse(self.destination.exists())
 
     def test_modified_attached_media_invalidates_export_even_when_text_is_unchanged(self):
-        asset = next((self.export / "assets").iterdir())
+        asset = next((self.export / "assets").glob("*.png"))
         asset.write_bytes(b"\x89PNG\r\n\x1a\nUNREVIEWED_SCREENSHOT")
         with self.assertRaises(core.Rejected):
             self.prepare()

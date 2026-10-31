@@ -65,7 +65,8 @@ class ChangesTests(unittest.TestCase):
         (self.root / 'with-media/private-extra.txt').write_text('MUST_NOT_COPY')
         self.context.write_text(json.dumps(self.info))
         compare(self.root / 'old', self.root / 'with-media', self.context, self.root / 'result')
-        self.assertEqual(len(list((self.root / 'result/assets').iterdir())), 1)
+        self.assertEqual(len(list((self.root / 'result/assets').glob('*.png'))), 1)
+        self.assertTrue((self.root / 'result/assets/contextqa-logo.svg').exists())
         self.assertFalse((self.root / 'result/private-extra.txt').exists())
         self.assertIn(selected, (self.root / 'result/index.html').read_text())
 

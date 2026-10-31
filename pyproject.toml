@@ -16,7 +16,7 @@ cqa-artifacts = "cqa_artifacts.__main__:cli"
 include = ["cqa_artifacts*"]
 
 [tool.setuptools.package-data]
-cqa_artifacts = ["contextqa-contract.json"]
+cqa_artifacts = ["contextqa-contract.json", "brand/*.svg"]
 
 [project.urls]
 Homepage = "https://contextqa.com/?utm_source=github&utm_medium=developer_referral&utm_campaign=contextqa_docs_evidence&utm_content=package_homepage"

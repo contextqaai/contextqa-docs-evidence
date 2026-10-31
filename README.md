@@ -13,7 +13,7 @@ Built around [ContextQA](https://contextqa.com/?utm_source=github&utm_medium=dev
 - Import candidate actions and screenshot frames from bounded Playwright trace ZIPs. Raw trace, DOM and network details stay private.
 - Attach local PNG/JPEG/WebP screenshots and independently recorded MP4/WebM videos to steps.
 - List/read and explicitly author ContextQA cases, steps, suites and plans using 26 contract-derived JSON operations.
-- Start one approved saved ContextQA plan with a durable local journal, poll within bounds, and collect selected member results into review-required guide steps. No blind execution retry, fabricated screenshot or remote media download.
+- Start one approved saved ContextQA plan with a durable local journal, poll within bounds, and collect selected member results into review-required guide steps. No blind execution retry or fabricated screenshots. Selected private media retrieval now requires an explicitly reviewed storage host.
 - Require content/media review, bound to hashes, before exporting Markdown with attached images, a static HTML walkthrough, JSON, an iframe snippet and partner handoff instructions.
 - Compare reviewed before/after exports with release context and explicit step matching. Produce a documentation refresh draft and machine-readable changes.
 
@@ -112,3 +112,15 @@ Use OpenAI, Claude/Anthropic or an OpenAI-compatible provider from your own loca
 ## Install and test for real
 
 Follow the [fresh-install and real-testing guide](docs/real-testing.md) for observed test coverage, a reproducible local path, expected failures and the remaining live-account acceptance checks. Synthetic browser results are separate from real source/AI credentials and customer staging workflows.
+
+## Kan documentation proof and capture improvements
+
+See [the live-proof status and exact remaining gates](docs/documentation-proof.md). This revision adds review-bound capture labels, screenshot callouts in HTML, selected private media retrieval, and a Kan PR-to-documentation request mapper. It also prevents new result IDs alone from marking an unchanged guide as changed.
+
+```sh
+python3 -m cqa_artifacts capture-context workspaces/release-a --file private/context.json
+python3 -m cqa_artifacts annotate workspaces/release-a --step 1 --file private/annotations.json
+# Review again after metadata, instructions or annotations change.
+```
+
+MCP/Max execution and the full deployed-change→recapture→review loop still need live acceptance. Only ContextQA execution and ContextQA-produced media are accepted for the Kan demo; browser previews are excluded.

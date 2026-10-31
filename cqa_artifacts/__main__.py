@@ -41,7 +41,19 @@ def main():
     p.add_argument("--after", type=Path, required=True)
     p.add_argument("--context", type=Path, required=True)
     p.add_argument("--out", type=Path, required=True)
+    p = sub.add_parser("capture-context", help="Set reviewed version/time/mode labels; does not attest execution")
+    p.add_argument("workspace", type=Path)
+    p.add_argument("--file", type=Path, required=True)
+    p = sub.add_parser("annotate", help="Replace a step's screenshot callouts using percentage rectangles")
+    p.add_argument("workspace", type=Path)
+    p.add_argument("--step", type=int, required=True)
+    p.add_argument("--file", type=Path, required=True)
     sub.add_parser("contextqa-operations", help="List implemented contract operation IDs and scopes; no account needed")
+    p = sub.add_parser("fetch-media", help="Fetch one reviewed storage reference without API credentials")
+    p.add_argument("workspace", type=Path)
+    p.add_argument("--reference-index", type=int, required=True)
+    p.add_argument("--kind", choices=["screenshot", "video"], required=True)
+    p.add_argument("--allow-host", required=True)
     p = sub.add_parser("contextqa-call")
     p.add_argument("--operation", required=True)
     p.add_argument("--id", type=int)
@@ -121,6 +133,15 @@ def main():
                                              plan_id=args.plan_id, profile=core.load_json(args.profile) if args.profile else None)
                 if args.import_steps:
                     result["guide_import"] = api.import_result_steps(root)
+    elif command == "fetch-media":
+        from .media import fetch_media
+        result = fetch_media(root, args.reference_index, args.kind, args.allow_host)
+    elif command == "capture-context":
+        core.set_context(root, core.load_json(args.file))
+        result = {"updated": True, "execution_attested": False, "review_required": True}
+    elif command == "annotate":
+        core.annotate(root, args.step, core.load_json(args.file))
+        result = {"updated": True, "review_required": True}
     elif command == "compare":
         from .changes import compare
         result = compare(root, args.after, args.context, args.out)
