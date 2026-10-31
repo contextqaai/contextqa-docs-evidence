@@ -85,15 +85,15 @@ Use a fresh empty workspace for `--import-steps`; replace IDs with actual intege
 - [Browser automation product scope](docs/product-scope.md)
 - [ContextQA resources and attribution](docs/contextqa-resources.md)
 
-## Native platform lifecycle examples
+## Optional documentation destinations
 
-The examples use **Layerpath itself** and **EkLine itself** as their documentation targets:
+The primary path uses ContextQA to execute the customer application, then this repository to review, export and compare documentation. Layerpath and EkLine are optional destinations, not requirements or implemented connectors.
 
-- [Layerpath authoring lifecycle](examples/layerpath-lifecycle/README.md): real creation/editor workflow, private tour, controlled revision and evidence refresh.
-- [EkLine documentation lifecycle](examples/ekline-lifecycle/README.md): real Docs Agent session, reviewed draft, controlled revision and scoped PR/screenshot refresh.
-- [What remains to finish automation](docs/completion-requirements.md): required access, implementation and acceptance evidence for each missing capability.
+- [Layerpath handoff runbook](examples/layerpath-lifecycle/README.md): proposed use of reviewed ContextQA assets in a tour-authoring destination.
+- [EkLine handoff runbook](examples/ekline-lifecycle/README.md): proposed use of approved prose/assets in a documentation editor.
+- [Core completion requirements](docs/completion-requirements.md): evidence and implementation needed for the ContextQA-led lifecycle, with optional destination acceptance kept separate.
 
-**Status:** the user reported sign-in complete for both platforms; feature access and native lifecycle execution remain unverified. These are executable runbooks, not receipts claiming completed native projects. The text-only synthetic demo below is a separate wrapper check.
+Both native examples remain **unexecuted runbooks**. Historical sign-in reports do not establish current features, native drafts, API adapters or publishing support. The verified core example is [Kan's ContextQA execution receipt](docs/verification-2026-10-30.md); broader application coverage and automatic deployed-change refresh remain incomplete.
 
 ## Verification
 
