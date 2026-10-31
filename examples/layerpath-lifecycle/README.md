@@ -3,6 +3,10 @@
 **Status: proposed, not executed.** No native project, exported tour or connector is
 claimed. Historical sign-in readiness is not current feature-access evidence.
 
+Start with the [Layerpath integration brief](../../docs/layerpath-integration.md) for
+setup, a baseline-to-refresh walkthrough, responsibility boundaries and the interface
+decisions to confirm with the Layerpath team.
+
 ## Why this example exists
 
 This was originally a proposed “Layerpath documenting Layerpath” demonstration:
