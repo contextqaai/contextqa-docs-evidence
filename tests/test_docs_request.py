@@ -22,3 +22,25 @@ class RequestTests(unittest.TestCase):
     def test_foreign_repo_rejected(self):
         pr=self.pr();pr['base']['repo']['full_name']='other/repo'
         with self.assertRaises(ValueError):m.plan_request(pr,[{'filename':'README.md'}])
+
+    def test_list_backend_requires_recapture(self):
+        for path in ['packages/api/src/routers/list.ts', 'packages/db/src/repository/list.repo.ts']:
+            with self.subTest(path=path):
+                r=m.plan_request(self.pr(),[{'filename':path}])
+                self.assertEqual(r['workflows'],['kan-create-list'])
+    def test_new_list_form_requires_list_recapture(self):
+        r=m.plan_request(self.pr(),[{'filename':'apps/web/src/views/board/components/NewListForm.tsx'}])
+        self.assertIn('kan-create-list',r['workflows'])
+    def test_duplicate_files_cannot_satisfy_completeness(self):
+        with self.assertRaises(ValueError):
+            m.plan_request(self.pr(2),[{'filename':'README.md'}]*2)
+    def test_changed_head_rejected(self):
+        with self.assertRaises(ValueError):
+            m.plan_request(self.pr(),[{'filename':'README.md'}],expected_head_sha='b'*40)
+    def test_matching_sha_is_not_deployment_attestation(self):
+        r=m.plan_request(self.pr(),[{'filename':'README.md'}],deployed_sha='a'*40)
+        self.assertTrue(r['deployment_matches_head'])
+        self.assertFalse(r['deployment_verified'])
+    def test_invalid_previous_filename_rejected(self):
+        with self.assertRaises(ValueError):
+            m.plan_request(self.pr(),[{'filename':'README.md','previous_filename':42}])

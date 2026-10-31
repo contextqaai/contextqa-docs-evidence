@@ -1,0 +1,22 @@
+{
+  "verification_date": "2026-10-31 America/Chicago",
+  "case_id": 174,
+  "session_id": "8d799162-21e0-4812-8759-b90b40be616f",
+  "run_ref": "be616f",
+  "status": "STATUS_COMPLETED",
+  "is_completed": true,
+  "result_id": 372,
+  "result": "SUCCESS",
+  "last_completed_result_id": 372,
+  "mode": "EXPERT",
+  "screenshots_enabled_before_start": true,
+  "video_enabled_before_start": true,
+  "application_revision": null,
+  "duplicate_run_started": false,
+  "result_url": "https://ship-5.contextqa.com/run-result-view?testCaseId=174&runResultId=372",
+  "result_steps_passed": 1,
+  "result_steps_total": 1,
+  "generated_editable_actions": 19,
+  "reviewed_trace_frames": 5,
+  "application_wide_live_coverage": false
+}
