@@ -38,3 +38,11 @@ The trigger rejects duplicate changed-file paths and invalid rename metadata, ch
 80 evidence-package Python tests and 12 trigger regression tests passed in this continuation. The trigger's hosted mapper check passed too. Ten mocked AI transport tests passed in the preceding receipt; they were not rerun for this documentation-only update. Prior repository-wide Kan lint/typecheck attempts were blocked by pnpm version mismatch.
 
 Still needed: resolve Max availability, complete authorized Kan authentication, execute and inspect the successful isolated workflow, review real media for safe sharing, bind a selected deployment to its exact commit, rerun the same workflow, and export an annotated before/after guide. The renderer and capture-request integration work locally, but unattended documentation refresh and native publication are not proven. No merge, deployment command, or browser substitution was performed.
+
+## October 31 authentication retry
+
+After the user confirmed login was completed and password authentication should work, case 174 was started once more through ContextQA. Session `8d799162-21e0-4812-8759-b90b40be616f` (run reference `be616f`) was accepted. The case was checked before launch: environment 1, workspace 1, EXPERT, screenshot capture enabled, and video enabled.
+
+Repeated bounded status checks continued to report `EXECUTION_STARTING`, `is_completed=false`, and no result ID, verdict or new media. The live-executions lookup lists exactly this one session; the latest completed case result remains 371 from the earlier attempt. This retry is pending, not a pass or a repeated authentication failure. No duplicate run was started. A polling timeout does not cancel the remote session. Resume reads using the same session ID before considering another execution.
+
+[ContextQA session](https://ship-5.contextqa.com/live/174?sessionId=8d799162-21e0-4812-8759-b90b40be616f). PR 18 remains open at the same head; its SHA-filtered GitHub deployment listing is still empty.
