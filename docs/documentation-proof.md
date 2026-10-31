@@ -26,7 +26,11 @@ Example context:
 
 Any change to labels or annotations invalidates the previous review receipt.
 
-## Observed October 30, 2026 (America/Chicago)
+## Earlier October 30 observations (superseded where noted)
+
+See [the latest MCP and receipt audit](verification-2026-10-30.md). MCP is now connected, but the user-supplied historical run belongs to ship-5 while this connection is contextqa-z5. No Kan execution is claimed.
+
+### Earlier observations
 
 - The supplied ContextQA token successfully read bounded pages of plans, cases and results. Token values were not saved in this repository.
 - ContextQA MCP is registered locally but not exposed as tools to this chat. The user is reconnecting it.
