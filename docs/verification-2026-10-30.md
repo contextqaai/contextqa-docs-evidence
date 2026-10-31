@@ -1,36 +1,40 @@
-# ContextQA documentation proof — verification status
+# ContextQA documentation proof — October 30, 2026
 
-Checked October 30, 2026 (America/Chicago). This is an audit and capture request, not a verified application guide.
+Verified in America/Chicago. This is a partial acceptance receipt, not a completed board/list/card guide.
 
-## Connection and existing evidence
+## Connection and supported mode
 
-ContextQA MCP read operations succeed for tenant `contextqa-z5`, workspace `Contextqa Z5 / 1.0` (version 1). This connection lists only that workspace, 32 active cases about the ContextQA portal, and no Kan cases. The default environment targets other applications, not Kan. Onboarding is complete.
+ContextQA MCP confirms tenant `ship-5`, workspace `Ship 5 / 1.0`, workspace version 1. The current-user response, case 167's workspace, saved Kan environment, and enrolled `nigharsh/kan` repository (851) agree. Onboarding is complete. GitHub registry connection 477 is ACTIVE and maps integration 6 to ship-5.
 
-The user identified the relevant historical evidence in a different tenant: [ship-5 case 167 / result 300](https://ship-5.contextqa.com/run-result-view?testCaseId=167&runResultId=300&isManualExecution=true). That receipt has not been inspected: reconnect MCP to ship-5 first. IDs must never be looked up in a different tenant and treated as the same run. Kan login details are available in the conversation and must enter only an approved secure ContextQA credential mechanism; they are omitted here.
+The organization and actual execution configuration report `EXPERT`. Max support is not established and Expert is not represented as equivalent. Organization defaults have screenshot capture and video disabled; case 174 has video enabled. Its screenshot setting was successfully patched after execution had already started. The actual result configuration still reports `captureAllStepScreenshots=false`, so that run is not claimed to have full per-action screenshots. No organization defaults were changed. Secret values remain in the saved ContextQA environment and are omitted from this repository.
 
-Previously saved contextqa-z5 receipts contain run 1 SUCCESS/completed, run 3 FAILURE/completed, and runs 2/4 QUEUED/in-progress. These are historical plan-level values, not Kan proof. A current MCP case-result lookup for execution 1 returned zero results. The local adapter validation receipt explicitly records zero hosted runs and simulated transport. Earlier non-ContextQA browser evidence remains excluded.
+## Real execution receipts
 
-## Mode and capture
+- Historical [case 167 / result 300](https://ship-5.contextqa.com/run-result-view?testCaseId=167&runResultId=300): FAILURE, completed October 28, 0/1 steps passed. Step 343 reports the Create card button enabled after whitespace input. ContextQA provides screenshot, video and trace references. This is a whitespace-title reproduction, not the full board/list/card documentation workflow; its tested application SHA is not established.
+- New [case 174 / result 371](https://ship-5.contextqa.com/run-result-view?testCaseId=174&runResultId=371): FAILURE, 0/1 steps passed. Session `963639c3-b835-44a0-b519-b5db8f827d51`, run reference `827d51`. The bounded isolated workflow attempted login at the requested Kan target and stopped because the UI required an emailed magic link rather than password login. No board/list/card creation was verified. Step result 535 has a real screenshot; the result includes a WebM recording and trace reference. The screenshot was retrieved and visually inspected: it shows “Check your inbox.” It contains an account identifier and is retained privately, not published. Video availability is verified from the provider receipt; its contents have not been reviewed for publication. No substitute browser execution or screenshots were used.
 
-Live contextqa-z5 organization settings report `enableAISmartness=EXPERT`, `captureAllStepScreenshots=false`, and `videoRecording=false`. No settings were changed. Inspected local UI options are EXPERT, FAST and STRICT; no Max option is established. These findings do not establish ship-5 capabilities or any equivalence between Expert and Max. Verify the intended tenant's supported mode and per-case recording configuration after reconnecting.
+The single AI bootstrap step has no child step results. It did not produce a complete editable workflow or a shareable successful guide. A new run needs a suitable password-enabled QA target or an approved authenticated ContextQA session/profile. Do not blindly retry the completed login failure or modify unrelated data.
 
-## PR and deployment evidence
+## PRs and deployment
 
-- [Kan PR 15](https://github.com/nigharsh/kan/pull/15) is merged. Head: `de9eb589ade097555b573473f9c833192d9af5a2`; merge: `448514ba6f41a8789e4c2307294dc79bdedd6528`. Its historic receipt does not prove current deployment state.
-- [Kan PR 18](https://github.com/nigharsh/kan/pull/18) is open at `a0d0587a5f1fe13c0c132e235c6c7148825c2fe5`. Its Vercel status is successful and points to deployment `4kFZTLS3aeK7KqqkfN29Xr5j9THx`. The Vercel preview-comment check refers to a branch preview hostname. Neither proves the requested shared URL `https://kan-qa.vercel.app/` serves that SHA.
-- GitHub deployments filtered to PR 18's exact SHA returned an empty list. Listed older deployments refer to Railway. Current shared-target revision remains unverified.
-- PR 18's ContextQA impact check reports 32 affected cases and suggestions for review. This is impact analysis, not a workflow execution receipt.
+[Evidence PR 1](https://github.com/contextqaai/contextqa-docs-evidence/pull/1) and [Kan PR 15](https://github.com/nigharsh/kan/pull/15) were already merged before this continuation. No merge was performed here. Evidence follow-up remains [draft PR 2](https://github.com/contextqaai/contextqa-docs-evidence/pull/2).
 
-## Trigger review and corrections
+PR 15 head is `de9eb589ade097555b573473f9c833192d9af5a2`; merge commit is `448514ba6f41a8789e4c2307294dc79bdedd6528`. ContextQA analysis 19 records [plan run 18](https://ship-5.contextqa.com/td/runs/18), completed with 0 passed and 15 failed. This is a real historical test-run receipt, not just impact analysis; it does not prove the current shared URL serves the PR commit.
 
-Local branch `codex/documentation-refresh-trigger` started at `a30e315`. Remote branch lookup returned 404, no matching PR exists, and the registered GitHub workflows do not include the documentation request workflow.
+[PR 18](https://github.com/nigharsh/kan/pull/18), open at `a0d0587a5f1fe13c0c132e235c6c7148825c2fe5`, is the relevant current whitespace-title change. It maps to card, list and checklist guide requests. Its successful Vercel status points to deployment `4kFZTLS3aeK7KqqkfN29Xr5j9THx`, but GitHub deployments filtered to that SHA return an empty list. The status does not bind `https://kan-qa.vercel.app/` to that commit. No exact-revision validation or before/after execution comparison is claimed.
 
-The request-only integration never starts ContextQA or publishes documentation. Corrections add list creation path mapping, reject duplicate changed-file records that could conceal missing paths, validate rename metadata, and reject a supplied expected head that differs from the PR. The workflow rereads the PR after fetching files and rejects head/base drift. A matching operator-supplied SHA is explicitly labeled as unverified deployment evidence.
+[PR 13](https://github.com/nigharsh/kan/pull/13), open at `a9d97dd1ed197a553bd8814bc1ee501327a4679a`, changes checklist title validation and is relevant to checklist documentation, not the selected board/list/card proof.
 
-The updated request for PR 18 maps checklist, card and list guides. `execution_started=false`, `documentation_published=false`, and `deployment_verified=false` remain explicit.
+## Trigger validation
 
-## Validation and remaining work
+The earlier push blocker is cleared. Branch `codex/documentation-refresh-trigger` was pushed at `14a0a441a30a1e95bab4009d079183c0f8062dfc`, and [draft Kan PR 19](https://github.com/nigharsh/kan/pull/19) was opened.
 
-80 evidence-package Python tests, 10 mocked AI transport tests, and 12 trigger regression tests pass locally. Diff whitespace checks pass. Kan lint/typecheck were attempted but blocked by pnpm 11.25.0 versus required ^9.14.2. These checks do not execute a browser or establish hosted acceptance.
+[Documentation evidence request run 41170081040](https://github.com/nigharsh/kan/actions/runs/41170081040) succeeded: it read PR metadata, passed the mapper tests, generated a request and uploaded `docs-refresh-request-19`. The downloaded artifact matches that exact head, reports no mapped application workflow changes for the CI-only PR, and explicitly records `execution_started=false`, `documentation_published=false`, and `deployment_verified=false`. This verifies the PR-open request trigger and artifact delivery, not ContextQA execution by CI. The non-empty PR 18 mapping was separately checked locally against live GitHub metadata.
 
-After reconnecting ship-5: inspect case 167/result 300 and its actual steps/media; resolve Max; bind secure credentials; create an isolated uniquely named board, list and card using only ContextQA; retain run IDs and terminal/per-step outcomes; verify the exact target commit before a PR-specific rerun; collect and review real screenshots/video; export annotated guides and compare the two verified captures. Missing evidence stays missing. No merge or deployment is authorized or performed.
+The trigger rejects duplicate changed-file paths and invalid rename metadata, checks head/base drift after fetching files, and treats matching operator-supplied deployment SHAs as unverified. It contains no ContextQA execution credentials. It remains a draft; default-branch manual dispatch and the full deployment-to-recapture loop are not established.
+
+## Validation and remaining gaps
+
+80 evidence-package Python tests and 12 trigger regression tests passed in this continuation. The trigger's hosted mapper check passed too. Ten mocked AI transport tests passed in the preceding receipt; they were not rerun for this documentation-only update. Prior repository-wide Kan lint/typecheck attempts were blocked by pnpm version mismatch.
+
+Still needed: resolve Max availability, complete authorized Kan authentication, execute and inspect the successful isolated workflow, review real media for safe sharing, bind a selected deployment to its exact commit, rerun the same workflow, and export an annotated before/after guide. The renderer and capture-request integration work locally, but unattended documentation refresh and native publication are not proven. No merge, deployment command, or browser substitution was performed.

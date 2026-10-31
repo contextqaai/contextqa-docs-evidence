@@ -1,0 +1,23 @@
+{
+  "verification_date": "2026-10-30 America/Chicago",
+  "tenant": "ship-5",
+  "workspace_version_id": 1,
+  "mode": "EXPERT",
+  "max_verified": false,
+  "case_id": 174,
+  "result_id": 371,
+  "step_result_id": 535,
+  "result": "FAILURE",
+  "passed_steps": 0,
+  "total_steps": 1,
+  "failure": "Magic-link authentication required",
+  "screenshot_reference_available": true,
+  "screenshot_visually_reviewed": true,
+  "video_reference_available": true,
+  "video_reviewed_for_publication": false,
+  "application_revision": null,
+  "guide_completed": false,
+  "trigger_run": 41170081040,
+  "trigger_result": "success",
+  "trigger_execution_started": false
+}

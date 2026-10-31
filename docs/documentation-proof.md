@@ -28,7 +28,7 @@ Any change to labels or annotations invalidates the previous review receipt.
 
 ## Earlier October 30 observations (superseded where noted)
 
-See [the latest MCP and receipt audit](verification-2026-10-30.md). MCP is now connected, but the user-supplied historical run belongs to ship-5 while this connection is contextqa-z5. No Kan execution is claimed.
+See [the latest MCP and receipt audit](verification-2026-10-30.md). The latest continuation confirms ship-5 and records a real Kan login-blocked execution (case 174/result 371). The earlier tenant mismatch is resolved; the complete workflow remains unverified.
 
 ### Earlier observations
 
@@ -40,8 +40,8 @@ See [the latest MCP and receipt audit](verification-2026-10-30.md). MCP is now c
 
 ## Remaining acceptance gates
 
-1. Reconnect MCP and verify account/workspace. Resolve Max against the real server capability, without changing tenant-wide defaults.
-2. Bind the authorized Kan login through an approved test auth/environment mechanism. Never place credentials in GitHub artifacts or prose test scenarios.
+1. Workspace identity is verified as ship-5/version 1. Resolve Max availability; actual execution reports EXPERT.
+2. Resolve the observed magic-link login blocker using an authorized ContextQA auth profile or password-enabled QA target. Saved password credentials alone did not complete the current login flow. Never place credentials in GitHub artifacts or prose test scenarios.
 3. Run a bounded selected workflow with screenshots/video enabled at case level. Record the accepted ID, actual terminal outcome, mode evidence and actual provider usage if available.
 4. Retrieve and visually review selected real media, then export. Missing video remains missing; a slideshow is not a live recording.
 5. Obtain a deployment tied to the selected PR head, repeat the same workflow, and review the comparison. A change-request trigger alone is not continuous documentation maintenance.
