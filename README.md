@@ -89,6 +89,7 @@ Use a fresh empty workspace for `--import-steps`; replace IDs with actual intege
 
 The primary path uses ContextQA to execute the customer application, then this repository to review, export and compare documentation. Layerpath and EkLine are optional destinations, not requirements or implemented connectors.
 
+- [Layerpath integration brief](docs/layerpath-integration.md): responsibilities, setup, baseline-to-refresh walkthrough and interface decisions for the Layerpath team.
 - [Layerpath handoff runbook](examples/layerpath-lifecycle/README.md): proposed use of reviewed ContextQA assets in a tour-authoring destination.
 - [EkLine handoff runbook](examples/ekline-lifecycle/README.md): proposed use of approved prose/assets in a documentation editor.
 - [Core completion requirements](docs/completion-requirements.md): evidence and implementation needed for the ContextQA-led lifecycle, with optional destination acceptance kept separate.
