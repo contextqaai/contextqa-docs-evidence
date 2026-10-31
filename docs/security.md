@@ -6,7 +6,7 @@ The repository contains wrapper source, documentation, tests and synthetic examp
 
 ## Current controls
 
-- Local result reads use a fixed origin, explicit endpoint allowlist, no redirects, bounded response sizes and verified result-parent bindings. No paid execution calls or remote media downloads.
+- ContextQA calls use a fixed origin, contract-derived operation allowlist, explicit authoring approval, no redirects, bounded JSON and verified selected result-parent bindings. Saved-plan execution requires a separate approval flag and exclusive fsynced intent/accepted-run journal; acceptance can be ambiguous and no start is retried. No token-accessible stop, server cost cap or remote media download is implemented. Tests use mocked transport, never billed live execution.
 - Trace import rejects traversal/symlink paths and excessive expansion; it selects generic actions and screenshot resources, not DOM/network bodies.
 - Shareable output is rebuilt from reviewed text and attached allowlisted media. Unattached frames and private inputs remain local.
 - Content and media hashes bind review to the export; edits invalidate approval. Comparison requires intact reviewed exports and explicit complete step mapping.
@@ -23,3 +23,7 @@ Comparison detects changed text/media identity, not semantic UI differences, cor
 ## Publication gate
 
 Do not publish raw traces, HARs, recording workspaces, `.env` files, credential exports or real API responses. Share wrapper source and synthetic examples only. A production service needs a dedicated security review, tenant isolation, scoped secrets, quotas, authenticated artifact access, retention/deletion, redaction tooling and auditable approvals before general availability.
+
+## ContextQA integration boundary
+
+Review [API use](contextqa-api.md) before any real call. Local journals are trusted single-user records, not distributed locks or upstream idempotency keys; do not bypass an ambiguous intent with a new filename. DTO validation does not establish tenant authorization, correct business behavior or acceptable billing. The caller must review the actual saved plan and its internal rerun/notification/data/browser settings. Guide provenance contains only selected IDs, status/result/assessment, timestamp, transport label and digest; raw records, signed references and supplied profile stay private. Human review remains required even when an upstream summary says SUCCESS.

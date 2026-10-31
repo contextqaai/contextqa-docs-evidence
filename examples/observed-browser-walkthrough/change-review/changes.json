@@ -1,0 +1,48 @@
+{
+  "before_version": "Baseline state, same app build",
+  "after_version": "Created state, same app build",
+  "what_changed": "Controlled form input and resulting page state only. No product release occurred.",
+  "affected_documents": "This local synthetic walkthrough only.",
+  "schema": 1,
+  "comparison": "Reviewed text and media hashes; not a visual or semantic regression verdict",
+  "steps": [
+    {
+      "before_step": 1,
+      "after_step": 1,
+      "status": "unchanged",
+      "before": {
+        "title": "Start a local synthetic browser session",
+        "instruction": "Purpose: create a documentation project. Preconditions: run the private Browser Cloud loopback demo; no external account, AI key or customer data. Select Start demo session. Observed baseline: No project created yet. Captured 2026-10-27; same application build throughout.",
+        "media": [
+          "87775daaf657b2347fa139db7778770b7afd87c736bc384d8413c6bc371d57ef"
+        ]
+      },
+      "after": {
+        "title": "Start a local synthetic browser session",
+        "instruction": "Purpose: create a documentation project. Preconditions: run the private Browser Cloud loopback demo; no external account, AI key or customer data. Select Start demo session. Observed baseline: No project created yet. Captured 2026-10-27; same application build throughout.",
+        "media": [
+          "87775daaf657b2347fa139db7778770b7afd87c736bc384d8413c6bc371d57ef"
+        ]
+      }
+    },
+    {
+      "before_step": 2,
+      "after_step": 2,
+      "status": "changed",
+      "before": {
+        "title": "Baseline task state — not yet executed",
+        "instruction": "This is a baseline capture, not a passing test or completed workflow. The project name is Demo guide and the page states No project created yet.",
+        "media": [
+          "87775daaf657b2347fa139db7778770b7afd87c736bc384d8413c6bc371d57ef"
+        ]
+      },
+      "after": {
+        "title": "Create the controlled demo project",
+        "instruction": "Set Text to enter to Documentation guide — controlled revision B, then select Run demo task. The service fills #name and clicks #create. Select Read page text and Save screenshot. Observed exact result: Created: Documentation guide — controlled revision B. End the session to finalize video. This is a controlled state change in one synthetic app build, not a product release or Layerpath/EkLine integration.",
+        "media": [
+          "3fdafaad36f886cccdce87f54de6b42ac1352efef66dd5ec27e7b75c5444a33d"
+        ]
+      }
+    }
+  ]
+}

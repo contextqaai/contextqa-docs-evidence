@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "capturedDate": "2026-10-27 America/Los_Angeles",
+  "producer": "ContextQA Browser Cloud local synthetic fixture",
+  "freshPythonPackageInstall": true,
+  "chromiumSandboxEnabled": true,
+  "screenshots": [
+    {
+      "file": "export-after/assets/87775daaf657b2347fa139db7778770b7afd87c736bc384d8413c6bc371d57ef.png",
+      "sha256": "87775daaf657b2347fa139db7778770b7afd87c736bc384d8413c6bc371d57ef"
+    },
+    {
+      "file": "export-after/assets/3fdafaad36f886cccdce87f54de6b42ac1352efef66dd5ec27e7b75c5444a33d.png",
+      "sha256": "3fdafaad36f886cccdce87f54de6b42ac1352efef66dd5ec27e7b75c5444a33d"
+    }
+  ],
+  "observedOutcome": "Created: Documentation guide \u2014 controlled revision B",
+  "mediaReviewed": "Repository-owned synthetic screenshots visually inspected; no customer data or credentials",
+  "htmlImagesRendered": 2,
+  "nextStepNavigationVerified": true,
+  "changedPairedSteps": 1,
+  "modifiedAfterApprovalExportBlocked": true,
+  "actualProductRelease": false,
+  "nativePartnerExecution": false,
+  "contextqaSaaSExecution": false,
+  "modelCalls": 0
+}

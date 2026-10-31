@@ -1,0 +1,11 @@
+{
+  "format": "contextqa-reviewed-evidence-v1",
+  "layerpath": {
+    "mode": "manual_media_import",
+    "instructions": "Upload approved images or video and use the reviewed steps as the project brief. No Layerpath API is assumed."
+  },
+  "ekline": {
+    "mode": "documentation_draft",
+    "instructions": "Use guide.md and manifest.json as evidence for a reviewed documentation draft. No EkLine API is assumed."
+  }
+}

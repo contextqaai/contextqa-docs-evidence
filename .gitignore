@@ -13,3 +13,7 @@ approval.json
 *.egg-info/
 dist/
 build/
+
+.ai-private/
+
+!.env.example

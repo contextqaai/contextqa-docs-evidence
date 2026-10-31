@@ -1,0 +1,1 @@
+<iframe src="https://docs.example.com/local-synthetic/after/index.html" title="Local browser walkthrough — observed task completion" sandbox="" referrerpolicy="no-referrer" loading="lazy" width="100%" height="720"></iframe>

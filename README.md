@@ -1,16 +1,19 @@
 # ContextQA documentation evidence
 
-Turn reviewed workflow evidence into documentation that can be refreshed when the app changes. Separate project from the ContextQA n8n node; this is an experimental local wrapper, not a hosted browser-session service.
+ContextQA Docs Evidence helps solutions engineers and technical writers turn reviewed workflow evidence into documentation they can refresh when the app changes. Use ContextQA saved tests and results as the evidence source, then review and export a local guide. This candidate includes an explicit ContextQA API client; standalone browser capture still comes from a separate producer.
 
 **Workflow:** capture a known task → select screenshots → attach to instructions → review → export a guide → repeat after a release → supply change context → compare explicitly matched steps → review the documentation update.
 
 Built around [ContextQA](https://contextqa.com/?utm_source=github&utm_medium=developer_referral&utm_campaign=contextqa_docs_evidence&utm_content=readme_overview) workflow evidence. Start with the [recorder guide](https://contextqa.com/tutorials/no-code-test-automation-recorder/?utm_source=github&utm_medium=developer_referral&utm_campaign=contextqa_docs_evidence&utm_content=readme_capture_guide) or read about [visual baselines and change review](https://contextqa.com/blog/visual-regression-testing-ui-stability/?utm_source=github&utm_medium=developer_referral&utm_campaign=contextqa_docs_evidence&utm_content=readme_visual_regression_blog).
 
+**Release status:** private candidate; an open-source license and public release are pending owner approval. Core local samples make no model or ContextQA SaaS calls. Optional AI and hosted execution use separate credentials and may incur provider charges.
+
 ## What works now
 
 - Import candidate actions and screenshot frames from bounded Playwright trace ZIPs. Raw trace, DOM and network details stay private.
 - Attach local PNG/JPEG/WebP screenshots and independently recorded MP4/WebM videos to steps.
-- Read explicitly selected ContextQA result records using an environment token, without executing paid runs or downloading remote media.
+- List/read and explicitly author ContextQA cases, steps, suites and plans using 26 contract-derived JSON operations.
+- Start one approved saved ContextQA plan with a durable local journal, poll within bounds, and collect selected member results into review-required guide steps. No blind execution retry or fabricated screenshots. Selected private media retrieval now requires an explicitly reviewed storage host.
 - Require content/media review, bound to hashes, before exporting Markdown with attached images, a static HTML walkthrough, JSON, an iframe snippet and partner handoff instructions.
 - Compare reviewed before/after exports with release context and explicit step matching. Produce a documentation refresh draft and machine-readable changes.
 
@@ -54,13 +57,19 @@ python3 -m cqa_artifacts inspect workspaces/release-a
 
 A trace is not a complete video. Record video separately if required. Imported action parameters, selectors, filled values, network responses and DOM snapshots are not copied into public output. Trace frame extraction is a bounded, best-effort parser for the observed NDJSON event shape; Playwright's internal archive format can change.
 
-For read-only ContextQA collection, inject `CONTEXTQA_API_TOKEN` with your existing secret manager or local environment. Never put it in a command argument, source file, issue or PR.
+For ContextQA-first execution and collection, see [exact API operations, tokens, scopes and run safety](docs/contextqa-api.md) and the [platform configuration map](docs/contextqa-platform.md). A superadmin creates a scoped token in **Settings → API tokens**; inject it as `CONTEXTQA_API_TOKEN` through your secret manager. API entitlement and charges need account-specific confirmation.
 
 ```sh
-python3 -m cqa_artifacts collect workspaces/release-a --run-id RUN_ID
+# Account-free complete API-to-guide simulation; no live execution or image claim:
+python3 examples/contextqa_demo.py /tmp/NEW-contextqa-guide-simulation
+python3 -m cqa_artifacts contextqa-operations
+# Real selected existing results, only after scoped access is authorized:
+python3 -m cqa_artifacts contextqa-collect workspaces/release-a --run-id RUN_ID --case-result-id CASE_RESULT_ID --step-result-id STEP_RESULT_ID --import-steps
 ```
 
-Optional `--case-result-id ID` and `--step-result-id ID` require appropriate scopes and verifiable parent-run relationships. Missing parent fields fail closed. Signed media references remain under `private/`; fetch/review media separately using an authorized first-party download flow. No remote asset fetch, arbitrary URL, browser execution or paid-run endpoint is implemented.
+Use a fresh empty workspace for `--import-steps`; replace IDs with actual integers. Candidate steps require human review before export. Known artifact references and full plan/profile/result snapshots stay private. Existing ContextQA environments, data profiles, prerequisites and cross-browser/parallel plan settings drive the remote run; this package does not invent their IDs or configuration endpoints. The older `collect` command remains a narrow read-only compatibility path; prefer `contextqa-collect` for strict selected-ID validation and guide import.
+
+[Run once and poll safely](docs/contextqa-api.md#start-once-then-poll-the-accepted-run) documents the separate `contextqa-run --approve-execution` opt-in. It may bill, is non-idempotent and cannot be stopped through the supplied token API. Local journals prevent reuse but do not guarantee upstream exactly-once execution. No live run was performed to test this integration.
 
 ## Documentation
 
@@ -80,13 +89,38 @@ The examples use **Layerpath itself** and **EkLine itself** as their documentati
 - [EkLine documentation lifecycle](examples/ekline-lifecycle/README.md): real Docs Agent session, reviewed draft, controlled revision and scoped PR/screenshot refresh.
 - [What remains to finish automation](docs/completion-requirements.md): required access, implementation and acceptance evidence for each missing capability.
 
-**Status:** native execution awaits non-Google sign-in and feature access. These are executable runbooks, not receipts claiming completed native projects. The text-only synthetic demo below is a separate wrapper check.
+**Status:** the user reported sign-in complete for both platforms; feature access and native lifecycle execution remain unverified. These are executable runbooks, not receipts claiming completed native projects. The text-only synthetic demo below is a separate wrapper check.
 
 ## Verification
 
 ```sh
 python3 -m unittest discover -s tests -v
-python3 examples/demo.py /tmp/cqa-docs-evidence-demo
+python3 examples/demo.py /tmp/NEW-cqa-docs-evidence-demo
+python3 examples/contextqa_demo.py /tmp/NEW-contextqa-guide-simulation
 ```
 
-The demo uses synthetic instructions only; it does not claim to record a real app or create video. Source code and documentation may be shared separately from customer evidence. No open-source license has been granted in this private prototype.
+The first demo uses synthetic text; the ContextQA demo uses simulated API transport. Neither records a real app, creates video, calls a live API or establishes live test success. Guides label simulation explicitly. Source code and documentation may be shared separately from customer evidence. No open-source license has been granted in this private prototype.
+
+## Optional AI with your own key
+
+Use OpenAI, Claude/Anthropic or an OpenAI-compatible provider from your own local process. [Provider configuration, consent, usage metrics and privacy](docs/ai.md). AI drafts require explicit sharing approval and never execute browser actions, approve evidence or publish content. Keys stay in environment variables or your secret manager.
+
+## Product strategy and release plan
+
+[Growth strategy and two-recipe specification](docs/GTM.md) · [Capability evidence](docs/capability-register.md) · [Prioritized implementation backlog](docs/backlog.md) · [Audience and fair comparisons](docs/comparisons.md). These are local release drafts; proposed API flows, commands and commercial claims are explicitly gated. No public open-source release or hosted service is implied.
+
+## Install and test for real
+
+Follow the [fresh-install and real-testing guide](docs/real-testing.md) for observed test coverage, a reproducible local path, expected failures and the remaining live-account acceptance checks. Synthetic browser results are separate from real source/AI credentials and customer staging workflows.
+
+## Kan documentation proof and capture improvements
+
+See [the live-proof status and exact remaining gates](docs/documentation-proof.md). This revision adds review-bound capture labels, screenshot callouts in HTML, selected private media retrieval, and a Kan PR-to-documentation request mapper. It also prevents new result IDs alone from marking an unchanged guide as changed.
+
+```sh
+python3 -m cqa_artifacts capture-context workspaces/release-a --file private/context.json
+python3 -m cqa_artifacts annotate workspaces/release-a --step 1 --file private/annotations.json
+# Review again after metadata, instructions or annotations change.
+```
+
+MCP/Max execution and the full deployed-change→recapture→review loop still need live acceptance. Only ContextQA execution and ContextQA-produced media are accepted for the Kan demo; browser previews are excluded.

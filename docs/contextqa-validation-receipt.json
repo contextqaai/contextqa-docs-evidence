@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "checkedDate": "2026-10-27 America/Los_Angeles",
+  "repository": "contextqaai/contextqa-docs-evidence",
+  "scope": "Local uncommitted ContextQA-first adapter candidate; no live account acceptance",
+  "checks": {
+    "pythonUnitSecurityAndContractTests": 58,
+    "result": "passed",
+    "normalNoneditablePipInstall": "passed",
+    "pythonVersion": "3.14.2",
+    "installedOutsideCheckoutImports": "passed",
+    "packagedContractOperationCount": 26,
+    "installedProjectHelperAndCLI": "passed",
+    "installedSimulatedApiToGuide": "passed",
+    "simulatedRequestsInGuideExample": 11,
+    "privateArtifactReferencesInExample": 3
+  },
+  "wheelSha256": "307b3399046ba303183e9e37a511c4402ad0c7f583cfc30ca41733a459556f22",
+  "contractSourceSha256": "e8b3afefcb6eba18172081a8daad8f962cb28a95a284a33acb3369ff928531fa",
+  "sourceSha256": {
+    "cqa_artifacts/contextqa.py": "f19352349a079f414c019fd0554dd91f59497633794725100767d7b2c289a55d",
+    "cqa_artifacts/contextqa-contract.json": "09f0178f67d16e788754aaceeac14a4e8e68451f4da66cd53d44fd9ea33fb972",
+    "cqa_artifacts/project.py": "41cf701f5b5f7c118d42481013dad8f00bb8550dc3ccd6f41caad39f001ed749",
+    "cqa_artifacts/__main__.py": "5402c88c5af66bd21717833700f74bdf1502f29e707cfc604ac091d17d35d952",
+    "cqa_artifacts/core.py": "db00017736cc444f22774d6a04e54c38f2cd811bf9da35b753e595192908d8f8",
+    "pyproject.toml": "da1211b57b846abfb4553eed70733035922897c060a13b83207fd15397e36d25"
+  },
+  "contextqaLiveCalls": 0,
+  "modelLiveCalls": 0,
+  "billedRunsStarted": 0,
+  "remoteMediaDownloads": 0,
+  "newRemoteCIRun": false,
+  "gitCommitOrPush": false,
+  "limitations": [
+    "API wire behavior uses injected mock transport; no real token or tenant tested",
+    "Plan/data/environment/prerequisite/browser/parallel configuration is contract-supported and preflight-mock tested; actual tenant entitlement and execution remain unverified",
+    "Socket-operation timeout and polling scheduling deadline are not a hard total wall-clock kill",
+    "No server idempotency/stop or price/metering contract established",
+    "Artifact URLs stay private references; no media invented or downloaded",
+    "Native partner publication and public release remain separate tasks"
+  ],
+  "installationNote": "Initial offline --no-build-isolation attempt failed because setuptools was not installed in the venv; ordinary isolated build using the declared setuptools requirement succeeded. No runtime dependencies added."
+}
