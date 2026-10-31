@@ -1,0 +1,22 @@
+{
+  "schema_status": "proposed; not consumed by the current CLI",
+  "project_id": "example-kan",
+  "application_url": "https://app.example.com/",
+  "repository": "example-owner/example-app",
+  "contextqa": {"tenant": "example-tenant", "workspace_version_id": null},
+  "instructions": {"path": "DOCUMENTATION_STYLE.md", "sha256": null},
+  "sections": [
+    {
+      "id": "create-card",
+      "path": "guides/create-card.md",
+      "workflow_id": "create-board-list-card",
+      "module_ids": ["card-management"],
+      "code_paths": ["apps/web/src/views/board/**", "packages/api/src/routers/card.ts"],
+      "test_case_ids": [],
+      "baseline": {"result_id": null, "deployed_sha": null, "export_digest": null},
+      "evidence_status": "not_captured",
+      "owner": "documentation-owner"
+    }
+  ],
+  "publication": {"mode": "draft_pr", "automatic": false}
+}
