@@ -1,31 +1,51 @@
-# Layerpath documenting Layerpath — lifecycle example
+# Layerpath — optional tour handoff example
 
-**Target:** Layerpath itself. **Current state:** native execution pending sign-in. This is not an Atlas/fictional-app demonstration or a completed project receipt.
+**Status: proposed, not executed.** No native project, exported tour or connector is
+claimed. Historical sign-in readiness is not current feature-access evidence.
 
-## Task and intended output
+## Why this example exists
 
-Teach a new Layerpath author how to create a project from reviewed screenshots, inspect its ordered steps, add a callout/hotspot and preview the result. Produce a private sample tour and its guide/export evidence, subject to account capabilities. Record the actual project name/identifier only after it exists.
+This was originally a proposed “Layerpath documenting Layerpath” demonstration:
+capture its authoring UI and create a sample tour of that same workflow. It was a
+native-platform experiment, not a dependency of the documentation engine and not a
+completed integration. The original target is retained in execution-status.json for
+historical clarity.
 
-## Complete lifecycle to demonstrate
+The current primary path is **customer application → ContextQA tests and execution →
+reviewed evidence → client-guided documentation → scoped refresh after changes**.
+See the [usage guide](../../docs/how-to-use.md) and
+[trigger design](../../docs/documentation-triggers.md). Kan is the recorded core
+execution example; that evidence does not establish Layerpath acceptance.
 
-1. Capture the actual Layerpath creation interface using a clean sample workspace. Keep other projects, account identifiers and billing information out of selected screenshots.
-2. Create `ContextQA sample — Layerpath authoring lifecycle` from reviewed screenshots of Layerpath's own authoring task. Supply the viewer outcome and concise steps.
-3. Inspect the real generated tour, correct sequence/text, and add a hotspot or callout using supported editor controls. Preview every step. Record observed processing status; do not treat an early preview as completed generation.
-4. Save the private draft and collect whichever native outputs the account supports. Record guide/video/embed availability separately; do not invent exported files or assume the plan supports every format.
-5. Make one controlled revision to this sample tour's instructions or scene ordering. This is an authoring revision, not a claim that Layerpath shipped a new version.
-6. Capture the revised sample, compare the two approved versions, and update the affected guide/screenshots. Verify navigation and every hotspot again.
-7. Save before/after evidence and a receipt distinguishing actual execution, manual steps and unsupported outputs. No public sharing or subscription change is required.
+## Optional role in the current design
 
-For a genuine Layerpath product update later, replace the controlled-revision context with the actual release change and repeat the same task; do not manufacture a platform release or historic UI.
+A client may choose a tour-authoring destination after ContextQA has produced and the
+owner has reviewed the evidence. Layerpath is one candidate for that handoff. Confirm
+current account features, supported media intake, export formats and access before
+using it; this repository does not implement or promise a Layerpath API adapter.
 
-## Creation brief
+1. Capture the client's selected task using ContextQA, with isolated data and a known
+   application revision where available.
+2. Review selected screenshots/recordings and prepare the ordered instructions under
+   the approved client documentation profile. Keep credentials and raw traces private.
+3. If the destination supports the required intake, create a private sample using the
+   reviewed assets. Record the actual project identifier only after creation.
+4. Review text, scene order and any supported callouts, hotspots or navigation. Record
+   supported and unavailable outputs separately; do not infer feature entitlement.
+5. After a verified application change, recapture with ContextQA, compare matching
+   sections and replace affected destination assets through supported controls.
+6. Review the destination result before publishing under the client's approval policy.
 
-Create a short tour teaching a new Layerpath author the actual project-creation and editing sequence shown in these reviewed screenshots. Explain the viewer goal, source upload, ordered-step review and preview. Keep the example narrow. Use only controls visible in the source; flag missing steps. End with a private preview, not public publishing.
+If revising only the sample's wording/order, label that as a content revision, not an
+application release. Do not substitute destination browser recording for ContextQA
+execution in this lifecycle.
 
-## Acceptance
+## Acceptance and remaining work
 
-The native sample project exists, its screens come from the real app, the guide matches observed actions, and the controlled revision is distinguishable from a product release. Verify available exports and record any access/plan limitation. Link the receipt here when executed.
+A native project must exist; the reviewed output must match ContextQA evidence; an
+update must preserve working navigation and carry revision/instruction provenance.
+Until those receipts exist, this folder remains a handoff runbook, not a runnable
+sample. Native creation, update, export and publication automation remain unimplemented.
 
-Official workflow reference: [Create your first project](https://docs.layerpath.com/get-started/create-your-first-project).
-
-[ContextQA workflow evidence](https://contextqa.com/?utm_source=github&utm_medium=developer_referral&utm_campaign=contextqa_docs_evidence&utm_content=layerpath_lifecycle_sample)
+[Historical vendor reference](https://docs.layerpath.com/get-started/create-your-first-project)
+— revalidate before implementation; not checked as part of this documentation update.

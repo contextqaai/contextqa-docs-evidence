@@ -1,29 +1,52 @@
-# EkLine documenting EkLine — lifecycle example
+# EkLine — optional documentation handoff example
 
-**Target:** EkLine itself. **Current state:** native execution pending sign-in and Docs Agent availability. No draft session, sandbox connection or docs PR is claimed to exist yet.
+**Status: proposed, not executed.** No native session, draft, sandbox connection or
+EkLine-created PR is claimed. Historical sign-in readiness does not establish current
+Docs Agent access or integration availability.
 
-## Task and intended output
+## Why this example exists
 
-Document EkLine's own process for creating a documentation session, supplying source/change context, reviewing generated prose and screenshots, and proposing an update. Use the actual editor and a dedicated sample document rather than a fictional application.
+This was originally a proposed “EkLine documenting EkLine” demonstration: document its
+own session/review workflow and revise the resulting sample. It was an optional native
+editor experiment, not an implemented connector or requirement for the core product.
+The original target remains in execution-status.json as historical context.
 
-## Complete lifecycle to demonstrate
+The current primary path is **customer application → ContextQA tests and execution →
+reviewed evidence → client-guided documentation → scoped refresh after changes**.
+The repository's own Markdown/HTML outputs do not require EkLine. See the
+[usage guide](../../docs/how-to-use.md) and [trigger design](../../docs/documentation-triggers.md).
 
-1. Open an authorized EkLine workspace and verify Docs Agent access. Do not inspect or connect any indivatools repository.
-2. Capture the actual session-creation/source-selection/editor screens, excluding unrelated documents and account data.
-3. Start `ContextQA sample — EkLine documentation lifecycle`. Provide reviewed public EkLine reference material plus selected screenshots of its actual UI. Ask for a narrow how-to explaining the observed session/review sequence; flag uncertainty instead of inventing buttons.
-4. Review the first native draft and preserve a selected version with asset references. Validate screenshots, alt text, terminology, role prerequisites and instructions against observed behavior.
-5. Submit one controlled revision request for this sample guide, such as adding an explicit review-before-PR step. Compare before/after prose and selected evidence. This is a document revision, not an invented EkLine product release.
-6. If a suitably scoped GitHub connection already exists, create a draft update only in the authorized contextqaai documentation repo. Otherwise retain a local/native draft and record repository access as pending. A new GitHub App installation requires explicit approval before access is granted.
-7. For automatic screenshot refresh, separately validate an accessible named sandbox and connected docs/images repo. Run one on-demand refresh and review its changes before any scheduling is considered.
+## Optional role in the current design
 
-## Native draft request
+If a client already uses EkLine and its current account supports the needed workflow,
+it may consume the approved narrative, assets and change brief. This repository does
+not automatically invoke EkLine, upload files, connect repositories or create native
+PRs. Confirm current supported interfaces before implementing a destination adapter.
 
-Write a how-to for using EkLine Docs Agent to create and review a documentation update. Use the supplied screenshots of EkLine itself and official references as evidence. Name the actual observed controls, include image paths and descriptive alt text, and distinguish creating a draft from opening or merging a PR. Do not infer missing access or platform actions. Return a draft for review; do not publish, schedule recurring work or access indivatools.
+1. Use ContextQA to execute the selected customer workflow and collect its actual
+   results/media; bind the target revision and review the evidence.
+2. Prepare the outline or affected sections under the owner's versioned client
+   instructions. The current instruction template is followed by an operator; an
+   automatic skill loader is still proposed.
+3. Hand off only approved narrative/assets through a supported destination workflow.
+   Record a native session or draft identifier only after it actually exists.
+4. Review instructions, screenshots, terminology, accessibility and unchanged sections.
+5. On a verified application change, use ContextQA impact/capture evidence to prepare
+   the scoped refresh. If a separate editor revision is demonstrated, label it as such.
+6. Create a draft documentation change only in the authorized destination and with the
+   client's approved repository access. Publishing remains a distinct stage.
 
-## Acceptance
+EkLine's own sandbox/screenshot-refresh behavior is **not** the capture mechanism for
+this ContextQA-only lifecycle. The earlier sandbox-refresh proposal is superseded here.
+Do not assume a destination can access local asset paths or private evidence links.
+No new installation, schedule, permission expansion or publication follows this plan.
 
-The native session and reviewed draft exist, a controlled revision produces inspectable before/after changes, and every claimed screenshot/PR action is verified. Record pending sandbox/repository permissions instead of marking an unexecuted refresh complete.
+## Acceptance and remaining work
 
-References: [EkLine Docs Agent](https://docs.ekline.io/) · [Screenshot maintenance](https://docs.ekline.io/agent/refresh-doc-screenshots/) · [PR integration](https://docs.ekline.io/agent/github-integration/).
+A native draft and reviewed update must exist, with working asset links and traceable
+ContextQA evidence. Native PR creation must have its own receipt. Until then this is a
+handoff runbook, not a runnable sample. No partner relationship or native integration
+is implied by mentioning EkLine.
 
-[ContextQA workflow evidence](https://contextqa.com/?utm_source=github&utm_medium=developer_referral&utm_campaign=contextqa_docs_evidence&utm_content=ekline_lifecycle_sample)
+[Historical vendor reference](https://docs.ekline.io/) — revalidate actual account/API
+capabilities before implementation; not checked in this documentation update.

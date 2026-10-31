@@ -1,49 +1,62 @@
-# Completing the documentation lifecycle
+# Completing the ContextQA documentation lifecycle
 
-The examples must use Layerpath and EkLine themselves. A lifecycle is complete only when real evidence proves the capture, output, change and refresh stages. A plan, fixture, local draft or passing wrapper test does not establish native partner execution.
+Core completion does not require Layerpath or EkLine. They are optional destinations
+for clients who use those tools, not execution producers or prerequisites. Earlier
+requirements to demonstrate both native platforms are superseded by the
+[ContextQA-led usage guide](how-to-use.md) and [trigger design](documentation-triggers.md).
 
-## Access and decisions
+## Core acceptance
 
-| Need | What must be available | Why |
-| --- | --- | --- |
-| Product workspaces | Non-Google sign-in to Layerpath and EkLine; permission to create isolated sample drafts | Exercise their real interfaces without modifying existing work |
-| EkLine Docs Agent | Enabled account access | Run a real documentation session; account sign-in alone may not enable the Agent |
-| Safe target | Dedicated demo workflow with invented data; reachable staging URL if testing sandbox recapture | Real recapture needs an app that the agent can reach and navigate |
-| Docs destination | Only the authorized `contextqaai/contextqa-docs-evidence` repo, or an explicitly approved separate contextqaai demo repo | Store selected images and documentation changes without accessing indivatools |
-| Repository integration | Existing scoped EkLine connection, or explicit approval for a new limited GitHub App installation | Native PR creation requires repository access; do not silently expand an installation |
-| Release source | Real code/release diff or an explicitly labeled controlled content revision | Distinguish observed changes from invented platform updates |
-| Publishing decision | Draft/private preview by default; a separately authorized destination for public assets | A shared demo link can expose every included screen |
+| Stage | Evidence required |
+| --- | --- |
+| Onboarding | Correct tenant/workspace, application URL, authorized auth mechanism and reviewed generated test/workflow scope |
+| Documentation structure | Stable section IDs linked to workflows/tests; optional module/code mapping; owner and coverage gaps |
+| Client instructions | Owner-reviewed version/hash; audience, brand, dos/don'ts and review policy; automatic loading not implied |
+| Baseline capture | Real ContextQA terminal/per-step results, selected media, role/environment/date and verified revision or explicit unknown |
+| Guide export | Reviewed instructions/media, annotations and provenance; working Markdown/HTML assets and hash-bound approval |
+| Impact detection | PR/module/test changes resolve to affected sections; unmapped or new features produce coverage work |
+| Deployment verification | Trusted receipt binds the application URL/environment to the expected head or merge/squash commit |
+| Refresh | Same workflow recaptured through ContextQA; explicit before/after step mapping; reviewed scoped update |
+| Reliable orchestration | Authenticated events, tenant scoping, durable deduplication/run ledger, bounded polling and ambiguous-start reconciliation |
+| Delivery | Reviewed draft change in the configured destination; publication only under approved policy |
 
-Never enter Google SSO without specific permission. Never access `indivatools`. Do not buy credits or start a paid subscription for the sample. No scheduled refresh is created by this plan.
+A generated test, request artifact, passing wrapper test or changed image hash does
+not alone establish a verified documentation update. Record failed, missing and
+unknown evidence without replacing the last approved guide with unsupported claims.
 
-## Work remaining by capability
+## What has been established
 
-| Capability | Implementation needed | Evidence required to call it complete |
-| --- | --- | --- |
-| Capture screenshots again | Use the existing ContextQA execution producer or a configured EkLine sandbox; fix viewport, role, locale and test data | The same real task produces readable current screenshots on two captures |
-| Link steps to screenshots | Add stable task and step IDs to the capture producer, rather than matching frames by guesswork | Added, removed and reordered steps map correctly; ambiguous mappings are held |
-| Explain what changed | Ingest an approved release diff; map affected tasks to docs/tours; preserve human-authored context | Reviewer can trace every proposed edit to source change and screen evidence |
-| Visual comparison | Connect a supported visual-diff result or build a bounded image comparison with masking/thresholds | Structural UI changes are detected; timestamps and seeded-data differences do not create excessive churn |
-| Redact evidence | Apply tested masks/metadata handling, then inspect screenshots and full video/audio | No secret or personal content survives in approved output; failures block sharing |
-| Refresh Layerpath tours | Use its editor/media intake now; confirm a supported API before automating imports or updates | New screenshots replace old scenes; every hotspot and tour branch works after replacement |
-| Refresh EkLine docs | Configure its documented screenshot-maintenance workflow and scoped docs repository | A real session creates a reviewed docs/image PR with correct paths and source context |
-| Video | Enable recording in the capture producer; finalize the recording, inspect it and select approved output | A playable video of the real task exists and matches the documented version; trace frames alone do not count |
-| Hosted iframe | Host selected approved HTML/media over HTTPS with suitable embed headers and access controls | Actual destination renders it, navigation works, and unauthorized users cannot access protected evidence |
-| Safe automatic runs | Durable run ledger, duplicate protection, timeouts, cost caps and reconciliation | Retries never silently start another billed run; ambiguous execution stays unresolved until checked |
-| Release automation | Release event handler, dependency mapping and review queue | One release produces one scoped draft; no automatic publication or duplicate PRs |
+The [Kan receipt](verification-2026-10-30.md) records successful ContextQA
+case 174/result 372 for login, board/list/card creation and persistence. The wrapper
+implements review/export/compare utilities. The Kan request-only trigger has a hosted
+CI receipt. These do not prove complete application coverage, an exact deployed SHA,
+a PR-specific before/after refresh, automatic client-skill loading or publication.
 
-## Prefer native capabilities where they exist
+The remaining product work is manifest validation, client-instruction management,
+deployment verification, event orchestration, selective generation and draft delivery.
+See [how to use](how-to-use.md#implementing-the-automated-product-layer).
 
-EkLine documents an on-demand screenshot refresh using an enabled Docs Agent, connected docs/images repository and named product sandbox. Its guide also describes recurring refresh, but no schedule is activated here. Validate one on-demand run first. [EkLine screenshot maintenance](https://docs.ekline.io/agent/refresh-doc-screenshots/).
+## Optional destinations
 
-Layerpath documents creating an editable tour from images/video and reviewing its ordered steps. Use that supported intake and editor for the first native example; a platform-specific automated update API has not been verified. [Layerpath first project](https://docs.layerpath.com/get-started/create-your-first-project).
+- [Layerpath runbook](../examples/layerpath-lifecycle/README.md): proposed handoff of
+  reviewed ContextQA assets into a tour-authoring workflow, subject to current account
+  capabilities. No native project or automated adapter is verified.
+- [EkLine runbook](../examples/ekline-lifecycle/README.md): proposed handoff of approved
+  prose/assets/change context into a documentation editor, subject to current access.
+  No native session, PR or automated adapter is verified.
 
-## Practical build order
+For either destination, separately establish supported intake/update/export behavior,
+scoped access and a real native draft/update receipt. Capture remains in ContextQA.
+Verify destination navigation, asset rendering and sharing controls before publication.
+Do not buy subscriptions, expand integrations or enable schedules merely to complete
+an example. Historical vendor references need revalidation before implementation.
 
-1. Demonstrate a real manual lifecycle in each native platform, using private sample drafts.
-2. Validate one repeat capture and owner-reviewed refresh before adding event automation.
-3. Automate the producer and protected artifact delivery; integrate native partner features where verified.
-4. Add release-to-document mapping, visual/redaction safeguards and one-shot draft creation.
-5. Pilot with a consenting user; measure active author/reviewer time, repeat usage and actual execution/storage cost before deciding pricing.
+## Practical order
 
-A hosted general-purpose browser-session service is a separate product milestone. These documentation workflows do not require building that infrastructure first.
+1. Maintain the verified core Kan guide and coverage gaps.
+2. Complete one exact-revision capture → reviewed refresh → draft-change lifecycle.
+3. Implement the event/manifest/instruction layer with failure and duplicate tests.
+4. Add a destination adapter only for a client who needs it, with its own acceptance.
+
+A client can use exported Markdown/HTML and repository review without either optional
+platform. A generic browser-session service is not required for this documentation path.

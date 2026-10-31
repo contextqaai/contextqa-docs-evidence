@@ -1,7 +1,7 @@
 {
   "platform": "layerpath",
   "target": "layerpath itself",
-  "status": "awaiting_feature_verification_and_native_execution",
+  "status": "optional_destination_proposed_not_executed",
   "native_session_created": false,
   "native_project_created": false,
   "screenshots_captured": false,
@@ -16,5 +16,11 @@
   ],
   "sample_is_completed": false,
   "user_reported_sign_in": "ready",
-  "sign_in_observation": "User reported both ready; native editor feature access and lifecycle execution not verified."
+  "sign_in_observation": "Historical user report only; current authentication and native feature access have not been verified.",
+  "role": "optional_output_destination",
+  "required_for_core_lifecycle": false,
+  "capture_provider": "ContextQA",
+  "connector_implemented": false,
+  "status_reviewed_at": "2026-10-31",
+  "historical_target": "layerpath itself"
 }
