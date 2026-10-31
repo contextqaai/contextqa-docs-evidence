@@ -105,3 +105,7 @@ Do not build in month one: another dashboard, accounts/billing, public browser m
 3. Which license and public release scope does the owner approve? The current private prototypes are not already open source.
 4. Which one consenting team, target and monthly/live-run budget will validate demand? Existing account sign-in is not permission to expose artifacts or expand app access.
 5. Who owns ongoing support, product/API compatibility and a bounded maintenance budget (proposed 2–4 hours/week initially, to be measured)?
+
+## October 31 documentation lifecycle extension
+
+The [usage guide](how-to-use.md) and [trigger design](documentation-triggers.md) define the requested extension beyond the existing renderer/request mapper. Add tenant-scoped section/test/module manifests, approved client-instruction versioning, deployment verification, durable event deduplication/run reconciliation, selective draft regeneration, and an approved publication adapter. The example templates are not executable configuration for the current CLI. Implement and acceptance-test these components before claiming unattended refresh. This design supersedes the earlier blanket deferral of release-triggered documentation work for this requested scope; it does not itself authorize live runs or publication.

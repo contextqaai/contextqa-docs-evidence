@@ -8,6 +8,10 @@ Built around [ContextQA](https://contextqa.com/?utm_source=github&utm_medium=dev
 
 **Release status:** private candidate; an open-source license and public release are pending owner approval. Core local samples make no model or ContextQA SaaS calls. Optional AI and hosted execution use separate credentials and may incur provider charges.
 
+## How to use
+
+Start with the [onboarding-to-documentation usage guide](docs/how-to-use.md), then choose a [GitHub Actions or external trigger](docs/documentation-triggers.md). The guide includes a [client documentation-instructions template](examples/documentation-lifecycle/DOCUMENTATION_STYLE.md) and a proposed section/test/module manifest. Automatic client-skill loading and deployed-change recapture are extension work; the existing Kan workflow prepares requests only.
+
 ## What works now
 
 - Import candidate actions and screenshot frames from bounded Playwright trace ZIPs. Raw trace, DOM and network details stay private.
