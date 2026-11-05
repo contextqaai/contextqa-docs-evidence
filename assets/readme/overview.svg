@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1120" height="510" viewBox="0 0 1120 510" role="img" aria-labelledby="title desc">
+<title id="title">ContextQA Docs Evidence architecture and workflow</title>
+<desc id="desc">01  CONTEXTQA Saved tests + results Select member evidence → 02  ASSEMBLE Instructions + media Explicit step mapping → 03  REVIEW Inspect content + rights Hash-bound receipt → 04  EXPORT Markdown · HTML · JSON Local files + handoff. Alternative intake: bounded Playwright trace import or local screenshots / recorded video. Refresh: Capture a new version → Review a new export → Map steps + compare → Review refresh draft. Hash changes ≠ semantic UI changes. Export ≠ hosting or partner publication.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8"/></marker></defs>
+<rect width="1120" height="510" rx="24" fill="#0b1224"/>
+<circle cx="1080" cy="20" r="170" fill="#15254a"/>
+<g font-family="Arial, Helvetica, sans-serif">
+<text x="36" y="37" fill="#5eead4" font-size="13" font-weight="700" letter-spacing="2">FROM WORKFLOW EVIDENCE TO REVIEWED GUIDES.</text>
+<text x="36" y="86" fill="#f8fafc" font-size="40" font-weight="700">Keep documentation grounded.</text>
+<text x="36" y="118" fill="#cbd5e1" font-size="18">Select real evidence. Review the content. Export a guide you can refresh.</text>
+<rect x="36" y="150" width="238" height="120" rx="14" fill="#18243b" stroke="#67e8f9" stroke-width="1.5"/>
+<text x="54" y="180" fill="#67e8f9" font-size="15" font-weight="700">01  CONTEXTQA</text>
+<text x="54" y="214" fill="#f8fafc" font-size="17">Saved tests + results</text>
+<text x="54" y="241" fill="#cbd5e1" font-size="15">Select member evidence</text>
+<path d="M 280 211 H 299" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="306" y="150" width="238" height="120" rx="14" fill="#18243b" stroke="#c4b5fd" stroke-width="1.5"/>
+<text x="324" y="180" fill="#c4b5fd" font-size="15" font-weight="700">02  ASSEMBLE</text>
+<text x="324" y="214" fill="#f8fafc" font-size="17">Instructions + media</text>
+<text x="324" y="241" fill="#cbd5e1" font-size="15">Explicit step mapping</text>
+<path d="M 550 211 H 569" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="576" y="150" width="238" height="120" rx="14" fill="#18243b" stroke="#5eead4" stroke-width="1.5"/>
+<text x="594" y="180" fill="#5eead4" font-size="15" font-weight="700">03  REVIEW</text>
+<text x="594" y="214" fill="#f8fafc" font-size="17">Inspect content + rights</text>
+<text x="594" y="241" fill="#cbd5e1" font-size="15">Hash-bound receipt</text>
+<path d="M 820 211 H 839" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="846" y="150" width="238" height="120" rx="14" fill="#18243b" stroke="#fcd34d" stroke-width="1.5"/>
+<text x="864" y="180" fill="#fcd34d" font-size="15" font-weight="700">04  EXPORT</text>
+<text x="864" y="214" fill="#f8fafc" font-size="17">Markdown · HTML · JSON</text>
+<text x="864" y="241" fill="#cbd5e1" font-size="15">Local files + handoff</text>
+<text x="36" y="300" fill="#cbd5e1" font-size="16">Alternative intake: bounded Playwright trace import or local screenshots / recorded video</text>
+<path d="M36 326 H1084" stroke="#334155"/>
+<text x="36" y="357" fill="#5eead4" font-size="13" letter-spacing="2" font-weight="700">WHEN THE APPLICATION CHANGES</text>
+<rect x="36" y="377" width="238" height="49" rx="24" fill="#67e8f9"/>
+<text x="155" y="407" fill="#0b1224" font-size="16" font-weight="700" text-anchor="middle">Capture a new version</text>
+<path d="M 280 402 H 299" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="306" y="377" width="238" height="49" rx="24" fill="#c4b5fd"/>
+<text x="425" y="407" fill="#0b1224" font-size="16" font-weight="700" text-anchor="middle">Review a new export</text>
+<path d="M 550 402 H 569" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="576" y="377" width="238" height="49" rx="24" fill="#5eead4"/>
+<text x="695" y="407" fill="#0b1224" font-size="16" font-weight="700" text-anchor="middle">Map steps + compare</text>
+<path d="M 820 402 H 839" stroke="#94a3b8" stroke-width="2" marker-end="url(#arrow)"/>
+<rect x="846" y="377" width="238" height="49" rx="24" fill="#fcd34d"/>
+<text x="965" y="407" fill="#0b1224" font-size="16" font-weight="700" text-anchor="middle">Review refresh draft</text>
+<text x="36" y="475" fill="#cbd5e1" font-size="16">Hash changes ≠ semantic UI changes. Export ≠ hosting or partner publication.</text>
+</g></svg>
