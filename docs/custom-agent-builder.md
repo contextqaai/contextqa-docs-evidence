@@ -73,3 +73,11 @@ Track whether readers complete the task, which instructions reviewers correct, m
 Keep native execution in ContextQA, rendering/comparison here, and source-to-test/portable-code workflows in [Test Forge](https://github.com/contextqaai/contextqa-test-forge). Its builder hub maps the supplied 54-capability system map to agent recipes and the continuous human loop. Reuse a supported MCP/API binding when available; verify the connected catalog and account access rather than guessing an operation from a product capability label.
 
 This recipe follows the [pilot deck's building-block approach](https://docs.google.com/presentation/d/1Y8Z2Gkh3awvq1UUd2a3tDifxNZ1qudlwhifflToqxqk/edit?slide=id.p6#slide=id.p6). It adds an enablement path, not new runtime integrations. See [proof status](documentation-proof.md) for the scoped Kan evidence and remaining live acceptance work.
+
+## Add a reporting skill to your agent
+
+A reusable skill can turn reviewed ContextQA evidence into an audience-specific report. The companion [Test Forge repository](https://github.com/contextqaai/contextqa-test-forge) contains `skills/contextqa-report-builder/`, `skills/contextqa-report-review/` and `examples/custom-report/`: executive/QA profiles, fictional inputs and a local HTML/Markdown renderer. Reuse that presentation example rather than adding another execution client here.
+
+Example request: “Use the report-builder skill with my selected evidence. Give the documentation owner a concise release summary, the changed tasks, missing screenshots and next review actions. Keep publication pending.” Use this wrapper's existing `export` and `compare` for the guide and refresh artifacts; adapt the reporting skill to summarize those artifacts rather than treating documentation steps as test-case passes. The example plan-report JSON schema is not this wrapper's export manifest, so an explicit mapping is required.
+
+Let the owner customize audience, terminology, order and visuals. Preserve version/scope, review state, missing evidence and the distinction between a prepared draft and published documentation. Skills shape the assistant's workflow; they do not install integrations or approve publication.
