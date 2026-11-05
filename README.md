@@ -4,7 +4,36 @@ For **solutions engineers and technical writers**: turn selected ContextQA workf
 
 [Usage guide](docs/how-to-use.md) · [Technical guide](docs/POWERFUL.md) · [Capture and refresh](docs/capture-and-refresh.md) · [Proof status](docs/documentation-proof.md)
 
-![ContextQA Docs Evidence: contextqa → assemble → review → export. Refresh requires a new review.](assets/readme/overview.svg)
+## Who does what?
+
+| Role | Responsibility in this repo |
+|---|---|
+| **ContextQA** | Executes authorized saved workflows and supplies actual results and available media as documentation evidence. |
+| **Your custom agent** | Coordinates selected-result collection, explicit step/media assembly, local export and comparison using this toolkit. Optional AI drafts prose. |
+| **Human in the loop** | Approves execution scope/cost, checks instructions and every selected image/video, confirms sharing rights, and reviews refresh drafts before publication. |
+
+```mermaid
+flowchart TD
+    H[Human: authorize workflow and run cost] --> C[ContextQA: execute and supply evidence]
+    C --> A[Agent: collect and assemble guide]
+    A --> R{Human: review accuracy, media and rights}
+    R -->|Revise| A
+    R -->|Approve| E[Agent: export local guide]
+    E --> P[Human: publish separately]
+    E --> F[After new reviewed evidence: agent compares exports]
+    F --> V[Human: review refresh draft]
+    V -->|Revise guide| A
+    classDef agent fill:#ede9fe,stroke:#7c3aed,color:#2e1065
+    classDef platform fill:#ccfbf1,stroke:#0f766e,color:#134e4a
+    classDef human fill:#fef3c7,stroke:#b45309,color:#78350f
+    class A,E,F agent
+    class C platform
+    class H,R,P,V human
+```
+
+The agent is a coordinator you compose; **automatic recapture and destination publishing are not shipped**. Hash comparison flags changes for human interpretation. [Review checkpoints and an example](docs/POWERFUL.md#roles-and-human-review).
+
+[Slide-style overview](assets/readme/overview.svg)
 
 ## Try it locally
 

@@ -6,7 +6,49 @@ This guide contains the detailed operating procedures, capability boundaries and
 
 ## Technical navigation
 
-[How to use](#how-to-use) · [What works now](#what-works-now) · [Quick start (Python 3.10+; no runtime dependencies)](#quick-start-python-310-no-runtime-dependencies) · [After the app changes](#after-the-app-changes) · [Existing evidence sources](#existing-evidence-sources) · [Documentation](#documentation) · [Optional documentation destinations](#optional-documentation-destinations) · [Verification](#verification) · [Optional AI with your own key](#optional-ai-with-your-own-key) · [Product strategy and release plan](#product-strategy-and-release-plan) · [Install and test for real](#install-and-test-for-real) · [Kan documentation proof and capture improvements](#kan-documentation-proof-and-capture-improvements)
+[Roles and human review](#roles-and-human-review) · [How to use](#how-to-use) · [What works now](#what-works-now) · [Quick start (Python 3.10+; no runtime dependencies)](#quick-start-python-310-no-runtime-dependencies) · [After the app changes](#after-the-app-changes) · [Existing evidence sources](#existing-evidence-sources) · [Documentation](#documentation) · [Optional documentation destinations](#optional-documentation-destinations) · [Verification](#verification) · [Optional AI with your own key](#optional-ai-with-your-own-key) · [Product strategy and release plan](#product-strategy-and-release-plan) · [Install and test for real](#install-and-test-for-real) · [Kan documentation proof and capture improvements](#kan-documentation-proof-and-capture-improvements)
+
+## Roles and human review
+
+ContextQA is the execution/evidence producer for the primary workflow. It runs the authorized saved plan in the configured customer application and exposes actual results and available artifacts. The wrapper imports selected evidence; it does not itself crawl or capture the application. Existing authorized results can be collected without starting a new run. The [Kan receipt](verification-2026-10-30.md) is scoped evidence, not universal token-adapter, tenant or deployed-change acceptance.
+
+A **custom agent** here is an operator-composed coordinator around the CLI/library, not a shipped autonomous documentation service. The existing tools support selected-result collection, explicit instructions/media mapping, reviewed local exports and comparisons. Optional AI can draft from text approved for sharing; it cannot approve evidence, run browser actions or publish. Automatic client-instruction loading, deployment-to-recapture orchestration and destination publishing still require implementation. Today an operator follows the documentation style template during drafting and review.
+
+| Checkpoint | Agent prepares | Human decides | What happens next |
+|---|---|---|---|
+| Evidence acquisition | Selected saved plan and configuration, or existing result IDs | Is the environment/workflow appropriate, and is any new run's effect/cost authorized? | ContextQA executes only an approved run; the coordinator polls its accepted ID and selects real member results. |
+| Guide assembly | Candidate instructions, explicit step/media mapping, capture labels and annotations | Do instructions match observed behavior? Is every image/video appropriate to share, with permission? | Correct or remove unsuitable content, then record a hash-bound content/media approval. Text filtering does not sanitize pixels or audio. |
+| Export and delivery | Markdown, static HTML, JSON, attached assets and handoff files | Is the guide appropriate for the intended audience and destination? | Export local files, then publish separately through the chosen destination. The wrapper does not host or upload the guide. |
+| Application change | Separate reviewed before/after exports, release context and explicit step matching | Is the changed text/media meaningful, and does the proposed update remain accurate? | Review the refresh draft, update affected documentation and reapprove changed content. Preserve the original baseline. |
+
+**Example:** a “Create a project” guide needs a new button label. After the owner authorizes a new capture, ContextQA executes the workflow. The coordinator collects the selected results, and a human matches the new screenshot to the correct instruction and checks privacy/rights. A new reviewed export is compared with the baseline using explicit step mapping. The documentation owner accepts or edits the refresh draft and publishes separately. A changed image hash alone cannot establish that the button changed.
+
+Review is required again after changes to text, metadata, annotations or media. Approval establishes review of those bytes, not that a product behavior or revision claim is true. Native Layerpath/EkLine publication remains unimplemented; the Kan trigger prepares requests rather than completing the full deployed-change loop. See [operator workflow](how-to-use.md), [API run safety](contextqa-api.md), [security](security.md) and [proof status](documentation-proof.md).
+
+### Detailed approval flow
+
+```mermaid
+flowchart TD
+    H{Human: authorize selected workflow and run cost?}
+    H -->|Approved| C[ContextQA: execute saved plan]
+    C --> A[Agent: collect selected results and media references]
+    I[Existing authorized evidence] --> A
+    A --> D[Agent: assemble instructions and explicit media mappings]
+    D --> R{Human: approve accuracy, media privacy and rights?}
+    R -->|Revise| D
+    R -->|Approved| E[Agent: export local Markdown, HTML and JSON]
+    E --> P[Human: publish through a separately chosen destination]
+    E --> B[Preserve reviewed baseline]
+    N[App changes: obtain and review new evidence] --> F[Agent: compare exports with explicit step mapping]
+    B --> F
+    F --> V[Human: review refresh draft before updating docs]
+    classDef agent fill:#ede9fe,stroke:#7c3aed,color:#2e1065
+    classDef platform fill:#ccfbf1,stroke:#0f766e,color:#134e4a
+    classDef human fill:#fef3c7,stroke:#b45309,color:#78350f
+    class A,D,E,F agent
+    class C platform
+    class H,R,P,N,V human
+```
 
 ## Implementation map
 
