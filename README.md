@@ -4,6 +4,8 @@ For **solutions engineers and technical writers**: turn selected ContextQA workf
 
 [Usage guide](docs/how-to-use.md) · [Technical guide](docs/POWERFUL.md) · [Capture and refresh](docs/capture-and-refresh.md) · [Proof status](docs/documentation-proof.md)
 
+**Build your documentation agent:** customize the audience, evidence selection and review policy while reusing ContextQA execution and this renderer. [See it → try it → build it → own it](docs/custom-agent-builder.md).
+
 ## Who does what?
 
 | Role | Responsibility in this repo |

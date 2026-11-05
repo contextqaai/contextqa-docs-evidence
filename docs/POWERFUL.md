@@ -6,7 +6,7 @@ This guide contains the detailed operating procedures, capability boundaries and
 
 ## Technical navigation
 
-[Roles and human review](#roles-and-human-review) · [How to use](#how-to-use) · [What works now](#what-works-now) · [Quick start (Python 3.10+; no runtime dependencies)](#quick-start-python-310-no-runtime-dependencies) · [After the app changes](#after-the-app-changes) · [Existing evidence sources](#existing-evidence-sources) · [Documentation](#documentation) · [Optional documentation destinations](#optional-documentation-destinations) · [Verification](#verification) · [Optional AI with your own key](#optional-ai-with-your-own-key) · [Product strategy and release plan](#product-strategy-and-release-plan) · [Install and test for real](#install-and-test-for-real) · [Kan documentation proof and capture improvements](#kan-documentation-proof-and-capture-improvements)
+[Build a documentation steward](custom-agent-builder.md) · [Roles and human review](#roles-and-human-review) · [How to use](#how-to-use) · [What works now](#what-works-now) · [Quick start (Python 3.10+; no runtime dependencies)](#quick-start-python-310-no-runtime-dependencies) · [After the app changes](#after-the-app-changes) · [Existing evidence sources](#existing-evidence-sources) · [Documentation](#documentation) · [Optional documentation destinations](#optional-documentation-destinations) · [Verification](#verification) · [Optional AI with your own key](#optional-ai-with-your-own-key) · [Product strategy and release plan](#product-strategy-and-release-plan) · [Install and test for real](#install-and-test-for-real) · [Kan documentation proof and capture improvements](#kan-documentation-proof-and-capture-improvements)
 
 ## Roles and human review
 
