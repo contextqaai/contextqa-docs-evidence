@@ -1,0 +1,22 @@
+section,question,answer,owner,source,reviewed_at,status
+goals,"What must launch or change, by when?",,,,,unknown
+goals,Which three processes must not break?,,,,,unknown
+goals,Who signs off on each process?,,,,,unknown
+environment,Org ID and My Domain URL,,,,,unknown
+environment,"Sandbox, production, preview or developer org?",,,,,unknown
+environment,Which objects and read/write actions are authorized?,,,,,unknown
+business,Expected process steps and exceptions,,,,,unknown
+business,Approved thresholds and boundaries,,,,,unknown
+business,Required outcomes and out-of-scope behavior,,,,,unknown
+roles,Representative approved persona references,,,,,unknown
+roles,Visibility and edit restrictions,,,,,unknown
+roles,Approval segregation rules,,,,,unknown
+integrations,Connected systems and owners,,,,,unknown
+integrations,"Field mappings, currency and timing",,,,,unknown
+integrations,"Retry, duplicate and reconciliation policies",,,,,unknown
+verification,Existing approved cases/plans and environment bindings,,,,,unknown
+verification,"Data creation, external effects and cleanup scope",,,,,unknown
+verification,Evidence retention and sharing restrictions,,,,,unknown
+maintenance,Change and review owners,,,,,unknown
+maintenance,Rule/guide review cadence,,,,,unknown
+maintenance,Release and stale-evidence policy,,,,,unknown

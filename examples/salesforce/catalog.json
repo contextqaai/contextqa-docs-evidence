@@ -1,0 +1,1068 @@
+{
+  "schemaVersion": 1,
+  "status": "candidate-specifications-not-executed",
+  "assets": [
+    {
+      "id": "SF-SALES-01",
+      "version": 1,
+      "module": "sales",
+      "title": "Lead required fields",
+      "status": "candidate",
+      "requiredObjects": [
+        "Lead"
+      ],
+      "requiredFields": [
+        "Lead.LastName",
+        "Lead.Company"
+      ],
+      "ruleKey": "leadRequiredFields",
+      "personaKey": "salesRep",
+      "integrationKey": null,
+      "requiresSandbox": true,
+      "steps": [
+        {
+          "action": "Confirm the environment, business rule, persona and isolated test-data contract.",
+          "expected": "Named owner approves the rule and execution scope."
+        },
+        {
+          "action": "Submit an isolated lead with one approved mandatory field omitted.",
+          "expected": "Creation is rejected with the expected message and no record is persisted."
+        },
+        {
+          "action": "Collect actual assertions and approved media; reconcile and clean up test data under the approved procedure.",
+          "expected": "Evidence identifies environment, rule version and outcome; cleanup is recorded."
+        }
+      ],
+      "requiredEvidence": [
+        "approved-rule-reference",
+        "environment-binding",
+        "case-and-step-results",
+        "cleanup-receipt-or-not-applicable"
+      ],
+      "maintenanceTriggers": [
+        "rule revision",
+        "relevant metadata change",
+        "persona permission change",
+        "integration contract change",
+        "release advisory change"
+      ]
+    },
+    {
+      "id": "SF-SALES-02",
+      "version": 1,
+      "module": "sales",
+      "title": "Lead duplicate handling",
+      "status": "candidate",
+      "requiredObjects": [
+        "Lead"
+      ],
+      "requiredFields": [
+        "Lead.Email"
+      ],
+      "ruleKey": "leadDuplicatePolicy",
+      "personaKey": "salesRep",
+      "integrationKey": null,
+      "requiresSandbox": true,
+      "steps": [
+        {
+          "action": "Confirm the environment, business rule, persona and isolated test-data contract.",
+          "expected": "Named owner approves the rule and execution scope."
+        },
+        {
+          "action": "Submit a synthetic lead matching the approved duplicate criterion.",
+          "expected": "The approved block, warn, or merge behavior occurs; no unintended duplicate is created."
+        },
+        {
+          "action": "Collect actual assertions and approved media; reconcile and clean up test data under the approved procedure.",
+          "expected": "Evidence identifies environment, rule version and outcome; cleanup is recorded."
+        }
+      ],
+      "requiredEvidence": [
+        "approved-rule-reference",
+        "environment-binding",
+        "case-and-step-results",
+        "cleanup-receipt-or-not-applicable"
+      ],
+      "maintenanceTriggers": [
+        "rule revision",
+        "relevant metadata change",
+        "persona permission change",
+        "integration contract change",
+        "release advisory change"
+      ]
+    },
+    {
+      "id": "SF-SALES-03",
+      "version": 1,
+      "module": "sales",
+      "title": "Lead conversion relationships",
+      "status": "candidate",
+      "requiredObjects": [
+        "Lead",
+        "Account",
+        "Contact",
+        "Opportunity"
+      ],
+      "requiredFields": [
+        "Lead.IsConverted"
+      ],
+      "ruleKey": "leadConversionPolicy",
+      "personaKey": "salesRep",
+      "integrationKey": null,
+      "requiresSandbox": true,
+      "steps": [
+        {
+          "action": "Confirm the environment, business rule, persona and isolated test-data contract.",
+          "expected": "Named owner approves the rule and execution scope."
+        },
+        {
+          "action": "Convert an approved synthetic lead using the customer-selected account matching behavior.",
+          "expected": "Expected account/contact/opportunity links exist and ownership follows the approved policy."
+        },
+        {
+          "action": "Collect actual assertions and approved media; reconcile and clean up test data under the approved procedure.",
+          "expected": "Evidence identifies environment, rule version and outcome; cleanup is recorded."
+        }
+      ],
+      "requiredEvidence": [
+        "approved-rule-reference",
+        "environment-binding",
+        "case-and-step-results",
+        "cleanup-receipt-or-not-applicable"
+      ],
+      "maintenanceTriggers": [
+        "rule revision",
+        "relevant metadata change",
+        "persona permission change",
+        "integration contract change",
+        "release advisory change"
+      ]
+    },
+    {
+      "id": "SF-SALES-04",
+      "version": 1,
+      "module": "sales",
+      "title": "Opportunity stage gate",
+      "status": "candidate",
+      "requiredObjects": [
+        "Opportunity"
+      ],
+      "requiredFields": [
+        "Opportunity.StageName"
+      ],
+      "ruleKey": "closedWonPrerequisites",
+      "personaKey": "salesRep",
+      "integrationKey": null,
+      "requiresSandbox": true,
+      "steps": [
+        {
+          "action": "Confirm the environment, business rule, persona and isolated test-data contract.",
+          "expected": "Named owner approves the rule and execution scope."
+        },
+        {
+          "action": "Attempt the mapped closed-won transition with and without its required prerequisites.",
+          "expected": "The invalid transition is rejected and the valid transition persists without bypassing approvals."
+        },
+        {
+          "action": "Collect actual assertions and approved media; reconcile and clean up test data under the approved procedure.",
+          "expected": "Evidence identifies environment, rule version and outcome; cleanup is recorded."
+        }
+      ],
+      "requiredEvidence": [
+        "approved-rule-reference",
+        "environment-binding",
+        "case-and-step-results",
+        "cleanup-receipt-or-not-applicable"
+      ],
+      "maintenanceTriggers": [
+        "rule revision",
+        "relevant metadata change",
+        "persona permission change",
+        "integration contract change",
+        "release advisory change"
+      ]
+    },
+    {
+      "id": "SF-SALES-05",
+      "version": 1,
+      "module": "sales",
+      "title": "Quote discount boundary",
+      "status": "candidate",
+      "requiredObjects": [
+        "Quote"
+      ],
+      "requiredFields": [
+        "Quote.GrandTotal"
+      ],
+      "ruleKey": "discountThreshold",
+      "personaKey": "salesRep",
+      "integrationKey": null,
+      "requiresSandbox": true,
+      "steps": [
+        {
+          "action": "Confirm the environment, business rule, persona and isolated test-data contract.",
+          "expected": "Named owner approves the rule and execution scope."
+        },
+        {
+          "action": "Exercise below, exactly at, and above the approved discount threshold on a synthetic quote.",
+          "expected": "The required approver and send/submit restrictions match the approved boundary rule."
+        },
+        {
+          "action": "Collect actual assertions and approved media; reconcile and clean up test data under the approved procedure.",
+          "expected": "Evidence identifies environment, rule version and outcome; cleanup is recorded."
+        }
+      ],
+      "requiredEvidence": [
+        "approved-rule-reference",
+        "environment-binding",
+        "case-and-step-results",
+        "cleanup-receipt-or-not-applicable"
+      ],
+      "maintenanceTriggers": [
+        "rule revision",
+        "relevant metadata change",
+        "persona permission change",
+        "integration contract change",
+        "release advisory change"
+      ]
+    },
+    {
+      "id": "SF-SALES-06",
+      "version": 1,
+      "module": "sales",
+      "title": "Opportunity ownership transfer",
+      "status": "candidate",
+      "requiredObjects": [
+        "Opportunity"
+      ],
+      "requiredFields": [
+        "Opportunity.OwnerId"
+      ],
+      "ruleKey": "ownershipTransferPolicy",
+      "personaKey": "salesManager",
+      "integrationKey": null,
+      "requiresSandbox": true,
+      "steps": [
+        {
+          "action": "Confirm the environment, business rule, persona and isolated test-data contract.",
+          "expected": "Named owner approves the rule and execution scope."
+        },
+        {
+          "action": "Transfer a synthetic opportunity between the approved role pair.",
+          "expected": "The new owner, visibility and downstream assignment match the agreed policy."
+        },
+        {
+          "action": "Collect actual assertions and approved media; reconcile and clean up test data under the approved procedure.",
+          "expected": "Evidence identifies environment, rule version and outcome; cleanup is recorded."
+        }
+      ],
+      "requiredEvidence": [
+        "approved-rule-reference",
+        "environment-binding",
+        "case-and-step-results",
+        "cleanup-receipt-or-not-applicable"
+      ],
+      "maintenanceTriggers": [
+        "rule revision",
+        "relevant metadata change",
+        "persona permission change",
+        "integration contract change",
+        "release advisory change"
+      ]
+    },
+    {
+      "id": "SF-SERVICE-01",
+      "version": 1,
+      "module": "service",
+      "title": "Case intake routing",
+      "status": "candidate",
+      "requiredObjects": [
+        "Case"
+      ],
+      "requiredFields": [
+        "Case.Origin",
+        "Case.OwnerId"
+      ],
+      "ruleKey": "caseRoutingPolicy",
+      "personaKey": "serviceAgent",
+      "integrationKey": null,
+      "requiresSandbox": true,
+      "steps": [
+        {
+          "action": "Confirm the environment, business rule, persona and isolated test-data contract.",
+          "expected": "Named owner approves the rule and execution scope."
+        },
+        {
+          "action": "Create a synthetic case for each approved channel and priority combination.",
+          "expected": "Each case reaches the expected queue or owner without duplicate notifications."
+        },
+        {
+          "action": "Collect actual assertions and approved media; reconcile and clean up test data under the approved procedure.",
+          "expected": "Evidence identifies environment, rule version and outcome; cleanup is recorded."
+        }
+      ],
+      "requiredEvidence": [
+        "approved-rule-reference",
+        "environment-binding",
+        "case-and-step-results",
+        "cleanup-receipt-or-not-applicable"
+      ],
+      "maintenanceTriggers": [
+        "rule revision",
+        "relevant metadata change",
+        "persona permission change",
+        "integration contract change",
+        "release advisory change"
+      ]
+    },
+    {
+      "id": "SF-SERVICE-02",
+      "version": 1,
+      "module": "service",
+      "title": "Case escalation",
+      "status": "candidate",
+      "requiredObjects": [
+        "Case"
+      ],
+      "requiredFields": [
+        "Case.Priority",
+        "Case.Status"
+      ],
+      "ruleKey": "caseEscalationPolicy",
+      "personaKey": "serviceAgent",
+      "integrationKey": null,
+      "requiresSandbox": true,
+      "steps": [
+        {
+          "action": "Confirm the environment, business rule, persona and isolated test-data contract.",
+          "expected": "Named owner approves the rule and execution scope."
+        },
+        {
+          "action": "Trigger the approved escalation condition with controlled clock/data prerequisites.",
+          "expected": "Escalation and notifications occur within the approved window; nonqualifying cases remain unchanged."
+        },
+        {
+          "action": "Collect actual assertions and approved media; reconcile and clean up test data under the approved procedure.",
+          "expected": "Evidence identifies environment, rule version and outcome; cleanup is recorded."
+        }
+      ],
+      "requiredEvidence": [
+        "approved-rule-reference",
+        "environment-binding",
+        "case-and-step-results",
+        "cleanup-receipt-or-not-applicable"
+      ],
+      "maintenanceTriggers": [
+        "rule revision",
+        "relevant metadata change",
+        "persona permission change",
+        "integration contract change",
+        "release advisory change"
+      ]
+    },
+    {
+      "id": "SF-SERVICE-03",
+      "version": 1,
+      "module": "service",
+      "title": "Case closure requirements",
+      "status": "candidate",
+      "requiredObjects": [
+        "Case"
+      ],
+      "requiredFields": [
+        "Case.Status"
+      ],
+      "ruleKey": "caseClosurePolicy",
+      "personaKey": "serviceAgent",
+      "integrationKey": null,
+      "requiresSandbox": true,
+      "steps": [
+        {
+          "action": "Confirm the environment, business rule, persona and isolated test-data contract.",
+          "expected": "Named owner approves the rule and execution scope."
+        },
+        {
+          "action": "Attempt closure with and without the approved resolution information.",
+          "expected": "Only complete cases close; the resolution and status persist."
+        },
+        {
+          "action": "Collect actual assertions and approved media; reconcile and clean up test data under the approved procedure.",
+          "expected": "Evidence identifies environment, rule version and outcome; cleanup is recorded."
+        }
+      ],
+      "requiredEvidence": [
+        "approved-rule-reference",
+        "environment-binding",
+        "case-and-step-results",
+        "cleanup-receipt-or-not-applicable"
+      ],
+      "maintenanceTriggers": [
+        "rule revision",
+        "relevant metadata change",
+        "persona permission change",
+        "integration contract change",
+        "release advisory change"
+      ]
+    },
+    {
+      "id": "SF-SERVICE-04",
+      "version": 1,
+      "module": "service",
+      "title": "Case reopen behavior",
+      "status": "candidate",
+      "requiredObjects": [
+        "Case"
+      ],
+      "requiredFields": [
+        "Case.Status"
+      ],
+      "ruleKey": "caseReopenPolicy",
+      "personaKey": "serviceAgent",
+      "integrationKey": null,
+      "requiresSandbox": true,
+      "steps": [
+        {
+          "action": "Confirm the environment, business rule, persona and isolated test-data contract.",
+          "expected": "Named owner approves the rule and execution scope."
+        },
+        {
+          "action": "Reopen an isolated closed case through the approved channel.",
+          "expected": "Owner, status and any entitlement clock follow the approved reopen policy."
+        },
+        {
+          "action": "Collect actual assertions and approved media; reconcile and clean up test data under the approved procedure.",
+          "expected": "Evidence identifies environment, rule version and outcome; cleanup is recorded."
+        }
+      ],
+      "requiredEvidence": [
+        "approved-rule-reference",
+        "environment-binding",
+        "case-and-step-results",
+        "cleanup-receipt-or-not-applicable"
+      ],
+      "maintenanceTriggers": [
+        "rule revision",
+        "relevant metadata change",
+        "persona permission change",
+        "integration contract change",
+        "release advisory change"
+      ]
+    },
+    {
+      "id": "SF-ACCESS-01",
+      "version": 1,
+      "module": "access",
+      "title": "Record visibility by persona",
+      "status": "candidate",
+      "requiredObjects": [
+        "Account"
+      ],
+      "requiredFields": [
+        "Account.Id"
+      ],
+      "ruleKey": "accountSharingPolicy",
+      "personaKey": "restrictedUser",
+      "integrationKey": null,
+      "requiresSandbox": true,
+      "steps": [
+        {
+          "action": "Confirm the environment, business rule, persona and isolated test-data contract.",
+          "expected": "Named owner approves the rule and execution scope."
+        },
+        {
+          "action": "Read the same synthetic account as its permitted owner and a restricted persona.",
+          "expected": "Only the approved persona sees the record; an admin pass cannot substitute for the restricted-user test."
+        },
+        {
+          "action": "Collect actual assertions and approved media; reconcile and clean up test data under the approved procedure.",
+          "expected": "Evidence identifies environment, rule version and outcome; cleanup is recorded."
+        }
+      ],
+      "requiredEvidence": [
+        "approved-rule-reference",
+        "environment-binding",
+        "case-and-step-results",
+        "cleanup-receipt-or-not-applicable"
+      ],
+      "maintenanceTriggers": [
+        "rule revision",
+        "relevant metadata change",
+        "persona permission change",
+        "integration contract change",
+        "release advisory change"
+      ]
+    },
+    {
+      "id": "SF-ACCESS-02",
+      "version": 1,
+      "module": "access",
+      "title": "Field visibility and write access",
+      "status": "candidate",
+      "requiredObjects": [
+        "Opportunity"
+      ],
+      "requiredFields": [
+        "Opportunity.Amount"
+      ],
+      "ruleKey": "amountAccessPolicy",
+      "personaKey": "restrictedUser",
+      "integrationKey": null,
+      "requiresSandbox": true,
+      "steps": [
+        {
+          "action": "Confirm the environment, business rule, persona and isolated test-data contract.",
+          "expected": "Named owner approves the rule and execution scope."
+        },
+        {
+          "action": "Inspect and attempt to change the mapped amount field as two approved personas.",
+          "expected": "Read/edit permissions match the independent role policy through both UI and API."
+        },
+        {
+          "action": "Collect actual assertions and approved media; reconcile and clean up test data under the approved procedure.",
+          "expected": "Evidence identifies environment, rule version and outcome; cleanup is recorded."
+        }
+      ],
+      "requiredEvidence": [
+        "approved-rule-reference",
+        "environment-binding",
+        "case-and-step-results",
+        "cleanup-receipt-or-not-applicable"
+      ],
+      "maintenanceTriggers": [
+        "rule revision",
+        "relevant metadata change",
+        "persona permission change",
+        "integration contract change",
+        "release advisory change"
+      ]
+    },
+    {
+      "id": "SF-ACCESS-03",
+      "version": 1,
+      "module": "access",
+      "title": "Approval segregation",
+      "status": "candidate",
+      "requiredObjects": [
+        "Quote"
+      ],
+      "requiredFields": [
+        "Quote.Id"
+      ],
+      "ruleKey": "approvalSeparationPolicy",
+      "personaKey": "approver",
+      "integrationKey": null,
+      "requiresSandbox": true,
+      "steps": [
+        {
+          "action": "Confirm the environment, business rule, persona and isolated test-data contract.",
+          "expected": "Named owner approves the rule and execution scope."
+        },
+        {
+          "action": "Attempt self-approval and independent approval with isolated users.",
+          "expected": "The agreed segregation-of-duties restriction is enforced."
+        },
+        {
+          "action": "Collect actual assertions and approved media; reconcile and clean up test data under the approved procedure.",
+          "expected": "Evidence identifies environment, rule version and outcome; cleanup is recorded."
+        }
+      ],
+      "requiredEvidence": [
+        "approved-rule-reference",
+        "environment-binding",
+        "case-and-step-results",
+        "cleanup-receipt-or-not-applicable"
+      ],
+      "maintenanceTriggers": [
+        "rule revision",
+        "relevant metadata change",
+        "persona permission change",
+        "integration contract change",
+        "release advisory change"
+      ]
+    },
+    {
+      "id": "SF-FLOW-01",
+      "version": 1,
+      "module": "automation",
+      "title": "Flow positive and negative paths",
+      "status": "candidate",
+      "requiredObjects": [
+        "Case"
+      ],
+      "requiredFields": [
+        "Case.Status"
+      ],
+      "ruleKey": "flowEntryPolicy",
+      "personaKey": "serviceAgent",
+      "integrationKey": null,
+      "requiresSandbox": true,
+      "steps": [
+        {
+          "action": "Confirm the environment, business rule, persona and isolated test-data contract.",
+          "expected": "Named owner approves the rule and execution scope."
+        },
+        {
+          "action": "Exercise one matching and one nonmatching entry-condition example.",
+          "expected": "Expected updates occur only on the matching path; both results are persisted and checked."
+        },
+        {
+          "action": "Collect actual assertions and approved media; reconcile and clean up test data under the approved procedure.",
+          "expected": "Evidence identifies environment, rule version and outcome; cleanup is recorded."
+        }
+      ],
+      "requiredEvidence": [
+        "approved-rule-reference",
+        "environment-binding",
+        "case-and-step-results",
+        "cleanup-receipt-or-not-applicable"
+      ],
+      "maintenanceTriggers": [
+        "rule revision",
+        "relevant metadata change",
+        "persona permission change",
+        "integration contract change",
+        "release advisory change"
+      ]
+    },
+    {
+      "id": "SF-FLOW-02",
+      "version": 1,
+      "module": "automation",
+      "title": "Flow fault path",
+      "status": "candidate",
+      "requiredObjects": [
+        "Case"
+      ],
+      "requiredFields": [
+        "Case.Status"
+      ],
+      "ruleKey": "flowFaultPolicy",
+      "personaKey": "serviceAgent",
+      "integrationKey": null,
+      "requiresSandbox": true,
+      "steps": [
+        {
+          "action": "Confirm the environment, business rule, persona and isolated test-data contract.",
+          "expected": "Named owner approves the rule and execution scope."
+        },
+        {
+          "action": "Use an approved fault injection in an isolated sandbox without contacting real recipients.",
+          "expected": "The agreed error handling and recovery occur; no partial business transaction is silently accepted."
+        },
+        {
+          "action": "Collect actual assertions and approved media; reconcile and clean up test data under the approved procedure.",
+          "expected": "Evidence identifies environment, rule version and outcome; cleanup is recorded."
+        }
+      ],
+      "requiredEvidence": [
+        "approved-rule-reference",
+        "environment-binding",
+        "case-and-step-results",
+        "cleanup-receipt-or-not-applicable"
+      ],
+      "maintenanceTriggers": [
+        "rule revision",
+        "relevant metadata change",
+        "persona permission change",
+        "integration contract change",
+        "release advisory change"
+      ]
+    },
+    {
+      "id": "SF-APEX-01",
+      "version": 1,
+      "module": "automation",
+      "title": "Apex bulk behavior",
+      "status": "candidate",
+      "requiredObjects": [
+        "Account"
+      ],
+      "requiredFields": [
+        "Account.Name"
+      ],
+      "ruleKey": "bulkOperationPolicy",
+      "personaKey": "integrationUser",
+      "integrationKey": null,
+      "requiresSandbox": true,
+      "steps": [
+        {
+          "action": "Confirm the environment, business rule, persona and isolated test-data contract.",
+          "expected": "Named owner approves the rule and execution scope."
+        },
+        {
+          "action": "Execute the reviewed batch-size scenario against synthetic records and inspect unit/integration evidence.",
+          "expected": "All expected records are processed within the approved behavior and limits; partial errors are reconciled."
+        },
+        {
+          "action": "Collect actual assertions and approved media; reconcile and clean up test data under the approved procedure.",
+          "expected": "Evidence identifies environment, rule version and outcome; cleanup is recorded."
+        }
+      ],
+      "requiredEvidence": [
+        "approved-rule-reference",
+        "environment-binding",
+        "case-and-step-results",
+        "cleanup-receipt-or-not-applicable"
+      ],
+      "maintenanceTriggers": [
+        "rule revision",
+        "relevant metadata change",
+        "persona permission change",
+        "integration contract change",
+        "release advisory change"
+      ]
+    },
+    {
+      "id": "SF-API-01",
+      "version": 1,
+      "module": "integration",
+      "title": "OAuth integration readiness",
+      "status": "candidate",
+      "requiredObjects": [
+        "Account"
+      ],
+      "requiredFields": [
+        "Account.Id"
+      ],
+      "ruleKey": "oauthPolicy",
+      "personaKey": "integrationUser",
+      "integrationKey": null,
+      "requiresSandbox": false,
+      "steps": [
+        {
+          "action": "Confirm the environment, business rule, persona and isolated test-data contract.",
+          "expected": "Named owner approves the rule and execution scope."
+        },
+        {
+          "action": "Inspect a redacted authentication configuration and perform an approved bounded read with the target integration identity.",
+          "expected": "The approved authentication flow works for the intended org; no password or token is exposed."
+        },
+        {
+          "action": "Collect actual assertions and approved media; reconcile and clean up test data under the approved procedure.",
+          "expected": "Evidence identifies environment, rule version and outcome; cleanup is recorded."
+        }
+      ],
+      "requiredEvidence": [
+        "approved-rule-reference",
+        "environment-binding",
+        "case-and-step-results",
+        "cleanup-receipt-or-not-applicable"
+      ],
+      "maintenanceTriggers": [
+        "rule revision",
+        "relevant metadata change",
+        "persona permission change",
+        "integration contract change",
+        "release advisory change"
+      ]
+    },
+    {
+      "id": "SF-API-02",
+      "version": 1,
+      "module": "integration",
+      "title": "Order handoff reconciliation",
+      "status": "candidate",
+      "requiredObjects": [
+        "Order"
+      ],
+      "requiredFields": [
+        "Order.TotalAmount"
+      ],
+      "ruleKey": "orderReconciliationPolicy",
+      "personaKey": "integrationUser",
+      "integrationKey": "orderHandoff",
+      "requiresSandbox": true,
+      "steps": [
+        {
+          "action": "Confirm the environment, business rule, persona and isolated test-data contract.",
+          "expected": "Named owner approves the rule and execution scope."
+        },
+        {
+          "action": "Send one approved synthetic transaction through the mapped integration and reconcile its two sides.",
+          "expected": "Currency, total, line count and correlation identifier meet the approved mapping and tolerance."
+        },
+        {
+          "action": "Collect actual assertions and approved media; reconcile and clean up test data under the approved procedure.",
+          "expected": "Evidence identifies environment, rule version and outcome; cleanup is recorded."
+        }
+      ],
+      "requiredEvidence": [
+        "approved-rule-reference",
+        "environment-binding",
+        "case-and-step-results",
+        "cleanup-receipt-or-not-applicable"
+      ],
+      "maintenanceTriggers": [
+        "rule revision",
+        "relevant metadata change",
+        "persona permission change",
+        "integration contract change",
+        "release advisory change"
+      ]
+    },
+    {
+      "id": "SF-API-03",
+      "version": 1,
+      "module": "integration",
+      "title": "Duplicate-message handling",
+      "status": "candidate",
+      "requiredObjects": [
+        "Order"
+      ],
+      "requiredFields": [
+        "Order.Id"
+      ],
+      "ruleKey": "integrationIdempotencyPolicy",
+      "personaKey": "integrationUser",
+      "integrationKey": "orderHandoff",
+      "requiresSandbox": true,
+      "steps": [
+        {
+          "action": "Confirm the environment, business rule, persona and isolated test-data contract.",
+          "expected": "Named owner approves the rule and execution scope."
+        },
+        {
+          "action": "Replay an approved synthetic message in an isolated integration environment.",
+          "expected": "The agreed duplicate-handling rule prevents unintended duplicate business transactions."
+        },
+        {
+          "action": "Collect actual assertions and approved media; reconcile and clean up test data under the approved procedure.",
+          "expected": "Evidence identifies environment, rule version and outcome; cleanup is recorded."
+        }
+      ],
+      "requiredEvidence": [
+        "approved-rule-reference",
+        "environment-binding",
+        "case-and-step-results",
+        "cleanup-receipt-or-not-applicable"
+      ],
+      "maintenanceTriggers": [
+        "rule revision",
+        "relevant metadata change",
+        "persona permission change",
+        "integration contract change",
+        "release advisory change"
+      ]
+    },
+    {
+      "id": "SF-API-04",
+      "version": 1,
+      "module": "integration",
+      "title": "Integration retry and recovery",
+      "status": "candidate",
+      "requiredObjects": [
+        "Order"
+      ],
+      "requiredFields": [
+        "Order.Id"
+      ],
+      "ruleKey": "integrationRecoveryPolicy",
+      "personaKey": "integrationUser",
+      "integrationKey": "orderHandoff",
+      "requiresSandbox": true,
+      "steps": [
+        {
+          "action": "Confirm the environment, business rule, persona and isolated test-data contract.",
+          "expected": "Named owner approves the rule and execution scope."
+        },
+        {
+          "action": "Simulate the approved downstream outage and restore it under a bounded test window.",
+          "expected": "Retry, alerting and reconciliation satisfy the agreed recovery rule without losing or duplicating orders."
+        },
+        {
+          "action": "Collect actual assertions and approved media; reconcile and clean up test data under the approved procedure.",
+          "expected": "Evidence identifies environment, rule version and outcome; cleanup is recorded."
+        }
+      ],
+      "requiredEvidence": [
+        "approved-rule-reference",
+        "environment-binding",
+        "case-and-step-results",
+        "cleanup-receipt-or-not-applicable"
+      ],
+      "maintenanceTriggers": [
+        "rule revision",
+        "relevant metadata change",
+        "persona permission change",
+        "integration contract change",
+        "release advisory change"
+      ]
+    },
+    {
+      "id": "SF-RELEASE-01",
+      "version": 1,
+      "module": "release",
+      "title": "Release advisory applicability",
+      "status": "candidate",
+      "requiredObjects": [
+        "Account"
+      ],
+      "requiredFields": [
+        "Account.Id"
+      ],
+      "ruleKey": "releaseApplicability",
+      "personaKey": "releaseLead",
+      "integrationKey": null,
+      "requiresSandbox": false,
+      "steps": [
+        {
+          "action": "Confirm the environment, business rule, persona and isolated test-data contract.",
+          "expected": "Named owner approves the rule and execution scope."
+        },
+        {
+          "action": "Map an official release advisory to the actual org configuration and affected dependencies.",
+          "expected": "Applicability is recorded with sources; unknown scope remains unknown rather than green."
+        },
+        {
+          "action": "Collect actual assertions and approved media; reconcile and clean up test data under the approved procedure.",
+          "expected": "Evidence identifies environment, rule version and outcome; cleanup is recorded."
+        }
+      ],
+      "requiredEvidence": [
+        "approved-rule-reference",
+        "environment-binding",
+        "case-and-step-results",
+        "cleanup-receipt-or-not-applicable"
+      ],
+      "maintenanceTriggers": [
+        "rule revision",
+        "relevant metadata change",
+        "persona permission change",
+        "integration contract change",
+        "release advisory change"
+      ]
+    },
+    {
+      "id": "SF-RELEASE-02",
+      "version": 1,
+      "module": "release",
+      "title": "Configuration drift review",
+      "status": "candidate",
+      "requiredObjects": [
+        "Opportunity"
+      ],
+      "requiredFields": [
+        "Opportunity.StageName"
+      ],
+      "ruleKey": "environmentBaselinePolicy",
+      "personaKey": "releaseLead",
+      "integrationKey": null,
+      "requiresSandbox": false,
+      "steps": [
+        {
+          "action": "Confirm the environment, business rule, persona and isolated test-data contract.",
+          "expected": "Named owner approves the rule and execution scope."
+        },
+        {
+          "action": "Compare approved baseline and candidate snapshots from the intended environments.",
+          "expected": "Differences are explained or assigned; newly discovered components are not assumed to be deployment changes."
+        },
+        {
+          "action": "Collect actual assertions and approved media; reconcile and clean up test data under the approved procedure.",
+          "expected": "Evidence identifies environment, rule version and outcome; cleanup is recorded."
+        }
+      ],
+      "requiredEvidence": [
+        "approved-rule-reference",
+        "environment-binding",
+        "case-and-step-results",
+        "cleanup-receipt-or-not-applicable"
+      ],
+      "maintenanceTriggers": [
+        "rule revision",
+        "relevant metadata change",
+        "persona permission change",
+        "integration contract change",
+        "release advisory change"
+      ]
+    },
+    {
+      "id": "SF-DOCS-01",
+      "version": 1,
+      "module": "documentation",
+      "title": "Evidence-backed workflow guide",
+      "status": "candidate",
+      "requiredObjects": [
+        "Case"
+      ],
+      "requiredFields": [
+        "Case.Status"
+      ],
+      "ruleKey": "documentationScope",
+      "personaKey": "serviceAgent",
+      "integrationKey": null,
+      "requiresSandbox": false,
+      "steps": [
+        {
+          "action": "Confirm the environment, business rule, persona and isolated test-data contract.",
+          "expected": "Named owner approves the rule and execution scope."
+        },
+        {
+          "action": "Collect selected completed case/step results and separately reviewed media from the approved workflow.",
+          "expected": "Each published instruction has scoped evidence; raw records and signed URLs are excluded."
+        },
+        {
+          "action": "Collect actual assertions and approved media; reconcile and clean up test data under the approved procedure.",
+          "expected": "Evidence identifies environment, rule version and outcome; cleanup is recorded."
+        }
+      ],
+      "requiredEvidence": [
+        "approved-rule-reference",
+        "environment-binding",
+        "case-and-step-results",
+        "cleanup-receipt-or-not-applicable"
+      ],
+      "maintenanceTriggers": [
+        "rule revision",
+        "relevant metadata change",
+        "persona permission change",
+        "integration contract change",
+        "release advisory change"
+      ]
+    },
+    {
+      "id": "SF-DOCS-02",
+      "version": 1,
+      "module": "documentation",
+      "title": "Guide maintenance after change",
+      "status": "candidate",
+      "requiredObjects": [
+        "Case"
+      ],
+      "requiredFields": [
+        "Case.Status"
+      ],
+      "ruleKey": "documentationRefreshPolicy",
+      "personaKey": "serviceAgent",
+      "integrationKey": null,
+      "requiresSandbox": false,
+      "steps": [
+        {
+          "action": "Confirm the environment, business rule, persona and isolated test-data contract.",
+          "expected": "Named owner approves the rule and execution scope."
+        },
+        {
+          "action": "Compare reviewed before/after exports using explicit step mappings after an approved application change.",
+          "expected": "A reviewer sees changed text/media and decides what to update; missing recapture never counts as current proof."
+        },
+        {
+          "action": "Collect actual assertions and approved media; reconcile and clean up test data under the approved procedure.",
+          "expected": "Evidence identifies environment, rule version and outcome; cleanup is recorded."
+        }
+      ],
+      "requiredEvidence": [
+        "approved-rule-reference",
+        "environment-binding",
+        "case-and-step-results",
+        "cleanup-receipt-or-not-applicable"
+      ],
+      "maintenanceTriggers": [
+        "rule revision",
+        "relevant metadata change",
+        "persona permission change",
+        "integration contract change",
+        "release advisory change"
+      ]
+    }
+  ]
+}
