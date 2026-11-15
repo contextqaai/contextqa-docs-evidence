@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "orgId": "synthetic-demo",
+  "capturedAt": "2026-11-14T00:00:00Z",
+  "environment": {
+    "isSandbox": true,
+    "organizationType": "Synthetic fixture"
+  },
+  "objects": {
+    "Lead": {
+      "fields": {
+        "LastName": {
+          "type": "string"
+        },
+        "Company": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "rules": {
+    "leadRequiredFields": {
+      "status": "confirmed",
+      "value": "Last name and company are required in this synthetic example.",
+      "owner": "Synthetic sales owner",
+      "source": "Synthetic SOP section 1",
+      "version": 1
+    }
+  },
+  "personas": {
+    "salesRep": {
+      "status": "confirmed",
+      "reference": "synthetic-sales-rep"
+    }
+  },
+  "integrations": {},
+  "execution": {
+    "approved": false
+  },
+  "coverage": {
+    "scope": "synthetic selected schema; absence is not absence from an org"
+  }
+}

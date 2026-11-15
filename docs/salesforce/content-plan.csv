@@ -1,0 +1,16 @@
+priority,audience,topic,format,search_intent_hypothesis,asset,status,publication_gate
+P0,Platform owner,Understand an org before testing,landing,Salesforce org context,site/salesforce/index.html,draft prepared,Actual run/media review for live claims; editorial review before destination publication
+P0,Admin,Onboard securely,worksheet,Salesforce testing onboarding,docs/salesforce/onboarding.md,draft prepared,Actual run/media review for live claims; editorial review before destination publication
+P0,QA lead,Adapt reusable scenarios,tutorial,Salesforce test case templates,docs/salesforce/guides/adapt-assets.md,draft prepared,Actual run/media review for live claims; editorial review before destination publication
+P0,Sales Ops,Lead to opportunity,guide,Salesforce Sales Cloud testing,docs/salesforce/guides/sales-cloud.md,draft prepared,Actual run/media review for live claims; editorial review before destination publication
+P0,Service Ops,Case lifecycle,guide,Salesforce Service Cloud testing,docs/salesforce/guides/service-cloud.md,draft prepared,Actual run/media review for live claims; editorial review before destination publication
+P0,Security reviewer,Persona checks,guide,Salesforce permission testing,docs/salesforce/guides/permissions.md,draft prepared,Actual run/media review for live claims; editorial review before destination publication
+P0,Integration owner,OAuth and reconciliation,guide,Salesforce OAuth retirement testing,docs/salesforce/guides/integrations.md,draft prepared,Actual run/media review for live claims; editorial review before destination publication
+P0,Release lead,Readiness evidence,landing,Salesforce release readiness,site/salesforce/release-readiness.html,draft prepared,Actual run/media review for live claims; editorial review before destination publication
+P1,Implementer,Flow and Apex paths,guide,Salesforce Flow Apex regression,docs/salesforce/guides/flow-apex.md,draft prepared,Actual run/media review for live claims; editorial review before destination publication
+P1,Partner,Implementation acceptance,landing,Salesforce UAT acceptance,site/salesforce/implementation.html,draft prepared,Actual run/media review for live claims; editorial review before destination publication
+P1,Docs lead,Evidence-backed guides,tutorial,Salesforce documentation maintenance,docs/salesforce/guides/documentation.md,draft prepared,Actual run/media review for live claims; editorial review before destination publication
+P1,Learner,Eight-module pathway,course,Salesforce testing learning,docs/salesforce/learning/pathway.md,draft prepared,Actual run/media review for live claims; editorial review before destination publication
+P1,Learner,Context to custom test,video,Salesforce testing tutorial,docs/salesforce/learning/recording-scripts.md,script only,Actual run/media review for live claims; editorial review before destination publication
+P1,Integration owner,Live handoff example,video,Salesforce integration verification,docs/salesforce/learning/recording-scripts.md,script only,Actual run/media review for live claims; editorial review before destination publication
+P1,Docs lead,Refresh a guide,video,Salesforce documentation automation,docs/salesforce/learning/recording-scripts.md,script only,Actual run/media review for live claims; editorial review before destination publication

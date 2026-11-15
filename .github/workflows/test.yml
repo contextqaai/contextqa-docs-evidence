@@ -23,6 +23,11 @@ jobs:
           cqa-artifacts approve "${RUNNER_TEMP}/installed-wrapper" --reviewer "CI synthetic fixture; not customer approval" --confirm-rights-and-reviewed-content
           cqa-artifacts export "${RUNNER_TEMP}/installed-wrapper" --out "${RUNNER_TEMP}/installed-export" --base-url https://docs.example.com/synthetic
       - run: python -m unittest discover -s tests -v
+      - name: Check Salesforce content references and generated pages
+        run: |
+          python scripts/check-salesforce-content.py
+          python scripts/build-salesforce-site.py
+          git diff --exit-code -- site/salesforce docs/salesforce/content-plan.csv
       - run: python examples/demo.py "${RUNNER_TEMP}/cqa-evidence-demo"
       - run: python examples/contextqa_demo.py "${RUNNER_TEMP}/cqa-contextqa-simulation"
   ai:
