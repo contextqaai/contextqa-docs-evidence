@@ -2,6 +2,12 @@
 
 ContextQA owns the durable user journeys and performs the product activities. The documentation coordinator consumes ContextQA execution evidence, writes guides, compares versions and maintains the latest approved local copy. A separate browser driver is not an alternative evidence producer.
 
+## URL, credentials and goal are enough to start
+
+The coding agent can create initial saved journeys through ContextQA's AI bootstrap, using `create_test_case(task_description=..., environment_id=...)`, then execute them to obtain typed steps and actual evidence. Pre-existing saved cases are not required. See [OrangeHRM prompts and setup](../examples/orangehrm/README.md) for a scoped example. Credentials stay in ContextQA environment variables.
+
+This bootstrap is an agent/MCP workflow, not an implicit paid action inside `docs-writer collect`. Collection accepts existing run IDs so resumes cannot accidentally create duplicate executions. Bootstrap acceptance and execution success are separate states. Documentation promotion still requires the evidence, review and deployment gates below.
+
 ## Operating loop
 
 1. Map a documentation topic to saved ContextQA cases, a plan, fixture/environment configuration and required capture checkpoints. Preserve the cases in ContextQA so the next change reuses or deliberately maintains the same journey.

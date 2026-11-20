@@ -6,6 +6,14 @@ Use this workflow when asked to create or maintain product documentation. The us
 
 Keep a repository manifest, a saved-journey registry, an editorial spec per article, and a documentation library. Case/plan IDs and definition hashes belong in Git; account variables stay in ContextQA. Configure documentation-only cases with stable sample data, screenshots at useful states and recordings. Bound runs and retries; never rerun an ambiguous accepted start.
 
+## Starting with only a URL, credentials and goal
+
+Existing saved journeys are not a prerequisite. Bind the authorized credentials to a dedicated ContextQA environment and create an AI bootstrap case from the user's goal. The prompt must name the target, scope, assertions, evidence checkpoints and test-owned data policy. Execute through ContextQA; inspect the actual result and generated typed steps. Use these captured locators to maintain reusable cases. Never replace a previously authored typed case with an opaque AI step to hide failures.
+
+Split broad coverage into independently diagnosable journeys. Distinguish authored, accepted/queued, executed, passed, failed and unavailable workflows. Persist accepted execution handles; a startup delay is not permission to retry the start. Keep an explicit coverage matrix and cleanup outcomes. Do not claim exhaustive testing from a generic navigation pass.
+
+A public application URL does not prove a deployed commit. Without source/deployment identity, retain the run evidence and draft documentation with that limitation; do not invent a revision to satisfy the latest-copy deployment gate.
+
 ## Work autonomously through these stages
 
 1. Read the changed source and existing guide. Identify user-visible changes and select affected journeys. Preserve independent explanations and product-reference facts.
