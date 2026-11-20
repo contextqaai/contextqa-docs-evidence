@@ -16,7 +16,7 @@ class FakeClient:
     def __init__(self):
         self.calls=[];self.case={'id':10,'name':'Create card','workspaceVersionId':1,'videoRecording':True}
         self.step={'id':20,'testCaseId':10,'action':'Click Create card','position':1,'disabled':False}
-        self.case_result=dict(PASS,id=100,testCaseId=10,testPlanResultId=30)
+        self.case_result=dict(PASS,id=100,testCaseId=10,testPlanResultId=30,screenRecordingUrl='https://media.example/v.mp4')
         self.step_result=dict(id=200,testCaseId=10,testCaseResultId=100,stepId=20,result='SUCCESS',stepDetails={'action':'Click Create card'},screenShotURL='https://media.example/s.png?private=secret')
         self.run={'id':30,'testPlanId':40,**PASS};self.plan={'id':40,'workspaceVersionId':1,'name':'Cards'}
         self.writes=0;self.started=0
@@ -68,9 +68,117 @@ class JourneyTests(unittest.TestCase):
         # Header-only synthetic media tests plumbing, never real pixel/video fidelity.
         screenshot=core.add_media_bytes(root,b'\x89PNG\r\n\x1a\nsynthetic','screenshot')
         video=core.add_media_bytes(root,b'\x00\x00\x00\x18ftypmp42synthetic','video')
+        refs=core.load_json(root/'private/artifact-references.json')
+        receipts=[]
+        for mid,kind,record in [(screenshot,'screenshot','steps:200'),(video,'video','cases:100')]:
+            index=next(i for i,r in enumerate(refs) if r['record']==record)
+            receipts.append(dict(reference_index=index,media_id=mid,kind=kind,source_record=record))
+        core.write_json(root/'private/media-retrieval.json',receipts)
         recipe={'steps':[dict(step_result_id=200,title='Create a card',instruction='Enter a title and select Create card. Recording 00:02 shows the new card.',media_ids=[screenshot,video])]}
         out=self.root/'export';j.review_capture(root,recipe,out,'Fixture reviewer',True)
         return out
+    def editorial_fixture(self):
+        import hashlib
+        export=self.exported();enriched=j.evidence_plan(self.plan,self.registry,{'create-card':str(export)})
+        entry=enriched['journey_evidence'][0];media=next(m for m in entry['capture']['media'] if m['kind']=='screenshot')
+        spec=dict(schema='editorial-guide-v1',id='create-card',title='Create a card',audience='Board members',
+            goal='Add work to a board',summary='Create a named card in a list.',prerequisites=['Open a board with a list.'],
+            sources=[dict(id='run',kind='contextqa-run',journey_id='create-card',url='https://app.example/runs/30',observed_at='2026-11-20',summary='Synthetic test fixture')],
+            figures=[dict(id='card',journey_id='create-card',media_id=media['id'],source_id='run',
+                sha256=hashlib.sha256(core.asset_file(export,media['path']).read_bytes()).hexdigest(),
+                width=1,height=1,caption='The new card appears in the list.',alt='List containing the new card.',purpose='Confirm card creation',
+                privacy_reviewed=True,state_reviewed=True,readability_reviewed=True)],
+            sections=[dict(id='create',kind='procedure',title='Create your card',paragraphs=['Use a descriptive title.'],
+                steps=['Enter a title and select Create card.'],expected='The card appears in the list.',source_ids=['run'],figure_ids=['card'],requires_execution=True)],
+            review=dict(editorial=True,independent_task_completion=False))
+        return export,enriched,{'guide.md':spec}
+    def test_editorial_prepare_uses_reviewed_assets_and_retains_review_gate(self):
+        export,enriched,specs=self.editorial_fixture()
+        proposal=j.editorial_proposal(enriched,specs,{'create-card':str(export)})
+        self.assertIn('Check your progress',proposal['edits'][0]['after'])
+        self.assertIn('Keep this introduction.',proposal['edits'][0]['after'])
+        repeated=copy.deepcopy(enriched);repeated.pop('plan_digest')
+        repeated['articles'][0]['before']=proposal['edits'][0]['after']
+        self.assertEqual(j.editorial_proposal(j.sealed(repeated,'plan_digest'),specs,{'create-card':str(export)})['edits'],[])
+        self.assertIn('evidence/',proposal['edits'][0]['after'])
+        self.assertTrue(any('independent_task_completion' in q for q in proposal['questions']))
+        out=self.root/'editorial-review'
+        j.prepare(self.plan,self.registry,{'create-card':str(export)},out,editorial_specs=specs)
+        self.assertTrue((out/'drafts/guide.md').exists())
+    def test_editorial_rejects_wrong_journey_and_changed_image(self):
+        export,enriched,specs=self.editorial_fixture()
+        specs['guide.md']['figures'][0]['journey_id']='unrelated'
+        with self.assertRaises(core.Rejected):j.editorial_proposal(enriched,specs,{'create-card':str(export)})
+        specs['guide.md']['figures'][0]['journey_id']='create-card'
+        specs['guide.md']['figures'][0]['sha256']='0'*64
+        with self.assertRaises(core.Rejected):j.editorial_proposal(enriched,specs,{'create-card':str(export)})
+
+    def approved_review(self):
+        export=self.exported();out=self.root/'review'
+        receipt=j.prepare(self.plan,self.registry,{'create-card':str(export)},out)
+        store=Store(out/'review.db');ident=receipt['item_id']
+        item=store.snapshot('cards','owner')['items'][ident]
+        item=store.review('cards','owner',ident,item['version'],'answer',text='Reviewed')
+        item=store.review('cards','owner',ident,item['version'],'accept',change_id='1')
+        item=store.review('cards','owner',ident,item['version'],'ready')
+        store.approve('cards','owner',ident,item['version'],True)
+        return export,out
+    def test_latest_copy_is_immutable_idempotent_and_compareable(self):
+        from cqa_artifacts.library import advance
+        export,review=self.approved_review();library=self.root/'library';exports={'create-card':str(export)}
+        with self.assertRaisesRegex(core.Rejected,'real ContextQA'):
+            advance(review,self.registry,exports,library,None)
+        result=advance(review,self.registry,exports,library,None,allow_simulated=True)
+        version=result['version'];root=library/'versions'/version
+        self.assertTrue((root/'comparison.html').exists())
+        self.assertIn('Keep this introduction.',(root/'files/guide.md').read_text())
+        self.assertFalse(advance(review,self.registry,exports,library,version,allow_simulated=True)['updated'])
+        before=(library/'latest.json').read_bytes()
+        with self.assertRaisesRegex(core.Rejected,'Latest version changed'):
+            advance(review,self.registry,exports,library,None,allow_simulated=True)
+        self.assertEqual(before,(library/'latest.json').read_bytes())
+        (root/'files/guide.md').write_text('tampered')
+        with self.assertRaisesRegex(core.Rejected,'files changed'):
+            advance(review,self.registry,exports,library,version,allow_simulated=True)
+        self.assertEqual(before,(library/'latest.json').read_bytes())
+    def test_second_approved_version_keeps_old_copy_and_exposes_diff(self):
+        from cqa_artifacts.library import advance
+        export,review=self.approved_review();library=self.root/'library';exports={'create-card':str(export)}
+        first=advance(review,self.registry,exports,library,None,allow_simulated=True)
+        old_path=library/'versions'/first['version']/'files/guide.md';old=old_path.read_text()
+        planned=copy.deepcopy(self.plan);planned.pop('plan_digest')
+        planned['articles'][0].update(before=old,base_digest=fingerprint(old))
+        planned=j.sealed(planned,'plan_digest')
+        proposal=dict(title='Clarify card title',summary='Reviewed editorial clarification',edits=[dict(path='guide.md',after=old+'\nUse a descriptive card title.\n',reason='Clarify the naming instruction')],questions=[])
+        out=self.root/'second-review';receipt=j.prepare(planned,self.registry,exports,out,proposal=proposal)
+        store=Store(out/'review.db');ident=receipt['item_id'];item=store.snapshot('cards','owner')['items'][ident]
+        item=store.review('cards','owner',ident,item['version'],'answer',text='Reviewed')
+        item=store.review('cards','owner',ident,item['version'],'accept',change_id='1')
+        item=store.review('cards','owner',ident,item['version'],'ready');store.approve('cards','owner',ident,item['version'],True)
+        second=advance(out,self.registry,exports,library,first['version'],allow_simulated=True)
+        self.assertNotEqual(first['version'],second['version']);self.assertEqual(old_path.read_text(),old)
+        new=library/'versions'/second['version']
+        self.assertIn('+Use a descriptive card title.',(new/'changes.diff').read_text())
+        self.assertEqual(core.load_json(library/'latest.json')['version'],second['version'])
+        # Corrupting the candidate evidence cannot move the latest pointer.
+        pointer=(library/'latest.json').read_bytes()
+        (export/'review-receipt.json').write_text('{}')
+        with self.assertRaises(core.Rejected):advance(out,self.registry,exports,library,second['version'],allow_simulated=True)
+        self.assertEqual(pointer,(library/'latest.json').read_bytes())
+
+    def test_unapproved_or_failed_candidate_never_becomes_latest(self):
+        from cqa_artifacts.library import advance
+        export=self.exported();out=self.root/'review';exports={'create-card':str(export)}
+        j.prepare(self.plan,self.registry,exports,out)
+        library=self.root/'library'
+        with self.assertRaises(core.Rejected):advance(out,self.registry,exports,library,None,allow_simulated=True)
+        self.assertFalse((library/'latest.json').exists())
+    def test_legacy_export_and_wrong_artifact_origin_rejected(self):
+        export=self.exported();receipt=core.load_json(export/'journey-review.json');receipt.pop('digest');receipt.pop('evidence_policy')
+        (export/'journey-review.json').write_text(json.dumps(j.sealed(receipt)))
+        with self.assertRaisesRegex(core.Rejected,'legacy exports'):
+            j.evidence_plan(self.plan,self.registry,{'create-card':str(export)})
+
     def test_impact_maps_changes_and_reports_missing_coverage(self):
         report=j.impact(self.plan,self.registry)
         self.assertEqual([x['id'] for x in report['journeys']],['create-card']);self.assertEqual(report['unmapped_sections'],[])
@@ -93,6 +201,13 @@ class JourneyTests(unittest.TestCase):
     def test_unrelated_result_filter_is_rejected(self):
         self.client.step_result['testCaseResultId']=999
         with self.assertRaises(core.Rejected):self.captured()
+    def test_manual_screenshot_cannot_enter_contextqa_review(self):
+        root=self.captured()
+        mid=core.add_media_bytes(root,b'\x89PNG\r\n\x1a\nmanual','screenshot')
+        recipe={'steps':[dict(step_result_id=200,title='Create',instruction='Create',media_ids=[mid])]}
+        with self.assertRaisesRegex(core.Rejected,'manual captures'):
+            j.review_capture(root,recipe,self.root/'export','Test',True)
+
     def test_missing_deployment_blocks_export(self):
         root=self.captured(False)
         with self.assertRaises(core.Rejected):j.review_capture(root,{'steps':[]},self.root/'export','Test',True)
@@ -170,9 +285,9 @@ class JourneyTests(unittest.TestCase):
         def fake_fetch(root,index,kind,host):
             return {'media_id':core.add_media_bytes(root,b'\x89PNG\r\n\x1a\nsynthetic','screenshot')}
         with patch('cqa_artifacts.media.fetch_media',side_effect=fake_fetch):result=j.fetch_capture_media(root,['media.example'])
-        self.assertEqual(result['downloaded'],1);self.assertFalse(result['attached'])
+        self.assertEqual(result['downloaded'],2);self.assertFalse(result['attached'])
         self.assertEqual(core.manifest(root)['steps'][0]['media'],[])
-        self.assertEqual(len(core.load_json(root/'review-recipe.json')['steps'][0]['media_ids']),1)
+        self.assertEqual(len(core.load_json(root/'review-recipe.json')['steps'][0]['media_ids']),2)
     def test_registered_definition_lock_detects_unmapped_step_changes(self):
         original=self.client.call
         def call(operation,**kwargs):
@@ -203,6 +318,13 @@ class JourneyTests(unittest.TestCase):
         self.assertNotEqual(j.definition_digest('updateTestStep',a),j.definition_digest('updateTestStep',b))
         b=dict(a,testData='https://app.example/?required=value')
         self.assertNotEqual(j.definition_digest('updateTestStep',a),j.definition_digest('updateTestStep',b))
+    def test_nonvisual_diagnostic_screenshots_do_not_change_definition(self):
+        a=dict(self.client.step,visualEnabled=False,goldenScreenshot='https://media.example/old.png')
+        b=dict(a,goldenScreenshot='https://media.example/new.png')
+        self.assertEqual(j.definition_digest('updateTestStep',a),j.definition_digest('updateTestStep',b))
+        a['visualEnabled']=True;b['visualEnabled']=True
+        self.assertNotEqual(j.definition_digest('updateTestStep',a),j.definition_digest('updateTestStep',b))
+
     def test_collection_run_map_is_exact_and_never_starts_runs(self):
         with self.assertRaises(core.Rejected):j.collect(self.client,self.plan,self.registry,{},self.root/'collection')
         result=j.collect(self.client,self.plan,self.registry,{'create-card':{'run_id':30,'deployment':self.attestation()}},self.root/'collection')

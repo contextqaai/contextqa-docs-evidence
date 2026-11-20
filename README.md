@@ -57,6 +57,10 @@ This is an **account-free API simulation**, not a live run or screenshot capture
 
 [Developer instructions](AGENTS.md) · [Security and publication](docs/security.md) · [Capability evidence](docs/capability-register.md)
 
+## ContextQA as the documentation operator
+
+[ContextQA-only writer workflow](docs/contextqa-writer.md): saved journeys perform the product activities; their execution results, screenshots and recordings support the guides. Reviewed changes produce before/after comparisons and immutable versions, with a pointer to the latest approved copy. A failed or stale run cannot advance that pointer. The prior manual-browser Learning Hub example is excluded from acceptance; it demonstrates layout only. Use the [agent instructions](agent-instructions/contextqa-writer.md) with `docs-writer collect` and `docs-writer finalize`; the agent supplies technical-writing judgment and visual review. The coordinator does not silently call a model or publish to a hosted documentation service. Semantic image comparison remains outside this implementation.
+
 ## Saved journeys and documentation refresh
 
 The [journey agent](docs/journey-agent.md) connects source changes to saved ContextQA cases, checks definition drift, collects matching run evidence, and updates documentation with reviewed screenshots and video links. It runs from the CLI; remote test updates, execution and delivery remain explicit.

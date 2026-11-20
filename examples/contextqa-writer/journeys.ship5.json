@@ -1,0 +1,211 @@
+{
+  "schema": 1,
+  "repository": "nigharsh/kan",
+  "journeys": [
+    {
+      "id": "board-list-card",
+      "name": "Create a board, list and card",
+      "sections": [
+        "board-list-card"
+      ],
+      "code_paths": [
+        "apps/web/**"
+      ],
+      "application_url": "https://kan-qa.vercel.app",
+      "environment": "QA",
+      "workspace_version_id": 1,
+      "case_ids": [
+        186
+      ],
+      "required_media": [
+        "screenshot",
+        "video"
+      ],
+      "profile": {
+        "schema": 1,
+        "name": "Documentation writer acceptance",
+        "plan": {
+          "id": 39,
+          "expect": {
+            "workspaceVersionId": 1,
+            "environmentId": 1,
+            "testCaseCount": 1
+          }
+        },
+        "cases": [
+          {
+            "id": 186,
+            "expect": {
+              "workspaceVersionId": 1,
+              "environmentId": 1,
+              "videoRecording": true,
+              "captureAllStepScreenshots": true
+            }
+          }
+        ],
+        "execution": {
+          "maxPolls": 20,
+          "intervalMs": 2000
+        },
+        "steps": [
+          {
+            "id": 398,
+            "expect": {
+              "testCaseId": 186
+            }
+          },
+          {
+            "id": 399,
+            "expect": {
+              "testCaseId": 186
+            }
+          },
+          {
+            "id": 400,
+            "expect": {
+              "testCaseId": 186
+            }
+          },
+          {
+            "id": 401,
+            "expect": {
+              "testCaseId": 186
+            }
+          },
+          {
+            "id": 402,
+            "expect": {
+              "testCaseId": 186
+            }
+          },
+          {
+            "id": 403,
+            "expect": {
+              "testCaseId": 186,
+              "action": "Enter <span data-key=\"test-data\" data-event-key=\"value\" class=\"test_data\">Docs Guide B</span> in the <span data-key=\"label\" data-event-key=\"label\" class=\"element\">Name</span>",
+              "testData": "Docs Guide B",
+              "metadata": "Type 'Docs Guide B' in the 'Name' input field inside the 'New board' modal.",
+              "event": {
+                "customEvent": "enter",
+                "label": "Name",
+                "isIFrame": false,
+                "iFrameLocator": null,
+                "value": "Docs Guide B",
+                "pwLocator": [
+                  "#name",
+                  "div.relative.flex > input[name='name'][placeholder='Name']",
+                  "input[name='name'][placeholder='Name'][type='text']"
+                ],
+                "selector": "#name",
+                "volatility": 10
+              }
+            }
+          },
+          {
+            "id": 404,
+            "expect": {
+              "testCaseId": 186
+            }
+          },
+          {
+            "id": 405,
+            "expect": {
+              "testCaseId": 186
+            }
+          },
+          {
+            "id": 406,
+            "expect": {
+              "testCaseId": 186
+            }
+          },
+          {
+            "id": 407,
+            "expect": {
+              "testCaseId": 186
+            }
+          },
+          {
+            "id": 408,
+            "expect": {
+              "testCaseId": 186
+            }
+          },
+          {
+            "id": 409,
+            "expect": {
+              "testCaseId": 186
+            }
+          },
+          {
+            "id": 410,
+            "expect": {
+              "testCaseId": 186
+            }
+          },
+          {
+            "id": 411,
+            "expect": {
+              "testCaseId": 186
+            }
+          },
+          {
+            "id": 412,
+            "expect": {
+              "testCaseId": 186,
+              "action": "AI Verification: <span data-key=\"description\" data-event-key=\"description\" class=\"element action-flex-auto\">Verify that the board 'Docs Guide B' is visible.</span>",
+              "element": "Verify that the board 'Docs Guide B' is visible.",
+              "metadata": "Verify that the board 'Docs Guide B' is visible.",
+              "event": {
+                "customEvent": "ai_verify",
+                "description": "Verify that the board 'Docs Guide B' is visible.",
+                "isHtmlRequired": true,
+                "isImageRequired": true,
+                "query": "Verify that the board 'Docs Guide B' is visible."
+              }
+            }
+          },
+          {
+            "id": 413,
+            "expect": {
+              "testCaseId": 186
+            }
+          },
+          {
+            "id": 414,
+            "expect": {
+              "testCaseId": 186
+            }
+          },
+          {
+            "id": 441,
+            "expect": {
+              "testCaseId": 186
+            }
+          }
+        ]
+      },
+      "definition_locks": {
+        "case:186": "e666210682785d621bb27db474a0b13b716fab329d21017e70e47d2a1be71916",
+        "step:398": "dbac33f352b54a7459a4bc641b57ff1392ab8600243648bd7a070830d71e74e6",
+        "step:399": "a05a8162ef5d7c1cbac65e6cda10e443c2ac19904caf7fee4558eaec4fbd9dc0",
+        "step:400": "021236efbefae001239744e03a12fec6142077b08903c707cb076da3a9a77bd0",
+        "step:401": "f0096e3ce4be1ff05ad772ecd9c0f734f1edfa25d64a9c2eb6e330a0e2637b5f",
+        "step:402": "5aec51e1756a935faaae35ccfa2199d19692f23cd37b5464afa0113e136db740",
+        "step:403": "9511fa6e8ce1f7ae6048f3b657d2e3a82d93c045b91bd8ff90ed21eead9577ed",
+        "step:404": "23da400e7b39644ca5190065b703b5a97e172e7ab97a1e4250c1db8e39be928f",
+        "step:405": "8aca3a5a9b923c94665834e17f489162b698fc4fc48b1d66e36cf1cf062ff8f1",
+        "step:406": "9fc6d62b47ec974474ad252cad51709d6a1655980231fcae28fe13af63b522e1",
+        "step:407": "1bdb152e74009bea92217969fcbbcc77dad4b466fc80de307b38a6485af4940e",
+        "step:408": "187d99175c932761702badcd98a5e2ba41101da06df0be062adabc395103a1cf",
+        "step:409": "5218e9ec98557a5076ba54515b5a833d82259a8d761b0b50fb4ed86a559317ea",
+        "step:410": "0aa907d758aec5767053b027d5e1167d910181fbb31799b0974bb9b38583eb24",
+        "step:411": "c65b4a2e985a05bed83b500435b45eabebcd6aaaf61dd177a40cb8ab23f6f3f3",
+        "step:412": "d4139a2febc31229118f7ad89f0ad3e6de3d957b0dd3d70fff27e49a1d53de5a",
+        "step:413": "bbdc09c8577161b8ea56f3dbcc82b44e9cf44b239385d09c3602940e9531544f",
+        "step:414": "756474a47a49f7dbf23a27cf5f3dabe8a861a7309345194e972e72fc83f4c982",
+        "step:441": "cb56f1e886b5fb700c7d699799dfc7f2097373d9f90ac2e658adfa0518cf54fd"
+      }
+    }
+  ]
+}

@@ -257,8 +257,12 @@ def writable(operation,actual):
 def definition_digest(operation,actual):
     from urllib.parse import urlsplit, urlunsplit
     value=copy.deepcopy(writable(operation,actual))
+    for timestamp in ('createdDate','updatedDate'):value.pop(timestamp,None)
     # ContextQA re-signs this media reference on reads. Its signature/expiry is
     # not a test-definition edit. Keep the underlying artifact path in the lock.
+    # Non-visual steps receive a fresh diagnostic image on execution; it is
+    # not an assertion baseline. Visual-enabled steps still lock the path.
+    if value.get('visualEnabled') is False:value.pop('goldenScreenshot',None)
     reference=value.get('goldenScreenshot')
     if isinstance(reference,str) and reference.startswith('https://'):
         u=urlsplit(reference);value['goldenScreenshot']=urlunsplit((u.scheme,u.netloc,u.path,'',''))
@@ -320,6 +324,35 @@ def apply_maintenance(client,value,planned,out,approve_write=False):
     return dict(completed=True,writes=len(planned['updates']),registry=str(out/'registry.next.json'),new_execution_started=False)
 
 
+def contextqa_media_origins(root, data, recipe):
+    """Require a downloaded ContextQA artifact for every selected image/video."""
+    receipt_path=Path(root)/'private/media-retrieval.json'
+    receipts=core.load_json(receipt_path) if receipt_path.exists() else []
+    references=core.load_json(Path(root)/'private/artifact-references.json')
+    media={m['id']:m for m in data['media']}; origins=[]
+    for original, step in zip(data['steps'],recipe['steps']):
+        allowed={'steps:'+str(original.get('step_result_id')), 'cases:'+str(original.get('case_result_id'))}
+        for mid in step['media_ids']:
+            matches=[]
+            for receipt in receipts:
+                index=receipt.get('reference_index')
+                if receipt.get('media_id')!=mid or type(index) is not int or not 0<=index<len(references):continue
+                ref=references[index]
+                if (receipt.get('source_record') not in allowed or ref.get('record')!=receipt.get('source_record')
+                    or receipt.get('kind')!=media[mid]['kind']):continue
+                field=ref.get('field','').split('/')[0]
+                fields=('screenRecordingUrl','screenRecordings') if media[mid]['kind']=='video' else ('screenShotURL','screenshotUrl','snapshotUrl','screenshots')
+                if field in fields:matches.append(receipt)
+            if not matches and media[mid]['kind']=='screenshot':
+                from .frames import verified_origin
+                derived=verified_origin(root,mid,step['step_result_id'])
+                if derived:
+                    origins.append(derived);continue
+            if not matches:raise core.Rejected('Selected media must come from this ContextQA step/case artifact download; manual captures are not accepted')
+            origins.append(dict(media_id=mid,kind=media[mid]['kind'],source_record=matches[0]['source_record'],step_result_id=step['step_result_id']))
+    return origins
+
+
 def review_capture(root,recipe,out,reviewer,confirmed=False):
     root=Path(root);out=Path(out);record=core.load_json(root/'journey-capture.json');checked(record)
     if out.exists():raise core.Rejected('Choose a new reviewed export directory')
@@ -344,7 +377,10 @@ def review_capture(root,recipe,out,reviewer,confirmed=False):
         if not isinstance(step['media_ids'],list):raise core.Rejected('Invalid media selection')
         known={m['id'] for m in data['media']}
         if any(mid not in known for mid in step['media_ids']):raise core.Rejected('Unknown reviewed media ID')
+    origins=contextqa_media_origins(root,data,recipe)
     selected={mid for step in recipe['steps'] for mid in step['media_ids']}
+    if any(o.get('video_id') and o['video_id'] not in selected for o in origins):
+        raise core.Rejected('Include the original recording for every selected derived frame')
     kinds={m['kind'] for m in data['media'] if m['id'] in selected}
     if not set(record['journey']['required_media'])<=kinds:raise core.Rejected('Required journey screenshot/video missing')
     # A replacement review is an exact selection, not an additive attachment.
@@ -358,12 +394,12 @@ def review_capture(root,recipe,out,reviewer,confirmed=False):
     receipt=sealed(dict(schema=1,journey_id=record['journey']['id'],journey_digest=fingerprint(record['journey']),
         registry_digest=record['registry_digest'],head_sha=record['head_sha'],run_id=record['run_id'],
         source_sha256=record['source_sha256'],deployment=record['deployment'],
-        export_digest=fingerprint(reviewed(out)),reviewed_by=reviewer))
+        export_digest=fingerprint(reviewed(out)),reviewed_by=reviewer,media_origins=origins,evidence_policy='contextqa-only-v1'))
     exclusive_json(out/'journey-review.json',receipt)
     return dict(export=str(out),steps=len(recipe['steps']),media=len(selected),review_required_for_documentation=True)
 
 
-def fetch_capture_media(root,hosts,max_files=20):
+def fetch_capture_media(root,hosts,max_files=20,recording_frames=False):
     """Download selected journey media privately and propose step associations.
 
     The generated recipe still requires content review; downloading is not approval.
@@ -379,16 +415,39 @@ def fetch_capture_media(root,hosts,max_files=20):
     for i,ref in enumerate(refs):
         field=ref['field'].split('/')[0]
         kind='video' if field in ('screenRecordingUrl','screenRecordings') else 'screenshot' if field in ('screenShotURL','screenshotUrl','snapshotUrl','screenshots') else None
+        if recording_frames and kind!='video':continue
         if kind and urlsplit(ref['url']).hostname in hosts and ref['record'].split(':')[0] in ('cases','steps'):
             selected.append((i,ref,kind))
     if len(selected)>max_files:raise core.Rejected('Media exceeds the selected download limit; use individual fetch-media selections')
     recipe={'steps':[dict(step_result_id=s['step_result_id'],title=s['title'],instruction=s['instruction'],media_ids=[]) for s in data['steps']]}
     for i,ref,kind in selected:
-        result=fetch_media(root,i,kind,urlsplit(ref['url']).hostname)
+        receipt_path=root/'private/media-retrieval.json'
+        receipts=core.load_json(receipt_path) if receipt_path.exists() else []
+        prior=next((r for r in receipts if r.get('reference_index')==i and r.get('kind')==kind and r.get('source_record')==ref['record']),None)
+        media=next((m for m in core.manifest(root)['media'] if prior and m['id']==prior.get('media_id') and m['kind']==kind),None)
+        if media:
+            core.regular_file(core.asset_file(root,media['path']))
+            result={'media_id':media['id']}
+        else:result=fetch_media(root,i,kind,urlsplit(ref['url']).hostname)
         group,ident=ref['record'].split(':');ident=int(ident)
         candidates=[n for n,s in enumerate(data['steps']) if s.get('step_result_id' if group=='steps' else 'case_result_id')==ident]
         # A case recording is linked once, at the first documented step of that case.
         for n in candidates[:1]:recipe['steps'][n]['media_ids'].append(result['media_id'])
+    if recording_frames:
+        from .frames import extract
+        results=core.load_json(root/'private/contextqa-results.json')
+        receipts=core.load_json(root/'private/media-retrieval.json')
+        for step,original in zip(recipe['steps'],data['steps']):
+            detail=next(r for r in results['steps'] if r['id']==step['step_result_id'])
+            timing=detail.get('executedResult') or {}
+            end=timing.get('video_end_time');start=timing.get('video_start_time')
+            candidates={r['media_id'] for r in receipts if r.get('kind')=='video' and r.get('source_record')=='cases:'+str(original.get('case_result_id'))}
+            if not isinstance(end,(int,float)) or not isinstance(start,(int,float)):
+                continue  # Non-visual steps may have no recording interval.
+            if len(candidates)!=1:
+                raise core.Rejected('Recording frames need one unambiguous recording')
+            row=extract(root,next(iter(candidates)),step['step_result_id'],int(max(start,end-150)))
+            step['media_ids'].append(row['media_id'])
     exclusive_json(root/'review-recipe.json',recipe)
     return dict(downloaded=len(selected),recipe=str(root/'review-recipe.json'),attached=False,review_required=True)
 
@@ -401,6 +460,14 @@ def evidence_plan(planned,value,exports):
     for journey in report['journeys']:
         root=Path(exports[journey['id']]);data=reviewed(root);receipt=core.load_json(root/'journey-review.json');checked(receipt)
         execution=data.get('execution',{})
+        if receipt.get('evidence_policy')!='contextqa-only-v1':
+            raise core.Rejected('Re-review legacy exports with ContextQA artifact provenance before using them')
+        origins=receipt.get('media_origins',[])
+        for step in data['steps']:
+            for mid in step['media']:
+                if not any(o.get('media_id')==mid and o.get('step_result_id')==step.get('step_result_id')
+                           and o.get('source_record') in {'steps:'+str(step.get('step_result_id')), 'cases:'+str(step.get('case_result_id'))}
+                           for o in origins):raise core.Rejected('Missing ContextQA media provenance in reviewed export')
         if (receipt['registry_digest']!=report['registry_digest'] or receipt['journey_digest']!=fingerprint(journey)
             or receipt['journey_id']!=journey['id'] or receipt['head_sha']!=planned['head_sha']
             or receipt['export_digest']!=fingerprint(data) or execution.get('source_sha256')!=receipt['source_sha256']
@@ -446,9 +513,86 @@ def draft_from_evidence(planned):
     return dict(title='Refresh documented user journeys',summary='Review source changes alongside the observed journey instructions and media.',edits=edits,questions=[])
 
 
-def prepare(planned,value,exports,out,proposal=None):
+def editorial_proposal(planned, specs, exports):
+    """Compile authored guides using only media from validated journey exports."""
+    import tempfile
+    from .guides import compile_guide
+    checked(planned, 'plan_digest')
+    articles = {a['path']: a for a in planned['articles']}
+    if not isinstance(specs, dict) or set(specs) != set(articles):
+        raise core.Rejected('Editorial specs must cover exactly the affected article paths')
+    evidence = {e['journey_id']: e for e in planned['journey_evidence']}
+    edits = []; questions = []
+    with tempfile.TemporaryDirectory() as temporary:
+        root = Path(temporary)
+        for path, original in specs.items():
+            spec = copy.deepcopy(original); replacements = {}
+            section = next(s['id'] for s in planned['manifest']['sections'] if s['path'] == path)
+            for source in spec['sources']:
+                if source['kind']=='browser-observation':
+                    raise core.Rejected('ContextQA-only guides cannot use manually observed browser workflows')
+                if source['kind'] != 'contextqa-run': continue
+                ident = source.get('journey_id'); entry = evidence.get(ident)
+                if not entry or section not in entry['sections']:
+                    raise core.Rejected('Editorial execution source is not mapped to this article')
+                execution = entry['capture']['execution']
+                source.update(run_id=execution['run_id'], verdict=execution['verdict'], deployment_verified=True)
+            for figure in spec['figures']:
+                entry = evidence.get(figure.get('journey_id'))
+                if not entry or section not in entry['sections']:
+                    raise core.Rejected('Editorial figure is not mapped to this article')
+                media = next((m for m in entry['capture']['media'] if m['id'] == figure.get('media_id')), None)
+                if not media or media['kind'] != 'screenshot':
+                    raise core.Rejected('Editorial figure must name a reviewed screenshot')
+                source = next((s for s in spec['sources'] if s['id'] == figure['source_id']), None)
+                if not source or source.get('journey_id') != entry['journey_id'] or source['kind'] != 'contextqa-run':
+                    raise core.Rejected('Editorial figure and execution source disagree')
+                raw = core.regular_file(core.asset_file(Path(exports[entry['journey_id']]), media['path']))
+                name = fingerprint(raw.hex()) + Path(media['path']).suffix
+                (root/name).write_bytes(raw); figure['path'] = name
+                import hashlib
+                # Keep the author's expected digest: a changed image needs renewed review.
+                if figure.get('sha256') != hashlib.sha256(raw).hexdigest():
+                    raise core.Rejected('Editorial screenshot digest differs from reviewed export')
+                destination = 'evidence/' + entry['export_digest'] + '/' + media['path']
+                replacements[figure['id']] = posixpath.relpath(destination, posixpath.dirname(path) or '.')
+            compiled = compile_guide(spec, root)
+            after = compiled['markdown']
+            for ident, relative in replacements.items():
+                after = after.replace('](' + compiled['assets'][ident]['path'] + ')', '](' + relative + ')')
+            after = after.replace('See quality-report.json for evidence and review gaps.', 'Evidence and review gaps are recorded in the documentation review request.')
+            if not compiled['report']['blockers']:
+                after=after.replace('> Editorial draft. Evidence and review gaps are recorded in the documentation review request.', '> Based on reviewed ContextQA execution evidence.')
+            recordings=[]
+            for entry in evidence.values():
+                if section not in entry['sections']:continue
+                for media in entry['capture']['media']:
+                    if media['kind']=='video':
+                        destination='evidence/'+entry['export_digest']+'/'+media['path']
+                        relative=posixpath.relpath(destination,posixpath.dirname(path) or '.')
+                        recordings.append('[Watch the ContextQA journey recording]('+relative+')')
+            if recordings:after+='\n## Watch the walkthrough\n\n'+'\n\n'.join(dict.fromkeys(recordings))+'\n'
+            questions.extend(path + ': ' + b for b in compiled['report']['blockers'])
+            start='<!-- contextqa:editorial:start -->'; end='<!-- contextqa:editorial:end -->'
+            block=start+'\n'+after.rstrip()+'\n'+end
+            before=articles[path]['before']
+            if start in before or end in before:
+                if before.count(start)!=1 or before.count(end)!=1 or before.index(start)>before.index(end):
+                    raise core.Rejected('Malformed managed editorial block')
+                after=before[:before.index(start)]+block+before[before.index(end)+len(end):]
+            else:
+                after=(before.rstrip()+'\n\n' if before else '')+block+'\n'
+            if after != before:
+                edits.append(dict(path=path, after=after, reason='Refresh the evidence-linked editorial guide'))
+    return dict(title='Update user guides from reviewed evidence', summary='Review complete instructions, checkpoints and captioned screenshots.', edits=edits, questions=list(dict.fromkeys(questions)))
+
+
+def prepare(planned,value,exports,out,proposal=None,editorial_specs=None):
     enriched=evidence_plan(planned,value,exports)
-    proposal=proposal if proposal is not None else draft_from_evidence(enriched)
+    if proposal is not None and editorial_specs is not None:
+        raise core.Rejected('Choose a proposal or editorial specs, not both')
+    proposal=(editorial_proposal(enriched,editorial_specs,exports) if editorial_specs is not None
+              else proposal if proposal is not None else draft_from_evidence(enriched))
     receipt=agent.prepare(enriched,proposal,out)
     store=Store(Path(out)/'review.db');project=enriched['manifest']['project_id']
     for ident,path in exports.items():
@@ -473,7 +617,8 @@ def main():
         if name in ('impact','prepare','evidence-plan','collect'):p.add_argument('--plan',type=Path,required=True)
         else:p.add_argument('--journey',required=name!='apply-maintenance')
         if name in ('prepare','evidence-plan'):p.add_argument('--exports',type=Path,required=True)
-        if name=='prepare':p.add_argument('--proposal',type=Path)
+        if name=='prepare':
+            p.add_argument('--proposal',type=Path);p.add_argument('--editorial-specs',type=Path)
         if name=='capture':
             p.add_argument('--run-id',type=int,required=True);p.add_argument('--head',required=True);p.add_argument('--deployment',type=Path)
         if name=='run':p.add_argument('--approve-execution',action='store_true')
@@ -500,7 +645,7 @@ def main():
     elif a.command=='media':result=fetch_capture_media(a.capture,a.allow_host,a.max_files)
     elif a.command=='evidence-plan':
         result=evidence_plan(read(a.plan),value,read(a.exports));exclusive_json(a.out,result);result={'plan':str(a.out),'reviewed_journeys':len(result['journey_evidence'])}
-    else:result=prepare(read(a.plan),value,read(a.exports),a.out,read(a.proposal) if a.proposal else None)
+    else:result=prepare(read(a.plan),value,read(a.exports),a.out,read(a.proposal) if a.proposal else None,read(a.editorial_specs) if a.editorial_specs else None)
     print(json.dumps(result,indent=2))
 
 

@@ -1,0 +1,352 @@
+{
+  "schema": "editorial-guide-v1",
+  "id": "create-and-run-test-plan",
+  "title": "Synthetic editorial renderer fixture",
+  "audience": "QA engineers configuring their first reusable browser test plan",
+  "goal": "Save a correctly mapped plan, execute its reviewed scope and interpret the result.",
+  "summary": "Turn a test suite into a reusable browser execution. Configure the plan, check its coverage, and learn where to inspect the first run.",
+  "prerequisites": [
+    "Access to the intended ContextQA workspace and permission to create plans.",
+    "A small test suite containing reviewed, executable cases for a non-production application.",
+    "A known environment, test account and sample data appropriate for those cases.",
+    "An available browser target and approval for the scope and cost of execution."
+  ],
+  "sources": [
+    {
+      "id": "learning-hub",
+      "kind": "product-reference",
+      "url": "https://learning.contextqa.com/enterprise-application-testing/web-testing/test-plans",
+      "observed_at": "2026-11-20",
+      "summary": "Published Test Plans guide: creation, running, monitoring and troubleshooting. Its instructions are reference evidence, not proof of this example executing."
+    },
+    {
+      "id": "ship5-setup",
+      "kind": "browser-observation",
+      "url": "https://ship-5.contextqa.com/td/1/plans/38/overview",
+      "observed_at": "2026-11-20",
+      "summary": "Direct browser observation: three-stage wizard, suite selection, Chromium mapping, settings and saved plan 38 with one suite and seven cases. No run started. Deployment commit unknown."
+    },
+    {
+      "id": "plan38-api",
+      "kind": "product-reference",
+      "url": "https://ship-5.contextqa.com/td/1/plans/38/overview",
+      "observed_at": "2026-11-20",
+      "summary": "ContextQA MCP manage_test_plan(action=get,id=38): workspaceVersionId 1, testSuiteCount 1, testCaseCount 7, parallelNode 1, screenshot ALL_TYPES, sendNotification false, Chromium device mapped to suite 16."
+    }
+  ],
+  "figures": [
+    {
+      "id": "identity",
+      "path": "assets/identity.png",
+      "sha256": "a63daebe767db0065f4adcf193ef6b2b99c8ef06c2fee9f7c1c6f0dd1d2c702b",
+      "source_id": "ship5-setup",
+      "caption": "Name the plan and choose its viewport before selecting suites.",
+      "alt": "Create Test Plan wizard showing the example plan name, Desktop viewport and Full HD resolution.",
+      "purpose": "Name the plan and choose its viewport before selecting suites.",
+      "privacy_reviewed": true,
+      "state_reviewed": true,
+      "readability_reviewed": true,
+      "width": 1116,
+      "height": 670
+    },
+    {
+      "id": "selection",
+      "path": "assets/selection.png",
+      "sha256": "9f484b1dbe4622feb4f4234d59952c5879f5e8c0ef24ab949b97651dc298ac27",
+      "source_id": "ship5-setup",
+      "caption": "The suite is in Selected Test Suites. Select Add to return it to the plan wizard.",
+      "alt": "Suite picker showing Kanban Board Canvas & Column Workflow in Selected Test Suites.",
+      "purpose": "The suite is in Selected Test Suites. Select Add to return it to the plan wizard.",
+      "privacy_reviewed": true,
+      "state_reviewed": true,
+      "readability_reviewed": true,
+      "width": 1382,
+      "height": 844
+    },
+    {
+      "id": "browser",
+      "path": "assets/browser.png",
+      "sha256": "0578c11ec911d91ffcb9ba48391a409b9ce59baff604a0c987e4187e4281fc1a",
+      "source_id": "ship5-setup",
+      "caption": "Give the target a recognizable name, then select its platform and browser.",
+      "alt": "Add Machine/Device panel with Chromium desktop, ContextQA Lab, Web Browser and Chromium selected.",
+      "purpose": "Give the target a recognizable name, then select its platform and browser.",
+      "privacy_reviewed": true,
+      "state_reviewed": true,
+      "readability_reviewed": true,
+      "width": 750,
+      "height": 992
+    },
+    {
+      "id": "mapping",
+      "path": "assets/mapping.png",
+      "sha256": "a030e6714aa5494ac1370062a284f177f5d80f388cbb027a6e46a3adbfa91cf7",
+      "source_id": "ship5-setup",
+      "caption": "The suite row now lists Chromium desktop, confirming the mapping before you continue.",
+      "alt": "Suite-to-machine mapping with one suite assigned to Chromium desktop.",
+      "purpose": "The suite row now lists Chromium desktop, confirming the mapping before you continue.",
+      "privacy_reviewed": true,
+      "state_reviewed": true,
+      "readability_reviewed": true,
+      "width": 1116,
+      "height": 650
+    },
+    {
+      "id": "settings",
+      "path": "assets/settings.png",
+      "sha256": "21989a8e8a3c8e1bd8165b9779958513c40975acc2d92cab49cfe941831bbb71",
+      "source_id": "ship5-setup",
+      "caption": "Review parallelism, the target environment and screenshot capture before saving.",
+      "alt": "Test Plan Settings with parallel execution 1 and Additional Settings expanded, including environment and All Steps screenshot capture.",
+      "purpose": "Review parallelism, the target environment and screenshot capture before saving.",
+      "privacy_reviewed": true,
+      "state_reviewed": true,
+      "readability_reviewed": true,
+      "width": 1116,
+      "height": 822
+    },
+    {
+      "id": "saved",
+      "path": "assets/saved.png",
+      "sha256": "9744a74979ecd5eb266182d530801c38bd5166b7f5dc61f4c7b837e25c9d1c67",
+      "source_id": "ship5-setup",
+      "caption": "The saved example has one suite and seven test cases. Blank latest-run fields mean it has not run.",
+      "alt": "Saved plan 38 Overview showing one suite, seven cases, Chromium and the Run Now control.",
+      "purpose": "The saved example has one suite and seven test cases. Blank latest-run fields mean it has not run.",
+      "privacy_reviewed": true,
+      "state_reviewed": true,
+      "readability_reviewed": true,
+      "width": 1668,
+      "height": 610
+    },
+    {
+      "id": "no-runs",
+      "path": "assets/no-runs.png",
+      "sha256": "47f39781a31cd0d8ebcc07d2d5cba12802a165d109aa8a0313bc0302535bc44d",
+      "source_id": "ship5-setup",
+      "caption": "An empty Runs tab is expected before the first execution; saving a plan does not execute it.",
+      "alt": "Runs tab for the saved example with no run records.",
+      "purpose": "An empty Runs tab is expected before the first execution; saving a plan does not execute it.",
+      "privacy_reviewed": true,
+      "state_reviewed": true,
+      "readability_reviewed": true,
+      "width": 1668,
+      "height": 540
+    }
+  ],
+  "sections": [
+    {
+      "id": "understand-the-plan",
+      "title": "What you are configuring",
+      "kind": "concept",
+      "paragraphs": [
+        "A suite groups test cases. A plan adds the execution configuration: which suites run, which browsers or devices they use, and which execution settings apply. Create the suite first; a plan does not create the test cases for you.",
+        "This walkthrough uses a Kan suite and a Chromium desktop target. Substitute a small, known suite for your application. The example screenshots were captured from Ship 5 on November 20, 2026. Workspace options may differ.",
+        "The example was saved as plan 38, with one suite and seven cases. Creation and configuration were observed directly. The execution instructions below come from the published product guide; this example has not been executed."
+      ],
+      "source_ids": [
+        "ship5-setup",
+        "learning-hub",
+        "plan38-api"
+      ],
+      "figure_ids": []
+    },
+    {
+      "id": "name-the-plan",
+      "title": "1. Name the plan and choose a viewport",
+      "kind": "procedure",
+      "paragraphs": [
+        "Use a name that identifies the application and purpose. A name such as Checkout smoke \u2014 staging is easier to recognize in run history than Test plan 1.",
+        "The viewport controls the browser dimensions used by the test. Choose the layout your cases are intended to exercise; a desktop screenshot does not establish mobile coverage."
+      ],
+      "source_ids": [
+        "ship5-setup",
+        "learning-hub"
+      ],
+      "figure_ids": [
+        "identity"
+      ],
+      "steps": [
+        "Open Plans \u2192 Test Plans, then select New Test Plan.",
+        "Enter a Test Plan Name. In this walkthrough, use Documentation walkthrough \u2014 Kan smoke.",
+        "Optionally add labels and a description explaining the scope and owner.",
+        "Review Hide on Dashboard and Send Notification. Keep notifications off for this walkthrough unless recipients are intended to receive run updates.",
+        "Select Desktop and Full HD (1920\u00d71080), then select Next."
+      ],
+      "expected": "The wizard advances to Test Machines & Suites Selection."
+    },
+    {
+      "id": "choose-suites",
+      "title": "2. Add the suite you want to run",
+      "kind": "procedure",
+      "paragraphs": [
+        "Choose a suite whose cases you have already reviewed. Selecting a suite defines the scope of a later execution; it is not just a display label.",
+        "The picker separates available suites from selected suites. Moving a suite to the right-hand side stages the choice; Add applies it to the wizard."
+      ],
+      "source_ids": [
+        "ship5-setup",
+        "learning-hub"
+      ],
+      "figure_ids": [
+        "selection"
+      ],
+      "steps": [
+        "Select Add Test Suites.",
+        "Search by suite name. The example searches for Kan.",
+        "Select the checkbox beside the intended suite in Available Test Suites, then use the right-arrow control to move it into Selected Test Suites.",
+        "Confirm that only the intended suites are selected, then select Add."
+      ],
+      "expected": "The selected suite appears in the wizard. It still needs a machine or device mapping."
+    },
+    {
+      "id": "map-browser",
+      "title": "3. Assign a browser to the suite",
+      "kind": "procedure",
+      "paragraphs": [
+        "Adding a suite and choosing a browser are separate actions. Select the suite row first so the wizard knows which suite receives the new configuration.",
+        "Use a descriptive configuration name such as Chromium desktop. Additional targets are useful for cross-browser coverage, but start with one target while validating a new plan."
+      ],
+      "source_ids": [
+        "ship5-setup",
+        "learning-hub"
+      ],
+      "figure_ids": [
+        "browser",
+        "mapping"
+      ],
+      "steps": [
+        "Select the checkbox beside the suite row, then select Add Machine/Device.",
+        "Enter Chromium desktop in Name.",
+        "Choose ContextQA Lab for Test Lab Type and Web Browser for Select Platform, where these options are available.",
+        "Select Chromium in Browser, then select Create in the machine panel.",
+        "Confirm that Chromium desktop appears on the suite row, then select Next."
+      ],
+      "expected": "The machine is listed on the left and its name is attached to the suite on the right."
+    },
+    {
+      "id": "configure-execution",
+      "title": "4. Review execution and evidence settings",
+      "kind": "procedure",
+      "paragraphs": [
+        "Start with one parallel execution while you check the plan. Higher parallelism changes resource use and should match both your tests and the account capacity.",
+        "The Environments field supplies environment-specific configuration. Review the target and the cases\u2019 own bindings before running; an empty plan-level selection is not proof that a safe staging environment will be used.",
+        "Capture Screenshots determines the evidence available after execution. All Steps is useful for documenting a workflow, but review captured pixels before sharing them."
+      ],
+      "source_ids": [
+        "ship5-setup",
+        "learning-hub"
+      ],
+      "figure_ids": [
+        "settings"
+      ],
+      "steps": [
+        "Set Parallel Execution to 1.",
+        "Expand Additional Settings. Review Page Load Timeout and Element Timeout against the application\u2019s needs; the observed defaults are 30.",
+        "Choose the intended environment if the plan requires one, and verify the selected suite\u2019s case configuration.",
+        "Set Capture Screenshots to All Steps when step-by-step evidence is needed. Review any Knowledge Base selection.",
+        "Expand Recovery Actions and review the failure behavior. Avoid enabling automatic reruns without considering their execution scope.",
+        "Select Create to save the plan."
+      ],
+      "expected": "The Overview page opens for the saved plan."
+    },
+    {
+      "id": "verify-saved-plan",
+      "title": "5. Check the saved configuration",
+      "kind": "procedure",
+      "paragraphs": [
+        "Before the first execution, confirm the plan contains the cases and browser you intended. A suite can exist with no executable cases, so the suite count alone is insufficient.",
+        "In this example, Overview shows one suite, seven cases and Chromium. The latest-run fields are blank because the plan has not run. Saving a plan and running it are separate operations."
+      ],
+      "source_ids": [
+        "ship5-setup",
+        "plan38-api",
+        "learning-hub"
+      ],
+      "figure_ids": [
+        "saved"
+      ],
+      "steps": [
+        "On Overview, check the suite and test-case totals in the header.",
+        "Inspect Suites in plan and verify the browser/device mapping.",
+        "Use View Test Cases to check the cases in the selected suite before authorizing execution.",
+        "Open Settings if execution settings need to change, or use the header menu \u2192 Edit to revisit the wizard."
+      ],
+      "expected": "The saved plan contains the intended cases and targets, with no unexpected suite or browser mapping."
+    },
+    {
+      "id": "run-and-monitor",
+      "title": "6. Start and monitor the first run",
+      "kind": "procedure",
+      "paragraphs": [
+        "The following execution procedure is documented in the Learning Hub. The saved example has not been run, so the screenshot below shows its initial empty history rather than a successful result.",
+        "Run Now executes the saved configuration and may consume execution capacity or incur charges. Confirm the environment, case behavior and run scope first. Do not start a second run merely because the first has not appeared immediately."
+      ],
+      "source_ids": [
+        "ship5-setup",
+        "learning-hub"
+      ],
+      "figure_ids": [
+        "no-runs"
+      ],
+      "requires_execution": true,
+      "steps": [
+        "Return to the plan header and select Run Now once after the run scope is approved.",
+        "Open Runs. During an active execution, use Live execution to inspect running and queued cases.",
+        "After execution finishes, open the corresponding run in Run history or Reports.",
+        "Inspect the case and step outcomes, together with any available screenshots and recordings."
+      ],
+      "expected": "A completed run has a recorded outcome for the expected cases. Completion alone is not a pass; check failures, skipped cases and missing executions."
+    },
+    {
+      "id": "interpret-results",
+      "title": "How to decide whether the run achieved its goal",
+      "kind": "verification",
+      "paragraphs": [
+        "First check that the result belongs to the intended plan, environment and execution. An older successful run does not validate a newly changed configuration.",
+        "Then compare the executed cases with the planned scope. Investigate failed, aborted, skipped or not-executed cases rather than treating a completed status as successful coverage.",
+        "Use step-level evidence to explain what happened. A screenshot can show a page state, while the assertion result establishes whether the check passed. Keep these two kinds of evidence distinct.",
+        "If the execution is blocked by configuration or infrastructure, correct that issue before using the result to update a successful product walkthrough."
+      ],
+      "source_ids": [
+        "learning-hub"
+      ],
+      "figure_ids": [],
+      "requires_execution": true
+    },
+    {
+      "id": "troubleshoot",
+      "title": "When something does not work",
+      "kind": "troubleshooting",
+      "paragraphs": [
+        "Add Machine/Device is disabled: select at least one suite row. The button applies a target to the selected suites.",
+        "Next does not advance from suite selection: confirm that a selected suite has a browser or device configuration attached.",
+        "The plan shows zero test cases: open the suite and add compatible cases through Manage Test Cases, then check the plan totals again.",
+        "The plan is missing from the dashboard: review Hide on Dashboard in the plan settings.",
+        "Run Now is disabled: check that the plan has executable cases. If the run is queued, inspect capacity and the active run state rather than starting another execution.",
+        "A failure occurs after execution starts: open the failed case and its step evidence. Check environment values, prerequisites and browser configuration before changing the documented procedure."
+      ],
+      "source_ids": [
+        "learning-hub"
+      ],
+      "figure_ids": []
+    }
+  ],
+  "related": [
+    {
+      "title": "Managing Test Suites",
+      "url": "https://learning.contextqa.com/enterprise-application-testing/web-testing/managing-test-suites"
+    },
+    {
+      "title": "Inspect Test Results",
+      "url": "https://learning.contextqa.com/enterprise-application-testing/reporting/test-results"
+    },
+    {
+      "title": "Schedule recurring runs",
+      "url": "https://learning.contextqa.com/enterprise-application-testing/execution/scheduling"
+    }
+  ],
+  "review": {
+    "editorial": true,
+    "independent_task_completion": false
+  }
+}

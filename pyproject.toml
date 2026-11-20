@@ -16,6 +16,9 @@ hosted = ["fastapi>=0.121,<1", "uvicorn>=0.38,<1", "psycopg[binary,pool]>=3.2,<4
 cqa-artifacts = "cqa_artifacts.__main__:cli"
 docs-agent = "cqa_artifacts.agent:cli"
 docs-journeys = "cqa_artifacts.journeys:cli"
+docs-guides = "cqa_artifacts.guides:cli"
+docs-writer = "cqa_artifacts.writer:cli"
+docs-library = "cqa_artifacts.library:cli"
 cqa-docs-loop = "cqa_artifacts.docs_loop:cli"
 
 [tool.setuptools.packages.find]
