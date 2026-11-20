@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "project_id": "demo",
+  "name": "Product documentation",
+  "repository": "example/product",
+  "application_url": "https://app.example.com",
+  "environment": "demo",
+  "instructions": "Write clear task-based instructions. Use exact product labels. Cite source evidence. Never turn a proposed change into a claim of verified execution. Require human review before delivery.",
+  "sections": [
+    {"id":"projects","title":"Create a project","path":"guides/projects.md","owner":"owner","module_ids":["projects"],"code_paths":["src/projects/*"],"keywords":["project","workspace"]},
+    {"id":"notifications","title":"Notifications","path":"guides/notifications.md","owner":"owner","module_ids":["notifications"],"code_paths":["src/notifications/*"],"keywords":["notification"]},
+    {"id":"roles","title":"Workspace roles","path":"guides/roles.md","owner":"owner","module_ids":["permissions"],"code_paths":["src/auth/*"],"keywords":["permission"]}
+  ]
+}

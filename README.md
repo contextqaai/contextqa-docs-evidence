@@ -53,6 +53,22 @@ This is an **account-free API simulation**, not a live run or screenshot capture
 
 **Know the boundary:** review selected content and media before export. Standalone capture needs a separate producer; automatic recapture, semantic visual diff and native partner publishing are not implemented. [Kan evidence and remaining gates](docs/documentation-proof.md) are scoped separately.
 
-**Private candidate:** no open-source license or public release yet. Optional AI and hosted execution use separate credentials and may incur charges.
+**Local release candidate:** an MIT license is included; no public release has been made. Optional AI and hosted execution use separate credentials and may incur charges.
 
 [Developer instructions](AGENTS.md) · [Security and publication](docs/security.md) · [Capability evidence](docs/capability-register.md)
+
+## Saved journeys and documentation refresh
+
+The [journey agent](docs/journey-agent.md) connects source changes to saved ContextQA cases, checks definition drift, collects matching run evidence, and updates documentation with reviewed screenshots and video links. It runs from the CLI; remote test updates, execution and delivery remain explicit.
+
+## Developer workflow without an app
+
+Use the [CLI-first workflow](docs/cli-first.md) to prepare source-bound Markdown/MDX drafts, a Git patch and a local review record. No React, PostgreSQL or running server is required. `python3 -m cqa_artifacts.agent prepare` preserves the evidence and approval gates.
+
+## Optional documentation review application
+
+The new [documentation loop](docs/documentation-loop.md) provides a responsive review inbox, article editor, evidence gates and explicit draft delivery. Start with the real, historical [Kan PR #15 workspace](examples/kan-pr15/) or the synthetic account-free `examples/docs-loop/demo.py` fixture. See the [PageLoop research mapping](docs/pageloop-research.md) and [validation receipt](docs/documentation-loop-validation.md). The included server is operator-local; production hosting and live execution acceptance are separate gates.
+
+### Hosted review console (React + PostgreSQL)
+
+`apps/web` is the React review console; `cqa_artifacts/hosted` is the FastAPI API on PostgreSQL. The repository agent (`python3 -m cqa_artifacts.agent plan|validate|submit`) sends change sets to the same workspace. Checks: `npm test --prefix apps/web`, `npm run build --prefix apps/web`, and with a disposable database `TEST_DATABASE_URL=... python -m unittest discover -s tests-hosted`. See the [parity matrix](docs/parity-matrix.md) and the [2026-11-19 validation receipt](docs/hosted-validation-2026-11-19.md) for what is and is not verified.

@@ -1,0 +1,139 @@
+{
+  "schema": 1,
+  "repository": "nigharsh/kan",
+  "journeys": [
+    {
+      "id": "card-creation",
+      "name": "Create cards and reject blank titles",
+      "sections": [
+        "create"
+      ],
+      "code_paths": [
+        "apps/web/src/views/board/components/NewCardForm.tsx"
+      ],
+      "application_url": "https://kan-qa.vercel.app",
+      "environment": "QA",
+      "workspace_version_id": 1,
+      "case_ids": [
+        143,
+        137
+      ],
+      "required_media": [
+        "screenshot",
+        "video"
+      ],
+      "profile": {
+        "schema": 1,
+        "name": "Kan PR15 saved journeys",
+        "plan": {
+          "id": 33,
+          "expect": {
+            "workspaceVersionId": 1,
+            "name": "PR Impact post-merge run \u2014 analysis 19",
+            "environmentId": 1
+          }
+        },
+        "cases": [
+          {
+            "id": 143,
+            "expect": {
+              "workspaceVersionId": 1,
+              "name": "Validate required constraint on card title in new card modal"
+            }
+          },
+          {
+            "id": 137,
+            "expect": {
+              "workspaceVersionId": 1,
+              "name": "Prevent card creation when card title is empty"
+            }
+          },
+          {
+            "id": 126,
+            "expect": {
+              "workspaceVersionId": 1,
+              "name": "PRE_Login"
+            }
+          }
+        ],
+        "steps": [
+          {
+            "id": 184,
+            "expect": {
+              "testCaseId": 143
+            }
+          },
+          {
+            "id": 178,
+            "expect": {
+              "testCaseId": 137
+            }
+          },
+          {
+            "id": 201,
+            "expect": {
+              "testCaseId": 126
+            }
+          },
+          {
+            "id": 202,
+            "expect": {
+              "testCaseId": 126
+            }
+          },
+          {
+            "id": 203,
+            "expect": {
+              "testCaseId": 126
+            }
+          },
+          {
+            "id": 204,
+            "expect": {
+              "testCaseId": 126
+            }
+          },
+          {
+            "id": 205,
+            "expect": {
+              "testCaseId": 126
+            }
+          },
+          {
+            "id": 206,
+            "expect": {
+              "testCaseId": 126
+            }
+          },
+          {
+            "id": 207,
+            "expect": {
+              "testCaseId": 126
+            }
+          },
+          {
+            "id": 208,
+            "expect": {
+              "testCaseId": 126
+            }
+          }
+        ]
+      },
+      "definition_locks": {
+        "case:143": "80099e5f786005b7c6b23b95c700692b0a56476af4f44e48ee79576d50f239ba",
+        "case:137": "61031cbababbcab4639bd86bdd7fc05405fb5fbb319c538ae65c7e57bd7ad9de",
+        "case:126": "45f22ecfc326a832c3e145cf10c7a779b31beb156579934c1d5a9b745249d073",
+        "step:184": "e400e2132f38b696d9a02a3b3372f03529d6b7dbfb513225b7a3708e215288dd",
+        "step:178": "98a088322e7f142105cbb66bdbbf8e5dc0efca59914574548099f736302ebf20",
+        "step:201": "3aafb5b0eb2e9084131f6b9d11b4752b4ebcac2f83b32ea3215c9d91160fc518",
+        "step:202": "d160003dcaba56e7c0fcb409b092542448e5e9f0c4e94032040631c0c03001ba",
+        "step:203": "70f6ca8f44e78c589ce2112ac475c5e392c2e04bf7b794d2db677d201ce5261a",
+        "step:204": "9c2beefca2459661fafbfde21802026b3ce9921a6a3fa71ccf3289ad5828f724",
+        "step:205": "60263bbf626247e1774286fb4d45363c1ba0aea30333d613d5e3a58681110a5f",
+        "step:206": "017fb6dc38550e64b8995f37d16a1dfa46abeebee671da513985e53b76fb687e",
+        "step:207": "be14f7558af62d5878d697c293ffbe3bd1f0dc11396fdd6323d7f3b088b1cfe6",
+        "step:208": "0d553e6f4ec6c3067a6de999b1f45d7f457a70068a0da8ed3536a9b7562ce041"
+      }
+    }
+  ]
+}

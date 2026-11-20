@@ -1,0 +1,114 @@
+name: ContextQA documentation agent
+description: Plan source-bound documentation changes, optionally draft them, and submit for human review.
+inputs:
+  repository-path:
+    description: Checked-out product repository
+    default: .
+  config:
+    description: Documentation manifest path in the product repository
+    default: .docs-agent.json
+  base-sha:
+    description: Full immutable base commit SHA
+    required: true
+  head-sha:
+    description: Full immutable target commit SHA
+    required: true
+  source-url:
+    description: HTTPS source PR or release link
+    default: ''
+  output-directory:
+    description: New private output directory
+    default: .docs-agent-output
+  journeys:
+    description: Optional repository-relative journey registry path
+    default: ''
+  evidence-exports:
+    description: Optional path to a JSON map of journey IDs to reviewed local exports
+    default: ''
+  draft:
+    description: Explicitly permit one model call and sharing the bounded plan with the configured provider
+    default: 'false'
+  submit:
+    description: Submit the validated proposal to the review API; does not approve or publish
+    default: 'false'
+  app-url:
+    description: Hosted documentation application origin
+    default: ''
+  organization:
+    description: Organization slug
+    default: ''
+  project:
+    description: Project slug
+    default: ''
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+    - uses: actions/setup-node@v4
+      with:
+        node-version: '22'
+    - name: Plan documentation impact
+      shell: bash
+      env:
+        PRODUCT_REPO: ${{ inputs.repository-path }}
+        CONFIG_PATH: ${{ inputs.config }}
+        BASE_SHA: ${{ inputs.base-sha }}
+        HEAD_SHA: ${{ inputs.head-sha }}
+        SOURCE_URL: ${{ inputs.source-url }}
+        OUTPUT_DIR: ${{ inputs.output-directory }}
+      run: |
+        export PYTHONPATH="$GITHUB_ACTION_PATH/../../.."
+        python -m cqa_artifacts.agent plan --repo "$PRODUCT_REPO" --config "$PRODUCT_REPO/$CONFIG_PATH" --base "$BASE_SHA" --head "$HEAD_SHA" --source-url "$SOURCE_URL" --out "$OUTPUT_DIR/plan.json"
+    - name: Select saved ContextQA journeys
+      if: inputs.journeys != ''
+      shell: bash
+      env:
+        PRODUCT_REPO: ${{ inputs.repository-path }}
+        JOURNEYS_PATH: ${{ inputs.journeys }}
+        OUTPUT_DIR: ${{ inputs.output-directory }}
+        EXPORTS_PATH: ${{ inputs.evidence-exports }}
+      run: |
+        export PYTHONPATH="$GITHUB_ACTION_PATH/../../.."
+        python -m cqa_artifacts.journeys impact --registry "$PRODUCT_REPO/$JOURNEYS_PATH" --plan "$OUTPUT_DIR/plan.json" --out "$OUTPUT_DIR/journey-impact.json"
+        if [ -n "$EXPORTS_PATH" ]; then
+          python -m cqa_artifacts.journeys evidence-plan --registry "$PRODUCT_REPO/$JOURNEYS_PATH" --plan "$OUTPUT_DIR/plan.json" --exports "$EXPORTS_PATH" --out "$OUTPUT_DIR/evidence-plan.json"
+        fi
+    - name: Draft with configured provider and validate
+      if: inputs.draft == 'true'
+      shell: bash
+      env:
+        OUTPUT_DIR: ${{ inputs.output-directory }}
+      run: |
+        export PYTHONPATH="$GITHUB_ACTION_PATH/../../.."
+        DRAFT_PLAN="$OUTPUT_DIR/plan.json"
+        if [ -f "$OUTPUT_DIR/evidence-plan.json" ]; then DRAFT_PLAN="$OUTPUT_DIR/evidence-plan.json"; fi
+        node "$GITHUB_ACTION_PATH/../../../scripts/docs-agent-draft.js" --plan "$DRAFT_PLAN" --out "$OUTPUT_DIR/proposal.json" --approve-data-sharing
+        python -m cqa_artifacts.agent validate --plan "$DRAFT_PLAN" --proposal "$OUTPUT_DIR/proposal.json" --out "$OUTPUT_DIR/event.json"
+    - name: Prepare local review files
+      if: inputs.draft == 'true'
+      shell: bash
+      env:
+        PRODUCT_REPO: ${{ inputs.repository-path }}
+        JOURNEYS_PATH: ${{ inputs.journeys }}
+        OUTPUT_DIR: ${{ inputs.output-directory }}
+        EXPORTS_PATH: ${{ inputs.evidence-exports }}
+      run: |
+        export PYTHONPATH="$GITHUB_ACTION_PATH/../../.."
+        if [ -n "$JOURNEYS_PATH" ] && [ -n "$EXPORTS_PATH" ]; then
+          python -m cqa_artifacts.journeys prepare --registry "$PRODUCT_REPO/$JOURNEYS_PATH" --plan "$OUTPUT_DIR/plan.json" --exports "$EXPORTS_PATH" --proposal "$OUTPUT_DIR/proposal.json" --out "$OUTPUT_DIR/review"
+        else
+          python -m cqa_artifacts.agent prepare --plan "$OUTPUT_DIR/plan.json" --proposal "$OUTPUT_DIR/proposal.json" --out "$OUTPUT_DIR/review"
+        fi
+    - name: Submit for review
+      if: inputs.submit == 'true'
+      shell: bash
+      env:
+        OUTPUT_DIR: ${{ inputs.output-directory }}
+        APP_URL: ${{ inputs.app-url }}
+        ORGANIZATION: ${{ inputs.organization }}
+        PROJECT: ${{ inputs.project }}
+      run: |
+        export PYTHONPATH="$GITHUB_ACTION_PATH/../../.."
+        python -m cqa_artifacts.agent submit --event "$OUTPUT_DIR/event.json" --url "$APP_URL" --organization "$ORGANIZATION" --project "$PROJECT"

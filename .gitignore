@@ -17,3 +17,10 @@ build/
 .ai-private/
 
 !.env.example
+!.env.hosted.example
+
+apps/web/node_modules/
+apps/web/dist/
+apps/web/*.tsbuildinfo
+.venv/
+.env.hosted

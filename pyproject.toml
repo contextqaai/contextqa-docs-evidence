@@ -9,14 +9,20 @@ description = "Private-first workflow evidence for documentation and demo handof
 requires-python = ">=3.10"
 dependencies = []
 
+[project.optional-dependencies]
+hosted = ["fastapi>=0.121,<1", "uvicorn>=0.38,<1", "psycopg[binary,pool]>=3.2,<4", "PyJWT[crypto]>=2.10,<3", "httpx>=0.28,<1"]
+
 [project.scripts]
 cqa-artifacts = "cqa_artifacts.__main__:cli"
+docs-agent = "cqa_artifacts.agent:cli"
+docs-journeys = "cqa_artifacts.journeys:cli"
+cqa-docs-loop = "cqa_artifacts.docs_loop:cli"
 
 [tool.setuptools.packages.find]
 include = ["cqa_artifacts*"]
 
 [tool.setuptools.package-data]
-cqa_artifacts = ["contextqa-contract.json", "brand/*.svg"]
+cqa_artifacts = ["contextqa-contract.json", "brand/*.svg", "loop_ui/*"]
 
 [project.urls]
 Homepage = "https://contextqa.com/?utm_source=github&utm_medium=developer_referral&utm_campaign=contextqa_docs_evidence&utm_content=package_homepage"
