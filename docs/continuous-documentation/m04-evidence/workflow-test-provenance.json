@@ -1,0 +1,53 @@
+{
+  "case_id": 208,
+  "result_id": 477,
+  "step_result_id": 860,
+  "viewport": [
+    1280,
+    720
+  ],
+  "frontend": {
+    "path": "/assets/index-vp0cUQO5.js",
+    "http_status": 200
+  },
+  "source_trace_sha256": "be00a3e487ae22c05bfb1a2e26f85fa3dce8e5b8ee49ad487841e393e00238fe",
+  "assets": [
+    {
+      "file": "workflow-test.mp4",
+      "source_recording_sha256": "ab5c9e44d25d96a5525330114bb56328a275dbb8bf32ae5ac3049ef1afb45e52",
+      "start_seconds": 186.0,
+      "end_seconds": 223.0,
+      "sha256": "b579fc8f899c10c29e681805f40289221fc9bbf542657c6d237b9cf383c1b852"
+    },
+    {
+      "file": "workflow-form.jpg",
+      "trace_timestamp_ms": 81933.108,
+      "resource": "page@9ac00ebdd193b4290d4c76f92cea8880-1795329407628.jpeg",
+      "sha256": "d6054f04bdb1c89cef40789f63d60b4e46acef217f143220fbc70a987321f6c1",
+      "encoded_frame_bounds": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "run-timeline.jpg",
+      "trace_timestamp_ms": 374449.857,
+      "resource": "page@9ac00ebdd193b4290d4c76f92cea8880-1795329700145.jpeg",
+      "sha256": "ac85b8d899e4ef6a887e33b9caa3981ed0cc5ca76278365e0e52b83b8a5e9d58",
+      "encoded_frame_bounds": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "paused-workflow.jpg",
+      "trace_timestamp_ms": 555250.04,
+      "resource": "page@9ac00ebdd193b4290d4c76f92cea8880-1795329880945.jpeg",
+      "sha256": "8eaa6336065252540839e479164d98be437f7117fcdcd27c4b5301c9812d96d9",
+      "encoded_frame_bounds": [
+        1280,
+        720
+      ]
+    }
+  ]
+}

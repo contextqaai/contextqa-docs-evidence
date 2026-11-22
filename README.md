@@ -1,10 +1,16 @@
-# ContextQA Docs Evidence
+# SoFa Docs
+
+**Continuous documentation platform plan (2026-11-21):** [product, UI, architecture and 17 modules](docs/continuous-documentation/README.md), with a [build order](docs/continuous-documentation/roadmap.md) and [68-ticket backlog](docs/continuous-documentation/BACKLOG.csv). This is the forward specification; implementation and production verification remain separate.
 
 For **solutions engineers and technical writers**: turn selected ContextQA workflow evidence into reviewed guides, then compare versions when the application changes.
 
 [Usage guide](docs/how-to-use.md) · [Technical guide](docs/POWERFUL.md) · [Capture and refresh](docs/capture-and-refresh.md) · [Proof status](docs/documentation-proof.md)
 
 **Build your documentation agent:** customize the audience, evidence selection and review policy while reusing ContextQA execution and this renderer. [See it → try it → build it → own it](docs/custom-agent-builder.md).
+
+The guide reader displays the reviewed article with its captured evidence. [Ship 5 capture and recording](docs/continuous-documentation/studio-evidence/training-export-provenance.json)
+
+![SoFa Docs guide reader captured by ContextQA](docs/continuous-documentation/studio-evidence/guide-reader.jpg)
 
 ## Salesforce-focused starter
 

@@ -1,0 +1,23 @@
+[
+  {
+    "file": "before-walkthrough.mp4",
+    "result_id": 459,
+    "source": "ContextQA screen recording",
+    "start_seconds": 84.0,
+    "end_seconds": 178.0,
+    "original_sha256": "55553c642c3b670c91624ad8645f5befb8e66765d3e9ee0072174feb6d1451af",
+    "sha256": "1ef3d2c41da9a48b945f0cbd6835fc48dbb6f6283e3331e437f9c51d924b439b"
+  },
+  {
+    "file": "before-inbox.jpg",
+    "result_id": 459,
+    "source": "ContextQA trace screencast frame",
+    "resource": "page@9dd1f36bf626aab0972a1145dbd78c40-1795322270522.jpeg",
+    "trace_timestamp_ms": 114327.675,
+    "viewport": [
+      1280,
+      720
+    ],
+    "sha256": "47fc341ad475aa00bd10a7ba18c0f0a9b0f64433846ad65d57e342f7e8baaa67"
+  }
+]

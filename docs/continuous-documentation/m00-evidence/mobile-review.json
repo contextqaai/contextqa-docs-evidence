@@ -1,0 +1,35 @@
+[
+  {
+    "file": "mobile-review.mp4",
+    "result_id": 463,
+    "source": "ContextQA screen recording",
+    "start_seconds": 253.0,
+    "end_seconds": 361.0,
+    "original_sha256": "252f93ad332df3f726476a75a5c6ee61497facdd51f9f6949f2f6cc6f5e75436",
+    "sha256": "d64bb25c991e797ce7fa39d46bff27d6326f77acff0c17c8a0d76a61da46de6b"
+  },
+  {
+    "file": "mobile-rejected.jpg",
+    "result_id": 463,
+    "source": "ContextQA trace screencast frame",
+    "resource": "page@51664211ab11a7f4fcca6e7fe03042c5-1795322805443.jpeg",
+    "trace_timestamp_ms": 118513.594,
+    "viewport": [
+      390,
+      844
+    ],
+    "sha256": "dbc3568e7a9d727ed364eb4a5451a64faa0196fa6f37ba4855d5c6a72845a579"
+  },
+  {
+    "file": "mobile-article.jpg",
+    "result_id": 463,
+    "source": "ContextQA trace screencast frame",
+    "resource": "page@51664211ab11a7f4fcca6e7fe03042c5-1795322984993.jpeg",
+    "trace_timestamp_ms": 298063.114,
+    "viewport": [
+      390,
+      844
+    ],
+    "sha256": "18603144f0ecdb0c0b0b54efbe5d366dd6a57b4b701acc424596b8e3897adf5c"
+  }
+]

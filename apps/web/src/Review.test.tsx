@@ -17,3 +17,32 @@ describe('review console',()=>{
  it('hides health actions from contributors',()=>{render(<HealthReport state={{...state,role:'contributor'}} importArticle={()=>{}} newRequest={()=>{}} result={{issues:[{path:'setup.md',kind:'coverage_gap',detail:'setup'}],external_links_checked:false,semantic_contradictions_checked:false}}/>);expect(screen.queryByRole('button',{name:'Import article'})).toBeNull()});
  it('prefills the missing path when a health finding opens intake',()=>{HTMLDialogElement.prototype.showModal??=function(this:HTMLDialogElement){this.setAttribute('open','')};HTMLDialogElement.prototype.close??=function(this:HTMLDialogElement){this.removeAttribute('open')};render(<Intake kind="request" state={state} initialPath="setup.md" close={()=>{}} submit={vi.fn()}/>);expect((screen.getByLabelText('New article path') as HTMLInputElement).value).toBe('setup.md')});
 });
+
+it('opens and closes the compact review context without changing an article decision',async()=>{
+ const review=vi.fn();
+ render(<Review item={item} state={state} busy={false} dirty={false} setDirty={()=>{}} back={()=>{}} review={review} mutate={vi.fn()} confirm={()=>{}}/>);
+ await userEvent.click(screen.getByRole('button',{name:'Show request details'}));
+ expect(screen.getByRole('button',{name:'Hide request details'}).getAttribute('aria-expanded')).toBe('true');
+ await userEvent.click(screen.getByRole('button',{name:'Hide request details'}));
+ expect(screen.getByRole('button',{name:'Show request details'}).getAttribute('aria-expanded')).toBe('false');
+ expect(review).not.toHaveBeenCalled();
+});
+
+it('preserves edited Markdown after a rejected save and retries the same revision', async () => {
+  const mutate = vi.fn().mockRejectedValueOnce(new Error('Temporary write failure')).mockResolvedValueOnce({});
+  const user = userEvent.setup();
+  render(<Review item={item} state={state} busy={false} dirty={true} setDirty={vi.fn()}
+    back={vi.fn()} review={vi.fn()} mutate={mutate} confirm={(_title, _text, action) => action()}/>);
+  await user.click(screen.getByRole('tab', {name: 'Article'}));
+  await user.click(screen.getByRole('button', {name: 'Edit Markdown'}));
+  const editor = screen.getByLabelText<HTMLTextAreaElement>('Article Markdown');
+  await user.clear(editor);
+  await user.type(editor, '# Revised instructions');
+  await user.click(screen.getByRole('button', {name: 'Save draft'}));
+  expect(screen.getByLabelText<HTMLTextAreaElement>('Article Markdown').value).toBe('# Revised instructions');
+  await user.click(screen.getByRole('button', {name: 'Save draft'}));
+  expect(mutate).toHaveBeenCalledTimes(2);
+  expect(mutate.mock.calls[1]).toEqual(mutate.mock.calls[0]);
+  expect(mutate.mock.calls[1][1]).toMatchObject({version: 1, data: {after: '# Revised instructions'}});
+  expect(screen.queryByLabelText('Article Markdown')).toBeNull();
+});

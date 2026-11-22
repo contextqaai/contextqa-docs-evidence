@@ -1,0 +1,48 @@
+{
+  "case_id": 205,
+  "result_id": 472,
+  "step_result_id": 843,
+  "viewport": [
+    1280,
+    720
+  ],
+  "frontend": {
+    "path": "/assets/index-CaWNtHsg.js",
+    "http_status": 200
+  },
+  "source_trace_sha256": "a6369adbf07685987932eafab20bc2e7d749dd145eed41a1023fc23c49c416fb",
+  "assets": [
+    {
+      "file": "retry-import.mp4",
+      "source_recording_sha256": "b033fa4120d6a5dab3e0d7aa7545e10b880aa81870aa4b0f25ec666cf2edd3ce",
+      "start_seconds": 4.0,
+      "end_seconds": 38.0,
+      "sha256": "1485569a7f783ddc4921cc891e3e8d5387661f2a9290c92f0cc6e60f4591a976"
+    },
+    {
+      "name": "incomplete-listing",
+      "id": 828,
+      "position": 5,
+      "action": "Verify that the Error message text contains Repository listing is incomplete. Existing articles are safe. Retry the preview or choose a smaller docs directory.",
+      "file": "incomplete-listing.jpg",
+      "sha256": "2373a7dfed96e915248ac57e6041fd5fb5b458e1eb5b13a6124d04e9ba13b5ca"
+    },
+    {
+      "name": "file-warnings",
+      "id": 839,
+      "position": 11,
+      "action": "Verify that the mint.json text contains Invalid or unsupported navigation configuration.",
+      "file": "file-warnings.jpg",
+      "sha256": "685e6ea86920800856a934bdb364440d0cb1d4680bf526012a92e126fb1d44d8"
+    },
+    {
+      "name": "unchanged-receipt",
+      "id": 843,
+      "position": 13,
+      "action": "AI Verification: Verify that the import receipt displays '0 created \u00b7 0 updated \u00b7 2 unchanged \u00b7 2 skipped'.",
+      "file": "unchanged-receipt.jpg",
+      "sha256": "95f0bfb075ed67354bdcbf9dcbdde155d1ca01c3d2eaafdaba0efc9a17740203"
+    }
+  ],
+  "implementation_commit": "d6ddf62"
+}

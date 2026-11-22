@@ -1,0 +1,33 @@
+{
+  "case_id": 210,
+  "result_id": 475,
+  "step_result_id": 858,
+  "viewport": [
+    390,
+    844
+  ],
+  "frontend": {
+    "path": "/assets/index-vp0cUQO5.js",
+    "http_status": 200
+  },
+  "source_trace_sha256": "34764462c93d3952b7aa012c85159dddf6074a022939ee4d0f9d123061b36dac",
+  "assets": [
+    {
+      "file": "schedule-correction.mp4",
+      "source_recording_sha256": "4ea2a54aa4cba28ce977f682345dd3ed85908a090fbc1cdb084b74203c7906c4",
+      "start_seconds": 174.0,
+      "end_seconds": 205.0,
+      "sha256": "b393d6f0997eb55900cb5b0dd9b498ae327dcac50b9ee97ce13062a99d6e3a29"
+    },
+    {
+      "file": "timezone-error.jpg",
+      "trace_timestamp_ms": 195554.858,
+      "resource": "page@0fd62128d220a3db080078c4c1eace46-1795329529851.jpeg",
+      "sha256": "8670a33199cbb806ef536a4eacc217ad0364ef2918c6048589697d53c2ebfe4b",
+      "encoded_frame_bounds": [
+        390,
+        844
+      ]
+    }
+  ]
+}

@@ -1,0 +1,449 @@
+{
+  "workspace": "Ship 5 / 1.0",
+  "baseline_sha": "1d62a9a1fe5fcdcdc6ca573e782bdaad07f523df",
+  "candidate_sha": "ece057449c7effd7a63d7cf042cc6c236ce4b0c8",
+  "baseline_loopback": "http://127.0.0.1:8081",
+  "candidate_loopback": "http://127.0.0.1:8080",
+  "fixture": "Kan documentation / Reject whitespace-only card titles",
+  "cases": [
+    {
+      "id": 196,
+      "name": "M00 | Open a documentation request and inspect its evidence",
+      "workspace_version_id": 1,
+      "environment_id": 8,
+      "authored_steps": [
+        617,
+        618,
+        619,
+        620,
+        621,
+        622,
+        623,
+        624,
+        625,
+        626,
+        627
+      ],
+      "execution_results": [
+        459
+      ]
+    },
+    {
+      "id": 199,
+      "name": "M00 | After build \u2013 open a request and verify evidence (pair to 196)",
+      "workspace_version_id": 1,
+      "environment_id": 9,
+      "authored_steps": [
+        633,
+        634,
+        630,
+        631,
+        632,
+        635,
+        636,
+        637,
+        638,
+        639,
+        640,
+        641
+      ],
+      "execution_results": [
+        460
+      ]
+    },
+    {
+      "id": 197,
+      "name": "M00 | Compact review navigation",
+      "workspace_version_id": 1,
+      "environment_id": 9,
+      "authored_steps": [
+        642,
+        643,
+        644,
+        645,
+        646,
+        647,
+        648,
+        649,
+        650,
+        651,
+        652
+      ],
+      "execution_results": [
+        461
+      ]
+    },
+    {
+      "id": 198,
+      "name": "M00 | Cancel request creation and restore focus",
+      "workspace_version_id": 1,
+      "environment_id": 9,
+      "authored_steps": [
+        653,
+        654,
+        655,
+        656,
+        657,
+        658,
+        659,
+        660,
+        661,
+        662
+      ],
+      "execution_results": [
+        462
+      ]
+    },
+    {
+      "id": 200,
+      "name": "M00 | Mobile sign-in rejection, recovery, article selection and details",
+      "workspace_version_id": 1,
+      "environment_id": 9,
+      "authored_steps": [
+        663,
+        664,
+        665,
+        666,
+        667,
+        668,
+        669,
+        670,
+        671,
+        672,
+        673,
+        674,
+        675,
+        676,
+        677,
+        678,
+        679,
+        680,
+        681,
+        682,
+        683,
+        684
+      ],
+      "execution_results": [
+        463
+      ]
+    }
+  ],
+  "execution_status": "See per-run provider verdicts and criterion assessment in m00-acceptance-results.md.",
+  "verified_media": [
+    {
+      "file": "after-walkthrough.mp4",
+      "result_id": 460,
+      "source": "ContextQA screen recording",
+      "start_seconds": 80.0,
+      "end_seconds": 188.0,
+      "original_sha256": "557030cdf2c1b64c642c2bcc41c04af2ed98f3d823d324b7851d0a2d9d7c903c",
+      "sha256": "67fa1bf584fdc02743c34acd5a507f5718a9375a68c48079da50bd53b27016f1"
+    },
+    {
+      "file": "after-overview.jpg",
+      "result_id": 460,
+      "source": "ContextQA trace screencast frame",
+      "resource": "page@d0b44994bc8ee4d3a693b6d12d785cd3-1795322717027.jpeg",
+      "trace_timestamp_ms": 108045.722,
+      "viewport": [
+        1280,
+        720
+      ],
+      "sha256": "70dc87e251dd8b2d171c009af6d558032871017d2842dd97c8075e3a698cdf7e"
+    },
+    {
+      "file": "after-detail.jpg",
+      "result_id": 460,
+      "source": "ContextQA trace screencast frame",
+      "resource": "page@d0b44994bc8ee4d3a693b6d12d785cd3-1795322747151.jpeg",
+      "trace_timestamp_ms": 138170.147,
+      "viewport": [
+        1280,
+        720
+      ],
+      "sha256": "b332ef54ba29dfbeeee8a6969c175201456d320c9fdf204cc3b3a4ccfef2e576"
+    },
+    {
+      "file": "after-evidence.jpg",
+      "result_id": 460,
+      "source": "ContextQA trace screencast frame",
+      "resource": "page@d0b44994bc8ee4d3a693b6d12d785cd3-1795322775788.jpeg",
+      "trace_timestamp_ms": 166806.664,
+      "viewport": [
+        1280,
+        720
+      ],
+      "sha256": "d5d5db189c5c70b2ef0a23e941a66cc99ddea8a871d9673c26919612762bff7f"
+    },
+    {
+      "file": "before-walkthrough.mp4",
+      "result_id": 459,
+      "source": "ContextQA screen recording",
+      "start_seconds": 84.0,
+      "end_seconds": 178.0,
+      "original_sha256": "55553c642c3b670c91624ad8645f5befb8e66765d3e9ee0072174feb6d1451af",
+      "sha256": "1ef3d2c41da9a48b945f0cbd6835fc48dbb6f6283e3331e437f9c51d924b439b"
+    },
+    {
+      "file": "before-inbox.jpg",
+      "result_id": 459,
+      "source": "ContextQA trace screencast frame",
+      "resource": "page@9dd1f36bf626aab0972a1145dbd78c40-1795322270522.jpeg",
+      "trace_timestamp_ms": 114327.675,
+      "viewport": [
+        1280,
+        720
+      ],
+      "sha256": "47fc341ad475aa00bd10a7ba18c0f0a9b0f64433846ad65d57e342f7e8baaa67"
+    },
+    {
+      "file": "keyboard-cancel.mp4",
+      "result_id": 462,
+      "source": "ContextQA screen recording",
+      "start_seconds": 129.0,
+      "end_seconds": 210.0,
+      "original_sha256": "858930fe2bc018578766b1070562f7cfed70856b4b8c2435be4fbc6d88ee2d33",
+      "sha256": "f50d2951d6d6864595c6a8d7f270c8bb0ad891834d29441c1be6edefb91f40c8"
+    },
+    {
+      "file": "keyboard-dialog.jpg",
+      "result_id": 462,
+      "source": "ContextQA trace screencast frame",
+      "resource": "page@e7e2e09c91bc0a4937958396eb871965-1795322835985.jpeg",
+      "trace_timestamp_ms": 192914.946,
+      "viewport": [
+        1440,
+        900
+      ],
+      "sha256": "3a987847f854f4463f8048c2579431e4931f9c6379fc76a3eee5b27406eba469"
+    },
+    {
+      "file": "mobile-review.mp4",
+      "result_id": 463,
+      "source": "ContextQA screen recording",
+      "start_seconds": 253.0,
+      "end_seconds": 361.0,
+      "original_sha256": "252f93ad332df3f726476a75a5c6ee61497facdd51f9f6949f2f6cc6f5e75436",
+      "sha256": "d64bb25c991e797ce7fa39d46bff27d6326f77acff0c17c8a0d76a61da46de6b"
+    },
+    {
+      "file": "mobile-rejected.jpg",
+      "result_id": 463,
+      "source": "ContextQA trace screencast frame",
+      "resource": "page@51664211ab11a7f4fcca6e7fe03042c5-1795322805443.jpeg",
+      "trace_timestamp_ms": 118513.594,
+      "viewport": [
+        390,
+        844
+      ],
+      "sha256": "dbc3568e7a9d727ed364eb4a5451a64faa0196fa6f37ba4855d5c6a72845a579"
+    },
+    {
+      "file": "mobile-article.jpg",
+      "result_id": 463,
+      "source": "ContextQA trace screencast frame",
+      "resource": "page@51664211ab11a7f4fcca6e7fe03042c5-1795322984993.jpeg",
+      "trace_timestamp_ms": 298063.114,
+      "viewport": [
+        390,
+        844
+      ],
+      "sha256": "18603144f0ecdb0c0b0b54efbe5d366dd6a57b4b701acc424596b8e3897adf5c"
+    },
+    {
+      "file": "tablet-details.mp4",
+      "result_id": 461,
+      "source": "ContextQA screen recording",
+      "start_seconds": 168.0,
+      "end_seconds": 251.0,
+      "original_sha256": "1adee1321091f1bf5df6fabfa0293841d284ffcaeef74a298afec03300eae039",
+      "sha256": "0e4acdbee80042d8b64d8bf1e146f87ceb2234cae57e2c7c1aff8d7e1967fa9b"
+    },
+    {
+      "file": "tablet-context.jpg",
+      "result_id": 461,
+      "source": "ContextQA trace screencast frame",
+      "resource": "page@a203f8784ffc4bb7b1c77bcb6c7d8b66-1795322871068.jpeg",
+      "trace_timestamp_ms": 241050.755,
+      "viewport": [
+        1024,
+        768
+      ],
+      "sha256": "0a7e4a0c3082276e29b048e5e47eba82e2d04a53c4e75a21b2ebf5c0323ef1dd"
+    }
+  ],
+  "fixture_preview": {
+    "provider": "ngrok",
+    "lifetime": "60 minutes from fixture startup",
+    "backend": "read-only synthetic snapshot generated by the review domain, with separate fixture authentication",
+    "database_connection": false,
+    "supports_mutations": false,
+    "before": {
+      "url": "https://noncalcareous-yvonne-unenumerated.ngrok-free.dev/before",
+      "asset": "/assets/index-qcmjYz3n.js",
+      "environment_id": 8
+    },
+    "after": {
+      "url": "https://noncalcareous-yvonne-unenumerated.ngrok-free.dev/after",
+      "asset": "/assets/index-Mf2vas4O.js",
+      "environment_id": 9
+    },
+    "external_preflight": "Both entry points served their expected assets. Authenticated fixture API returned one synthetic editor request. Local negative checks rejected writes, unrelated workspace routes, and anonymous data reads."
+  },
+  "credit_observation": {
+    "ceiling": 1000,
+    "opening_balance": 14773,
+    "closing_balance": 14768,
+    "web_test_charges": 5,
+    "observed_web_test_credits": 5,
+    "scope": "Ship 5 tenant ledger, entries have no per-result IDs"
+  },
+  "runs": [
+    {
+      "case_id": 196,
+      "result_id": 459,
+      "commit_sha": "1d62a9a1fe5fcdcdc6ca573e782bdaad07f523df",
+      "edition": "before",
+      "verdict": "SUCCESS",
+      "passed_failed_total": [
+        1,
+        0,
+        1
+      ],
+      "recording_count": 1,
+      "actual_viewports": [
+        [
+          1280,
+          720
+        ]
+      ],
+      "step_results": [
+        {
+          "result_id": 798,
+          "action": "ai_text_actions",
+          "result": "SUCCESS",
+          "failure": ""
+        }
+      ],
+      "started_at": "2026-11-22T04:35:47.972+00:00",
+      "ended_at": "2026-11-22T04:39:53.377+00:00"
+    },
+    {
+      "case_id": 199,
+      "result_id": 460,
+      "commit_sha": "ece057449c7effd7a63d7cf042cc6c236ce4b0c8",
+      "edition": "after",
+      "verdict": "SUCCESS",
+      "passed_failed_total": [
+        1,
+        0,
+        1
+      ],
+      "recording_count": 1,
+      "actual_viewports": [
+        [
+          1280,
+          720
+        ]
+      ],
+      "step_results": [
+        {
+          "result_id": 799,
+          "action": "ai_text_actions",
+          "result": "SUCCESS",
+          "failure": ""
+        }
+      ],
+      "started_at": "2026-11-22T04:43:25.475+00:00",
+      "ended_at": "2026-11-22T04:47:10.654+00:00"
+    },
+    {
+      "case_id": 197,
+      "result_id": 461,
+      "commit_sha": "ece057449c7effd7a63d7cf042cc6c236ce4b0c8",
+      "edition": "after",
+      "verdict": "SUCCESS",
+      "passed_failed_total": [
+        1,
+        0,
+        1
+      ],
+      "recording_count": 1,
+      "actual_viewports": [
+        [
+          1024,
+          768
+        ]
+      ],
+      "step_results": [
+        {
+          "result_id": 800,
+          "action": "ai_text_actions",
+          "result": "SUCCESS",
+          "failure": ""
+        }
+      ],
+      "started_at": "2026-11-22T04:43:44.428+00:00",
+      "ended_at": "2026-11-22T04:48:37.726+00:00"
+    },
+    {
+      "case_id": 198,
+      "result_id": 462,
+      "commit_sha": "ece057449c7effd7a63d7cf042cc6c236ce4b0c8",
+      "edition": "after",
+      "verdict": "SUCCESS",
+      "passed_failed_total": [
+        1,
+        0,
+        1
+      ],
+      "recording_count": 1,
+      "actual_viewports": [
+        [
+          1440,
+          900
+        ]
+      ],
+      "step_results": [
+        {
+          "result_id": 801,
+          "action": "ai_text_actions",
+          "result": "SUCCESS",
+          "failure": ""
+        }
+      ],
+      "started_at": "2026-11-22T04:43:54.924+00:00",
+      "ended_at": "2026-11-22T04:48:43.318+00:00"
+    },
+    {
+      "case_id": 200,
+      "result_id": 463,
+      "commit_sha": "ece057449c7effd7a63d7cf042cc6c236ce4b0c8",
+      "edition": "after",
+      "verdict": "SUCCESS",
+      "passed_failed_total": [
+        1,
+        0,
+        1
+      ],
+      "recording_count": 1,
+      "actual_viewports": [
+        [
+          390,
+          844
+        ]
+      ],
+      "step_results": [
+        {
+          "result_id": 802,
+          "action": "ai_text_actions",
+          "result": "SUCCESS",
+          "failure": ""
+        }
+      ],
+      "started_at": "2026-11-22T04:44:42.230+00:00",
+      "ended_at": "2026-11-22T04:52:06.256+00:00"
+    }
+  ],
+  "fixture_boundary": "Isolated synthetic data and immutable read-only API responses. Local integration tests cover database writes and tenant boundaries."
+}

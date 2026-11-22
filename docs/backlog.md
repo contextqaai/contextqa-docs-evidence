@@ -1,5 +1,9 @@
 # ContextQA repository implementation backlog
 
+## Continuous documentation platform plan — November 21
+
+Use the [new platform specification](continuous-documentation/README.md), [module roadmap](continuous-documentation/roadmap.md) and [implementation tickets](continuous-documentation/BACKLOG.csv) for the Pageloop-inspired product work. The older cross-repository planning snapshot below is retained with its original scope and receipts.
+
 ## October 27 implementation update
 
 The Python ContextQA adapter is now implemented locally and transport-mock tested: 26 contract-derived JSON authoring/result operations, an explicit one-attempt saved-plan trigger with fsynced intent/accepted-run journal, bounded strict-result polling, selected run→case→step/suite membership checks, optional private run→plan/profile snapshots and review-required guide import. See [ContextQA API usage](contextqa-api.md) and [platform configuration](contextqa-platform.md). This supersedes earlier statements that *no adapter is implemented*; the contract-derived live behavior, tenant acceptance, billing/metering and actual configured data/prerequisite/browser/parallel execution remain unverified. Native partner publishing remains absent. Selected media retrieval was added October 30; see documentation-proof.md. The new no-key API-to-guide sample is simulated transport, not live evidence. Historical receipts below retain their original scope/date.

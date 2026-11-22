@@ -1,0 +1,47 @@
+[
+  {
+    "file": "after-walkthrough.mp4",
+    "result_id": 460,
+    "source": "ContextQA screen recording",
+    "start_seconds": 80.0,
+    "end_seconds": 188.0,
+    "original_sha256": "557030cdf2c1b64c642c2bcc41c04af2ed98f3d823d324b7851d0a2d9d7c903c",
+    "sha256": "67fa1bf584fdc02743c34acd5a507f5718a9375a68c48079da50bd53b27016f1"
+  },
+  {
+    "file": "after-overview.jpg",
+    "result_id": 460,
+    "source": "ContextQA trace screencast frame",
+    "resource": "page@d0b44994bc8ee4d3a693b6d12d785cd3-1795322717027.jpeg",
+    "trace_timestamp_ms": 108045.722,
+    "viewport": [
+      1280,
+      720
+    ],
+    "sha256": "70dc87e251dd8b2d171c009af6d558032871017d2842dd97c8075e3a698cdf7e"
+  },
+  {
+    "file": "after-detail.jpg",
+    "result_id": 460,
+    "source": "ContextQA trace screencast frame",
+    "resource": "page@d0b44994bc8ee4d3a693b6d12d785cd3-1795322747151.jpeg",
+    "trace_timestamp_ms": 138170.147,
+    "viewport": [
+      1280,
+      720
+    ],
+    "sha256": "b332ef54ba29dfbeeee8a6969c175201456d320c9fdf204cc3b3a4ccfef2e576"
+  },
+  {
+    "file": "after-evidence.jpg",
+    "result_id": 460,
+    "source": "ContextQA trace screencast frame",
+    "resource": "page@d0b44994bc8ee4d3a693b6d12d785cd3-1795322775788.jpeg",
+    "trace_timestamp_ms": 166806.664,
+    "viewport": [
+      1280,
+      720
+    ],
+    "sha256": "d5d5db189c5c70b2ef0a23e941a66cc99ddea8a871d9673c26919612762bff7f"
+  }
+]

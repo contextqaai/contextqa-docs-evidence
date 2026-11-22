@@ -4,6 +4,7 @@ No branch merge, no site publication, no automatic retry after a remote write.
 The local checkout is read; changes are assembled in a new temporary clone.
 """
 import json
+import hashlib
 import base64
 import os
 from pathlib import Path
@@ -22,7 +23,7 @@ def command(args,cwd):
     return result.stdout if args[:2]==['git','show'] else result.stdout.strip()
 
 
-def deliver(bundle,checkout,repository,base_sha,branch,journal,approved=False,run=command,base_ref="main"):
+def deliver(bundle,checkout,repository,base_sha,branch,journal,approved=False,run=command,base_ref="main",current_destination=None):
     if approved is not True:
         raise Rejected('Explicit draft-PR delivery approval required')
     if not re.fullmatch(r'[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+',repository):
@@ -35,11 +36,21 @@ def deliver(bundle,checkout,repository,base_sha,branch,journal,approved=False,ru
         raise Rejected('Use a unique contextqa-docs/ branch')
     if bundle.get('published') is not False or not bundle.get('approval') or not bundle.get('files'):
         raise Rejected('Reviewed draft bundle required')
+    destination=bundle.get('source',{}).get('documentation_destination')
+    root_prefix=''
+    if destination is not None:
+        if current_destination!=destination or repository!=destination['docs_repo'] or base_ref!=destination['branch']:
+            raise Rejected('The active documentation destination differs from the reviewed scope')
+        directory=destination.get('docs_root','')
+        if directory and (not re.fullmatch(r'[\w./-]+',directory)
+                or any(p.lower() in ('','.','..','.git','.github') for p in directory.split('/'))):
+            raise Rejected('Invalid documentation directory')
+        root_prefix=directory+'/' if directory else ''
     evidence={}
     for relative,payload in bundle.get('evidence_files',{}).items():
         if not re.fullmatch(r'evidence/[a-f0-9]{64}/(?:index\.html|manifest\.json|assets/(?:contextqa-logo\.svg|[a-f0-9]{64}\.(?:png|jpg|webp|mp4|webm)))',relative):
             raise Rejected('Invalid reviewed evidence path')
-        try:evidence[relative]=base64.b64decode(payload,validate=True)
+        try:evidence[root_prefix+relative]=base64.b64decode(payload,validate=True)
         except (ValueError,TypeError):raise Rejected('Invalid evidence bytes') from None
     if sum(map(len,evidence.values()))>16*1024*1024:
         raise Rejected('Reviewed evidence exceeds the 16 MiB delivery limit')
@@ -57,19 +68,31 @@ def deliver(bundle,checkout,repository,base_sha,branch,journal,approved=False,ru
     if remote.split() != [base_sha,'refs/heads/'+base_ref]:
         raise Rejected('Remote target branch differs from the reviewed base commit')
     # Compare exact file contents at the commit, not an unrelated working tree.
-    for relative in bundle['files']:
-        path_name(relative)
+    files={}
+    for path,body in bundle['files'].items():
+        path_name(path)
+        relative=root_prefix+path
+        files[relative]=body
         tracked=run(['git','ls-tree','--format=%(objectmode)','HEAD','--',relative],checkout)
         if tracked and tracked not in ('100644','100755'):
             raise Rejected('Destination must be an ordinary tracked file')
         current=run(['git','show',f'HEAD:{relative}'],checkout) if tracked else ''
-        if fingerprint(current)!=bundle['baseline'][relative]:
+        if fingerprint(current)!=bundle['baseline'][path]:
             raise Rejected('Destination content differs from reviewed article baseline')
-    for relative in evidence:
-        # Content-addressed paths must be new. Never overwrite an existing asset,
-        # even when a malicious checkout has placed a symlink at that path.
-        if run(['git','ls-tree','--format=%(objectmode)','HEAD','--',relative],checkout):
-            raise Rejected('Evidence destination already exists; use a fresh reviewed delivery')
+    new_evidence={}
+    for relative,raw in evidence.items():
+        mode=run(['git','ls-tree','--format=%(objectmode)','HEAD','--',relative],checkout)
+        if not mode:
+            new_evidence[relative]=raw
+            continue
+        if mode!='100644':
+            raise Rejected('Existing evidence must be an ordinary file')
+        oid=run(['git','rev-parse','HEAD:'+relative],checkout)
+        blob=b'blob '+str(len(raw)).encode()+b'\0'+raw
+        algorithm='sha256' if len(oid)==64 else 'sha1'
+        if hashlib.new(algorithm,blob).hexdigest()!=oid:
+            raise Rejected('Existing evidence differs from the approved bytes')
+    evidence=new_evidence
     journal.parent.mkdir(parents=True,exist_ok=True,mode=0o700)
     fd=os.open(journal,os.O_CREAT|os.O_EXCL|os.O_WRONLY,0o600)
     def record(value):
@@ -82,7 +105,7 @@ def deliver(bundle,checkout,repository,base_sha,branch,journal,approved=False,ru
             run(['git','clone','--no-hardlinks','--no-checkout',str(checkout),str(root)],checkout)
             run(['git','checkout','-b',branch,base_sha],root)
             run(['git','remote','set-url','origin',origin],root)
-            for relative,body in bundle['files'].items():
+            for relative,body in files.items():
                 destination=root/relative
                 for ancestor in [destination,*destination.parents]:
                     if ancestor==root:break
@@ -96,7 +119,7 @@ def deliver(bundle,checkout,repository,base_sha,branch,journal,approved=False,ru
                     if ancestor.is_symlink():raise Rejected('Evidence destination has a symbolic-link component')
                 destination.parent.mkdir(parents=True,exist_ok=True)
                 destination.write_bytes(payload)
-            run(['git','add','--',*bundle['files'],*evidence],root)
+            run(['git','add','--',*files,*evidence],root)
             run(['git','-c','core.hooksPath=/dev/null','commit','-m','docs: apply reviewed ContextQA update'],root)
             record(dict(stage='push_intent'))
             run(['git','push','origin',branch],root)

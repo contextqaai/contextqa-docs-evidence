@@ -1,0 +1,50 @@
+# Continuous documentation platform acceptance
+
+The local application has working paths across M00–M16. Production acceptance is open. An editor can import a baseline, draft and review a change, inspect the ContextQA evidence, save a version and export an illustrated lesson. A customer deployment still needs to prove that its own code push, deployed build, capture, approved pull request and live guide all describe the same change.
+
+## Module status
+
+| Module | Working and checked | Remaining acceptance |
+|---|---|---|
+| M00 · Application shell | Queue, navigation, keyboard cancellation, mobile details and a recorded before/after comparison. [Results](m00-acceptance-results.md) | Finish the outstanding accessibility and design checks listed in the report. |
+| M01 · Workspace and roles | Workspace setup, invitations, role restrictions, revocation and setup resumption. [Walkthrough](m01-m02-walkthrough.md) | Exercise staging OIDC sign-in, expiry and return with the real identity provider. |
+| M02 · GitHub source intake | Scoped setup, signed event intake, duplicate suppression and disconnect behavior. [Results](m01-m02-results.md) | Accept a real installation delivery and reconnect in the pilot workspace. |
+| M03 · Documentation import | Commit-pinned inventory, page/asset preview, partial listing recovery and unchanged reimport. The portal pilot imported 288 GitBook articles. [Guide](m03-walkthrough.md) | Complete provider outage, large-tree and installation-specific checks in the client deployment. |
+| M04 · Workflow automation | Trigger validation, pause/resume, durable leases, retry state and timeline. [Guide](m04-walkthrough.md) | Prove worker restart and event replay under the staging deployment. |
+| M05 · Research and writing | Save incomplete briefs, choose a template, resolve missing inputs, keep original prose, draft illustrated procedures from reviewed captures and record a reasoned no-change outcome. [Guide](m05-m07-walkthrough.md) | Score a reader performing the task from the generated guide and verify a worker-produced tutorial against a live deployed revision. |
+| M06 · ContextQA crawl and replay | Signed-in portal discovery and independent saved-case replay, screenshot and recording capture, reviewed media and a worker that waits for deployment proof. [Results](m06-results.md) | A repeatable fresh-client entire-app crawl through the product, service credential and deployer receipt are open. |
+| M07 · Review and handoff | Request/page decisions, priority, archive/restore, role checks, durable recipient and handoff note. Ship 5 exercised the desktop and mobile workflows, including blocked handoff and recovery. [Guide](m05-m07-walkthrough.md) | Verify larger cross-user queues and recipient notifications under real identity. |
+| M08 · Editing and conflicts | Source editing, accepted-result preview, media dependencies, version-bound local draft recovery and baseline conflict resolution. The local suite checks an upstream edit and stale base. | Ship 5 replay for overlapping edits, moves, deletes and navigation changes. |
+| M09 · Delivery | Verified media in bundles, draft PR action, reconciliation and independent merge/build/live checks. The pilot produced a [GitBook draft PR](https://github.com/indivatools/gitbooks-docs/pull/232). | Exercise automatic delivery through actual merge, signed build and retrieval of the published page and its files. |
+| M10 · Continuous refresh | Signed intake matches affected paths/modules, waits for the deployed SHA and queues a registered journey. Reviewed evidence can create a scoped proposal. Inconclusive removals preserve the current guide. | Run a controlled client deployment with changed, unchanged, failed and removed journeys. Compare the resulting article and figure with the starting guide. |
+| M11 · Ask, CLI and MCP | Scoped citations, versioned sources, empty state, explicit work proposals and revocable read keys. Ship 5 exercised successful and empty searches. [Guide](guide-library-walkthrough.md) | Verify real client CLI/MCP onboarding, credential rotation and handoff to a writer. |
+| M12 · Integrations | GitBook Git Sync destination checks the selected repository, branch and configured docs root. Import and reviewed PR delivery reuse M03 and M09. | Verify the client site after Git Sync. Other provider-native connectors remain open. |
+| M13 · Reader and API reference | Private versioned guides, figures, redirects, Markdown, llms.txt and OpenAPI 3 operation import. Ship 5 verified the new request and operation description. [Guide](guide-library-walkthrough.md) | Custom-domain/TLS provisioning, independent reader identity, migration coverage beyond the GitBook pilot and a published-site check. |
+| M14 · Evidence media | Traceable screenshots and videos, immutable source, cropped/redacted/outlined PNG derivatives, download and capture retake paths. Ship 5 exercised the editor. [Guide](guide-library-walkthrough.md) | Verify selected frame, clip editing and retake-to-replacement on a client recording. |
+| M15 · Operations | Worker state, quota rollback, scoped media access, derived-image retention and a restore into a fresh PostgreSQL database. Uncertain capture jobs require reconciliation after restore. | Rehearse full staging deployment, alerts, database plus evidence-volume recovery, container rollback and rotation. |
+| M16 · Enablement | Generate, edit, approve and export training lessons and release notes sourced from a versioned guide. Ship 5 verified a lesson export and PostgreSQL persisted its approval. [Guide](guide-library-walkthrough.md) | Verify downstream distribution and a reviewed refresh after a live client guide changes. |
+
+## Verification of the documentation application
+
+These runs targeted isolated copies of the documentation application with a synthetic workspace. The published screenshots and clips were recorded by Ship 5. The example guide used in the lesson was seeded using an actual Ship 5 screenshot. Its preparation did not exercise a customer webhook.
+
+| Feature and test layer | Ship 5 result | Outcome |
+|---|---|---|
+| Desktop writing and review | [483](https://ship-5.contextqa.com/run-result-view?testCaseId=215&runResultId=483), [484](https://ship-5.contextqa.com/run-result-view?testCaseId=216&runResultId=484) | Partial brief, draft, request decision, blocked handoff and recipient receipt passed. |
+| Mobile writing and handoff | [486](https://ship-5.contextqa.com/run-result-view?testCaseId=217&runResultId=486), [485](https://ship-5.contextqa.com/run-result-view?testCaseId=218&runResultId=485), [489](https://ship-5.contextqa.com/run-result-view?testCaseId=219&runResultId=489) | Writing passed. The first handoff missed a status that was offscreen. The repeated journey passed after the receipt showed the status beside the recipient. |
+| Citation search and empty result | [488](https://ship-5.contextqa.com/run-result-view?testCaseId=221&runResultId=488) | Passed. |
+| Guide, screenshot derivative and training export | [491](https://ship-5.contextqa.com/run-result-view?testCaseId=220&runResultId=491) | Passed. The exported Markdown image was also resolved and checked by digest in the downloaded ZIP. |
+| OpenAPI import | [493](https://ship-5.contextqa.com/run-result-view?testCaseId=222&runResultId=493), [494](https://ship-5.contextqa.com/run-result-view?testCaseId=226&runResultId=494) | The broad case timed out. The focused import passed after refreshing workspace state when opening a new request. Other assertions from the broad case remain unverified by that rerun. |
+| Optional native API steps | [487](https://ship-5.contextqa.com/run-result-view?testCaseId=223&runResultId=487) | Four REST steps passed. They read the expected library and media usage, rejected an unsupported OpenAPI specification and rejected an incomplete search. |
+| Optional database assertions over HTTP | [490](https://ship-5.contextqa.com/run-result-view?testCaseId=224&runResultId=490), [492](https://ship-5.contextqa.com/run-result-view?testCaseId=225&runResultId=492) | Ship 5 exercised a fixed read-only query against the documentation app's actual isolated staging PostgreSQL database. The second result confirmed the approved export and its evidence after the browser completed. |
+| Optional native PostgreSQL Database step | Pending | Ship 5 environment 10 is reserved for verification. The scoped view passed five assertions locally. With the export timestamp removed in a rolled-back transaction, only the export assertion turned false. The verifier had no raw media-table grant. Registration and execution need the organization's private hostname and secret binding. |
+
+The PostgreSQL suite passed 51 tests. The core suite passed 193 tests, React passed 15, review helpers passed 5 and the AI adapter passed 10. The production web build completed. Tests with a synthetic provider exercise application contracts. The linked Ship 5 runs exercise the hosted runner. Each media provenance file identifies the exact frontend bundle and run from which the media came.
+
+The observed Ship 5 balance ended at 14,725, down 48 from the user-reported 14,773 across the project and down 12 from 14,737 at the start of this pass. These are tenant balance differences. Per-module charge attribution is unavailable from these observations.
+
+## Start the next acceptance pass
+
+Use the [operator guide](platform-operations.md) to bind the private worker, deployment receipt and publication origin. Replay one guide through its entire lifecycle. Capture screenshots at the same task step before and after the UI change, then compare text, steps, evidence and approvals. Use the [verification workflow](feature-verification.md) to record the other criteria and the decision for every affected guide.
+
+The [Ship 5 acceptance map](contextqa-acceptance.md) identifies the test method and companion evidence for all 88 criteria, including external receipts and reader evaluation. It also links the additional acceptance runs made against the local application candidate.

@@ -1,0 +1,56 @@
+{
+  "case_id": 204,
+  "result_id": 473,
+  "step_result_id": 855,
+  "viewport": [
+    1280,
+    720
+  ],
+  "frontend": {
+    "path": "/assets/index-CaWNtHsg.js",
+    "http_status": 200
+  },
+  "source_trace_sha256": "6fb501e4239799a7f3c537456a51347cf5ab09e3e3544f624d8a46d547c123f7",
+  "assets": [
+    {
+      "file": "import-articles.mp4",
+      "source_recording_sha256": "8f635040400eeb60d43f5f8723a00e8cf6157a84aebe9ae0125ace455dd80363",
+      "start_seconds": 2.0,
+      "end_seconds": 44.0,
+      "sha256": "75d3b8356d746175428dea2df93a684b141ff7666345800aa766bba2c07c0f33"
+    },
+    {
+      "name": "repository-preview",
+      "id": 840,
+      "position": 5,
+      "action": "Verify that the teams/setup.mdx text contains Shared title \u00b7 kept by path",
+      "file": "repository-preview.jpg",
+      "sha256": "9f3f6c40db83aba3985dbea399eafe915a8929f82ba3ab074425369c0e980b35"
+    },
+    {
+      "name": "import-receipt",
+      "id": 844,
+      "position": 7,
+      "action": "AI Verification: Verify that '2 created' is visible in the Import receipt section.",
+      "file": "import-receipt.jpg",
+      "sha256": "08cd1e6b75fe613dcc695f0ca9e0e2b0df2337dbade9bd9aa0d0ae227f845e9d"
+    },
+    {
+      "name": "source-version",
+      "id": 853,
+      "position": 13,
+      "action": "Verify that the Baseline text contains Version 1",
+      "file": "source-version.jpg",
+      "sha256": "e29f56fc7a7c8d9a05eee95d45a6af01a97e7d077cf0cb9c787a4c7fbcc5d365"
+    },
+    {
+      "name": "local-figure",
+      "id": 855,
+      "position": 15,
+      "action": "AI Verification: Verify that the diagram with 'Invite teammate' and 'Accept invitation' is visible.",
+      "file": "local-figure.jpg",
+      "sha256": "3467a18fe46c6edda249f62fe4572803cfc53cb85a345190425312af17c55cb0"
+    }
+  ],
+  "implementation_commit": "d6ddf62"
+}

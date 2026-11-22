@@ -1,0 +1,69 @@
+{
+  "case_id": 202,
+  "frontend_asset": {
+    "path": "/assets/index-Cmiz1mOo.js",
+    "http_status": 200
+  },
+  "result_id": 466,
+  "step_result_id": 805,
+  "source": "Ship 5 Chromium read-only synthetic preview",
+  "assets": [
+    {
+      "file": "workspace-navigation.mp4",
+      "sha256": "435e5bda00fcb1c4fec33bf92fb861739a879a882da476c8fd66c866d1bc2bac",
+      "source_recording_sha256": "5d769d886df493d3fa5d968c5e0145ddc9bba77ba6cd15da14fc1fc56aa72d4c",
+      "start_seconds": 124.0,
+      "end_seconds": 157.0
+    },
+    {
+      "file": "inbox-filter.jpg",
+      "sha256": "93affd91976a099c771e93d77e0a03d53abdfa40633e297f33701a4ca9d48daa",
+      "trace_resource": "page@5135d4419ff5a7dd9b33ef96a04a0b27-1795327160186.jpeg",
+      "trace_timestamp_ms": 148079.509,
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "knowledge-base.jpg",
+      "sha256": "593be761fe38a9c303db219ac206ee5710910175334fe24d9bb844cfe437b828",
+      "trace_resource": "page@5135d4419ff5a7dd9b33ef96a04a0b27-1795327238397.jpeg",
+      "trace_timestamp_ms": 226290.445,
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "sources.jpg",
+      "sha256": "d93924029c8384762a8c380f8916e7c2e7a77759bb714fe39bff65b59462c988",
+      "trace_resource": "page@5135d4419ff5a7dd9b33ef96a04a0b27-1795327288943.jpeg",
+      "trace_timestamp_ms": 276837.019,
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "content-health.jpg",
+      "sha256": "9f135ad4ee411a3cdb9d8c447b7247e08ab1a633f998e19f1e4f4a9d14ed8378",
+      "trace_resource": "page@5135d4419ff5a7dd9b33ef96a04a0b27-1795327336866.jpeg",
+      "trace_timestamp_ms": 324759.545,
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "activity-log.jpg",
+      "sha256": "8a8805f55c74f12694287bad2b79af2d6c2c1da38bff251b0f7ffc03a8a7584c",
+      "trace_resource": "page@5135d4419ff5a7dd9b33ef96a04a0b27-1795327385713.jpeg",
+      "trace_timestamp_ms": 373606.742,
+      "viewport": [
+        1280,
+        720
+      ]
+    }
+  ]
+}

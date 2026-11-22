@@ -1,0 +1,59 @@
+{
+  "case_id": 201,
+  "frontend_asset": {
+    "path": "/assets/index-Cmiz1mOo.js",
+    "http_status": 200
+  },
+  "result_id": 465,
+  "step_result_id": 804,
+  "source": "Ship 5 Chromium read-only synthetic preview",
+  "assets": [
+    {
+      "file": "workspace-setup.mp4",
+      "sha256": "8421eac24670944099c2f3d248bf7ca6f427689169fbd64c65292d61d185fc65",
+      "source_recording_sha256": "97745bfee9e072b15c86d696eb5d35a80a2e88c675e43bce930f401611c513d1",
+      "start_seconds": 300.0,
+      "end_seconds": 325.0
+    },
+    {
+      "file": "review-request.jpg",
+      "sha256": "7167baf91c87322d40297d6e0f1be538edcef9e6f62a50f43e24c7e3d93e4bd9",
+      "trace_resource": "page@0d31880f28ac97cb5cd3909cad2c259b-1795326732745.jpeg",
+      "trace_timestamp_ms": 104449.292,
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "app-discovery.jpg",
+      "sha256": "9bb549751ede81e4ef76edf147bb349923dd7dcceb1c42acc458d764d538aac8",
+      "trace_resource": "page@0d31880f28ac97cb5cd3909cad2c259b-1795326775974.jpeg",
+      "trace_timestamp_ms": 147677.732,
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "github-scope.jpg",
+      "sha256": "d6b90fd8e635cae08b0aa8dc9f7e028bd8ca564f9bb3025c4ec06daab2ab65a5",
+      "trace_resource": "page@0d31880f28ac97cb5cd3909cad2c259b-1795326969679.jpeg",
+      "trace_timestamp_ms": 341383.186,
+      "viewport": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "members.jpg",
+      "sha256": "c33eda768b7c2b3a696ca7f3300f363b1e9ba4f939001eefeaf9e02eb02bdb37",
+      "trace_resource": "page@0d31880f28ac97cb5cd3909cad2c259b-1795326989899.jpeg",
+      "trace_timestamp_ms": 361603.084,
+      "viewport": [
+        1280,
+        720
+      ]
+    }
+  ]
+}

@@ -10,9 +10,10 @@ requires-python = ">=3.10"
 dependencies = []
 
 [project.optional-dependencies]
-hosted = ["fastapi>=0.121,<1", "uvicorn>=0.38,<1", "psycopg[binary,pool]>=3.2,<4", "PyJWT[crypto]>=2.10,<3", "httpx>=0.28,<1"]
+hosted = ["pillow==12.1.1", "fastapi>=0.121,<1", "uvicorn>=0.38,<1", "psycopg[binary,pool]>=3.2,<4", "PyJWT[crypto]>=2.10,<3", "httpx>=0.28,<1", "mcp>=1.30,<2"]
 
 [project.scripts]
+docs-ask = "cqa_artifacts.hosted.assistant_cli:main"
 cqa-artifacts = "cqa_artifacts.__main__:cli"
 docs-agent = "cqa_artifacts.agent:cli"
 docs-journeys = "cqa_artifacts.journeys:cli"

@@ -62,6 +62,29 @@ class GitDeliveryTests(unittest.TestCase):
             return original(args,cwd)
         self.command=command
         self.assertEqual(self.deliver(approved=True)['stage'],'draft_pr_created')
+    def test_hosted_guides_bind_repo_branch_and_root(self):
+        destination=dict(docs_repo='org/repo',branch='main',docs_root='manual')
+        self.bundle['source']={'documentation_destination':destination}
+        with self.assertRaisesRegex(Rejected,'destination'):
+            self.deliver(approved=True,current_destination={**destination,'docs_root':'elsewhere'})
+        self.assertFalse(self.calls)
+        self.assertEqual(self.deliver(approved=True,current_destination=destination)['stage'],'draft_pr_created')
+        self.assertIn(['git','add','--','manual/guide.md'],self.calls)
+
+    def test_refresh_reuses_identical_evidence_without_rewriting(self):
+        import base64, hashlib
+        path='evidence/'+'a'*64+'/assets/'+'b'*64+'.jpg'
+        raw=b'previously delivered screenshot'
+        self.bundle['evidence_files']={path:base64.b64encode(raw).decode()}
+        original=self.command
+        def command(args,cwd):
+            if args==['git','rev-parse','HEAD:'+path]:
+                return hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\0'+raw).hexdigest()
+            return original(args,cwd)
+        self.command=command
+        self.deliver(approved=True)
+        self.assertIn(['git','add','--','guide.md'],self.calls)
+
     def test_remote_drift_blocks_delivery(self):
         original=self.command
         self.command=lambda args,cwd: ('b'*40+'\trefs/heads/main') if args[:2]==['git','ls-remote'] else original(args,cwd)

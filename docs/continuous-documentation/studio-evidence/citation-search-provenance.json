@@ -1,0 +1,43 @@
+{
+  "case_id": 221,
+  "result_id": 488,
+  "step_result_id": 884,
+  "viewport": [
+    1280,
+    720
+  ],
+  "frontend": {
+    "path": "/assets/index-BFuFjpQM.js",
+    "http_status": 200
+  },
+  "source_trace_sha256": "ff5d3165d0278a1cc226b721946e84c2032c661197e494ac7f2357166eb0f1f4",
+  "assets": [
+    {
+      "file": "citation-search.mp4",
+      "source_recording_sha256": "38970b543c51c68e874906d78f35710fa491f062a4864c30e10c057667dfa571",
+      "start_seconds": 49.0,
+      "end_seconds": 70.0,
+      "sha256": "8e029e6a1e6cf129dc1bdda631f8c2cd3c8a31ea2f11c7ae5896be235755a749"
+    },
+    {
+      "file": "citation-results.jpg",
+      "trace_timestamp_ms": 78956.899,
+      "resource": "page@e1da8fd223d159e5e14280d6f90318b6-1795333790909.jpeg",
+      "sha256": "0445b549e1fab158b8c4546b5972f7dd2e559eaa531d73506fe13d35977b9310",
+      "encoded_frame_bounds": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "search-empty.jpg",
+      "trace_timestamp_ms": 185457.615,
+      "resource": "page@e1da8fd223d159e5e14280d6f90318b6-1795333897410.jpeg",
+      "sha256": "d8fc7748bfe6e796996516f95650f76e167f0ed80c51b1ff978c07669227a121",
+      "encoded_frame_bounds": [
+        1280,
+        720
+      ]
+    }
+  ]
+}

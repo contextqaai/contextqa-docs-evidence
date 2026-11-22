@@ -1,0 +1,33 @@
+{
+  "case_id": 219,
+  "result_id": 489,
+  "step_result_id": 885,
+  "viewport": [
+    390,
+    844
+  ],
+  "frontend": {
+    "path": "/assets/index-BFuFjpQM.js",
+    "http_status": 200
+  },
+  "source_trace_sha256": "ea3afe817af363e0e718d47b15d1510ec1be1409a20c8539a061566fe2bf2f7a",
+  "assets": [
+    {
+      "file": "mobile-handoff.mp4",
+      "source_recording_sha256": "0a15631e190b41b2439550b9dc3416e379a577e66c51a0900e0e3c36d621a6db",
+      "start_seconds": 226.0,
+      "end_seconds": 253.0,
+      "sha256": "88dc8c08f36ed484ef3e044362dae2ceb487b69b8fe60acc0a075814d210dab0"
+    },
+    {
+      "file": "mobile-handoff.jpg",
+      "trace_timestamp_ms": 350355.803,
+      "resource": "page@20b5b979a0f9522969dc3e679b373f48-1795334055600.jpeg",
+      "sha256": "da8756b9ebfc77c1b85212199a49599577795fcebdc6235d6a8312b2ce45ed64",
+      "encoded_frame_bounds": [
+        390,
+        844
+      ]
+    }
+  ]
+}

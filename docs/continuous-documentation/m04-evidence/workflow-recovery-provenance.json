@@ -1,0 +1,43 @@
+{
+  "case_id": 209,
+  "result_id": 476,
+  "step_result_id": 859,
+  "viewport": [
+    1280,
+    720
+  ],
+  "frontend": {
+    "path": "/assets/index-vp0cUQO5.js",
+    "http_status": 200
+  },
+  "source_trace_sha256": "edee0ce8bb36fc56c7c48449154d1e1c612fd0e8141a145dd1d4041336d259cf",
+  "assets": [
+    {
+      "file": "workflow-recovery.mp4",
+      "source_recording_sha256": "4acdb60ee725296e29773814beeaaf0cb9f7d81651ba08a97793c19dedfb595b",
+      "start_seconds": 275.0,
+      "end_seconds": 309.0,
+      "sha256": "a984d1aa83abeac257f03b8008415e1889c3909cb33556dd8083a5bb7f0fa304"
+    },
+    {
+      "file": "missing-inventory.jpg",
+      "trace_timestamp_ms": 137962.413,
+      "resource": "page@3f37eb210d98edf712ee6fb13801bd49-1795329465412.jpeg",
+      "sha256": "63003263326044e142ba91a3df48430e17159d40047626e67f5a58eb56bb97ce",
+      "encoded_frame_bounds": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "resumed-run.jpg",
+      "trace_timestamp_ms": 490369.185,
+      "resource": "page@3f37eb210d98edf712ee6fb13801bd49-1795329817818.jpeg",
+      "sha256": "5e6fe477057e785e03c34315101ca2d28b1ff318d75636e2b9144ad9d510ca38",
+      "encoded_frame_bounds": [
+        1280,
+        720
+      ]
+    }
+  ]
+}
