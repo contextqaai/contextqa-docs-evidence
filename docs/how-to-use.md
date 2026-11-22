@@ -140,9 +140,9 @@ approve evidence, or apply generated changes automatically.
 
 In the SoFa Docs review inbox, open the request and choose **Article** to read the proposed guide with its screenshots. Choose **Changes** to compare the previous and proposed versions side by side. In the guide library, open a saved version to see its reviewed figures alongside the instructions.
 
-![Saved guide with a ContextQA screenshot in the SoFa Docs reader](continuous-documentation/studio-evidence/guide-reader.jpg)
+![Invitation screenshot displayed inline in the Article tab](continuous-documentation/studio-evidence/article-review-with-screenshot.jpg)
 
-The reader walkthrough was captured in [Ship 5 case 220, run 491](https://ship-5.contextqa.com/run-result-view?testCaseId=220&runResultId=491).
+Ship 5 captured this review in the sample workspace. [Watch case 232, run 501](https://ship-5.contextqa.com/run-result-view?testCaseId=232&runResultId=501).
 
 Inspect every selected instruction, frame and recording for accuracy, identifiers,
 rights and compliance with the client's guide. Approve only the reviewed content:
