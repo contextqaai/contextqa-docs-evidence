@@ -84,21 +84,24 @@ def deliver_guide(pool, org, project, actor, item, checkout, base_sha, journal_d
         admin(db, org, actor)
         current = setup(db, org, project)
         destination = {k: current[k] for k in ("docs_repo", "branch", "docs_root")}
+        previous = db.execute(
+            """SELECT r.status,r.pr_url FROM docs_guide_prs r JOIN docs_projects p
+               ON p.organization_id=r.organization_id AND p.id=r.project_id
+               WHERE r.organization_id=%s AND r.project_id=%s AND r.item_id=%s
+               AND r.approval_digest=(p.state->'items'->r.item_id->'approval'->>'digest')""",
+            (org,project,item),
+        ).fetchone()
+        if previous:
+            return dict(status=previous[0],url=previous[1],published=False)
         store = PostgresStore(BoundConnection(db), org)
         bundle = store.bundle(project, actor, item)
         if not current["connected"] or bundle["source"].get("documentation_destination") != destination:
             raise Rejected("Configure and review the intended documentation destination")
         key = (org, project, item, bundle["approval"]["digest"])
-        row = db.execute(
-            "INSERT INTO docs_guide_prs(organization_id,project_id,item_id,approval_digest,status,pr_url) VALUES(%s,%s,%s,%s,'intent',NULL) ON CONFLICT DO NOTHING RETURNING status",
+        db.execute(
+            "INSERT INTO docs_guide_prs(organization_id, project_id, item_id, approval_digest, status) VALUES(%s,%s,%s,%s,'intent')",
             key,
-        ).fetchone()
-        if not row:
-            row = db.execute(
-                "SELECT status,pr_url FROM docs_guide_prs WHERE organization_id=%s AND project_id=%s AND item_id=%s AND approval_digest=%s",
-                key,
-            ).fetchone()
-            return dict(status=row[0], url=row[1], published=False)
+        )
     branch = "contextqa-docs/" + item + "-" + key[-1][:12]
     # Persist intent before any remote write. Serialize disconnect against delivery.
     with pool.connection() as db:

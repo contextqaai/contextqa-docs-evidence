@@ -111,11 +111,15 @@ class PostgresTests(unittest.TestCase):
         self.assertEqual(r.status_code,409)
 
     def test_resumable_setup_and_stale_writes(self):
-        body=dict(name='New team',app_url='https://demo.example/app',request_id=str(uuid.uuid4()))
+        body=dict(app_url='https://demo.example/app',request_id=str(uuid.uuid4()))
         target=self.client.post('/api/workspaces',headers=self.headers,json=body).json()['workspace']
         self.addCleanup(self.delete_workspace,target.split('/')[0])
         self.assertEqual(self.client.post('/api/workspaces',headers=self.headers,json=body).json()['workspace'],target)
         url='/api/orgs/'+target.split('/')[0]+'/projects/docs/setup'
+        initial=self.client.get(url,headers=self.headers).json()
+        self.assertEqual(initial['app_url'],body['app_url'])
+        self.assertIn('capture evidence',initial['description'])
+        self.assertIn('demo.example',[p['name'] for p in self.client.get('/api/projects',headers=self.headers).json()['projects']])
         edit=dict(revision=0,app_url=body['app_url'],description='Test the reader experience')
         self.assertEqual(self.client.post(url,headers=self.headers,json=edit).status_code,200)
         self.assertEqual(self.client.get(url,headers=self.headers).json()['description'],edit['description'])
@@ -179,6 +183,28 @@ class PostgresTests(unittest.TestCase):
             self.client.post(self.prefix+'github/disconnect',headers=self.headers,json={'revision':1}).raise_for_status()
             self.assertEqual(signed(data,'after-disconnect').status_code,409)
             self.assertEqual(connect(revision=2).status_code,200)
+
+    def test_draft_pr_receipt_replay_keeps_the_item_revision(self):
+        from unittest.mock import patch
+        from cqa_artifacts.hosted.onboarding import setup
+        from cqa_artifacts.hosted.guide_intake import deliver_guide
+        project='shared-name'
+        destination=dict(docs_repo='team/docs',branch='main',docs_root='help')
+        with self.pool.connection() as db:
+            setup(db,self.org,project)
+            db.execute("UPDATE docs_setup SET docs_repo='team/docs',branch='main',docs_root='help',connected=true WHERE organization_id=%s AND project_id=%s",(self.org,project))
+        item=self.store.ingest(project,'alice',{**self.event,'documentation_destination':destination})['item_id']
+        self.store.review(project,'alice',item,1,'accept',change_id='1')
+        self.store.review(project,'alice',item,2,'ready')
+        self.store.approve(project,'alice',item,3,True)
+        with patch('cqa_artifacts.loop_git.deliver',return_value={'url':'https://github.com/team/docs/pull/1'}) as send:
+            args=(self.pool,self.org,project,'alice',item,Path('.'),'a'*40,Path('.'),True)
+            first=deliver_guide(*args)
+            version=self.store.snapshot(project,'alice')['items'][item]['version']
+            repeat=deliver_guide(*args)
+            self.assertEqual(first['url'],repeat['url'])
+            self.assertEqual(version,self.store.snapshot(project,'alice')['items'][item]['version'])
+            self.assertEqual(send.call_count,1)
 
     def test_ordinary_events_cannot_mint_verified_guide_or_source_identity(self):
         for extra in [{'id':'guide:fake'},{'id':'github:team/app@'+'a'*40},{'documentation_destination':{'docs_repo':'team/manual'}}]:
