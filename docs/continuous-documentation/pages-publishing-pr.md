@@ -17,3 +17,9 @@ An organization administrator can open a draft PR for a current version in **Gui
 4. Open the PR and review its changed guide, landing-page link, media and release manifest. After merge, use **Verify deployed files** and the Phase 10 reader journey. A newer guide or changed publishing base requires a fresh preview. A retry on the same preview reconciles its draft branch and existing PR.
 
 The publisher copies the saved screenshot bytes and links the inline image to its original. The public renderer supports the saved guide’s evidence references. A link to another guide or external site requires review and currently blocks the handoff. The release manifest supports up to 32 files across the site.
+
+## When the installation is missing
+
+Open **Publish to GitHub Pages** and select **Check publishing destination**. If the app asks you to configure the Pages GitHub App, complete the repository installation above, then check the destination again. Ship 5 verified that an administrator on the synthetic preview reached this message and could not open a publishing PR. Select the image for the original 1280 × 720 screenshot. [Ship 5 case 265, result 735](https://ship-5.contextqa.com/run-result-view?testCaseId=265&runResultId=735)
+
+[![Guide library with the publishing destination control and GitHub App setup message](pages-evidence/missing-installation.jpg)](pages-evidence/missing-installation.jpg)

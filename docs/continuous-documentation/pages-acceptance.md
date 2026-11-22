@@ -37,3 +37,11 @@ The overview figure from result 460 came from an 800 × 450 screencast frame of 
 For new guides, use the original step attachment for the matching action. Record its actual pixel dimensions. If only a smaller trace frame shows that action, label its dimensions and schedule a dedicated step capture when the text is hard to read. [Case 199, result 460](https://ship-5.contextqa.com/run-result-view?testCaseId=199&runResultId=460)
 
 To open a publishing PR from a saved guide, follow the [Pages publication procedure](pages-publishing-pr.md).
+
+## Third edition and workspace publishing
+
+**Reader verification passed.** GitHub Pages deployed staging revision `ea331ffa43f503135b09ae42e9e12d166c1ee824`. The public release manifest and all five listed files matched the pinned revision byte for byte. The anonymous reader opened the original 1280 × 720 inbox capture and identified the review request. The staging branch update used the operator account. [Pages build](https://api.github.com/repos/contextqaai/contextqa-docs-evidence/pages/builds/1393481590) · [Ship 5 case 264, result 733](https://ship-5.contextqa.com/run-result-view?testCaseId=264&runResultId=733)
+
+**Missing installation verification passed.** On candidate `fc681e0`, an administrator in environment 12 opened the current saved edition and checked the publishing destination. The preview returned HTTP 409 and the UI requested GitHub App setup. Ship 5 recorded one passing step. [Case 265, result 735](https://ship-5.contextqa.com/run-result-view?testCaseId=265&runResultId=735)
+
+**Hold production publishing.** The local suite passed 195 Python regression tests, 64 hosted tests using disposable PostgreSQL, 19 UI tests and the production UI build. The positive draft PR and retry cases used a simulated GitHub transport. Release acceptance still requires an actual App-created draft PR scoped to the single repository, reviewed merge and matching deployment receipt.

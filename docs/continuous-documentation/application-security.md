@@ -33,7 +33,7 @@ Classify each category as passed for the listed controls, failed, blocked, or in
 |---|---|---|
 | A01, A07 | Hosted route tests denied an editor. Authentication regressions checked signature, audience, expiry, scope and tenant isolation. | Repeat with the staging identity provider. |
 | A02 | A mismatched destination stopped before requesting a GitHub credential. Hosted configuration tests also rejected production development-auth mode. | Verify the real App installation lists only the approved repository. |
-| A03 | The Markdown renderer is explicitly versioned in both the hosted dependency declaration and lockfile. | Record the dependency advisory review and build provenance for the release. |
+| A03 | The pinned Mistune 3.4.0 wheel matched the registry SHA-256 `d03cec4c8620f21517a996d82d14f3b59c30d79bda2cc6c56bd32b839f18ce6b`. The version metadata listed no active advisories on 22 Nov 2026. [PyPI release](https://pypi.org/project/mistune/3.4.0/) | Review the full transitive inventory and record build provenance for the release. |
 | A04 | The adapter requests a short-lived installation token over HTTPS. | Confirm the deployment's key storage and rotation with its owner. |
 | A05 | The renderer test checked escaped literal markup and rejected an unreviewed link. | Review newly introduced input or output formats when they change. |
 | A06 | The disclosure tests blocked a seeded credential, an internal-only note and private comments. A public decision was required for the preview. | A reviewer must inspect the pixels, audio and unmarked business statements in each guide. |
