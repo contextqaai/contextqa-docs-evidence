@@ -1,0 +1,24 @@
+{
+  "title": "Document card-title validation introduced by Kan PR #15",
+  "summary": "Update the real Kan Mintlify documentation with source-derived create, rename and API title-validation behavior. Browser acceptance remains blocked by existing ContextQA prerequisite failures.",
+  "questions": [
+    "Verify the QA deployment commit and obtain a passing reviewed capture of the card workflows before publication."
+  ],
+  "edits": [
+    {
+      "path": "apps/docs/guides/cards/create-card.mdx",
+      "after": "---\ntitle: Create a card\ndescription: Give a new card a non-blank title.\n---\n\nA card title must contain at least one non-whitespace character. The **Create card** button stays disabled when the title is empty or contains only whitespace.\n\n1. Open the new-card form on your board.\n2. Enter a descriptive title, such as `Prepare release notes`.\n3. Complete the other fields you need, then select **Create card**.\n\nLeading and trailing whitespace is removed before the card is submitted. For example, `  Prepare release notes  ` is saved as `Prepare release notes`.\n\nIf the button remains disabled, replace the blank or whitespace-only title with a descriptive title. The API enforces the same non-blank rule even if a client bypasses the form.\n",
+      "reason": "Document the title-validation behavior in apps/web/src/views/board/components/NewCardForm.tsx changed by PR #15."
+    },
+    {
+      "path": "apps/docs/guides/cards/rename-card.mdx",
+      "after": "---\ntitle: Rename a card\ndescription: Change a card title and recover from an empty-title edit.\n---\n\nOpen the card details and edit its title. Enter at least one non-whitespace character before saving the change.\n\nLeading and trailing whitespace is removed when the title is submitted. For example, `  Release checklist  ` becomes `Release checklist`.\n\n## If the title is blank\n\nIf you submit an empty or whitespace-only title, Kan restores the previous title and displays:\n\n- **Unable to update card**\n- **Card title cannot be empty.**\n\nEnter a non-blank title and submit the change again. The rejected blank edit does not replace the existing card title.\n",
+      "reason": "Document the title-validation behavior in apps/web/src/views/card/index.tsx changed by PR #15."
+    },
+    {
+      "path": "apps/docs/api-reference/card-titles.mdx",
+      "after": "---\ntitle: Card title validation\ndescription: Title normalization and validation for create, update and duplicate operations.\n---\n\nThe card router trims leading and trailing whitespace before validating a supplied title. The normalized title must contain between 1 and 2,000 characters.\n\n| Operation | Title requirement |\n| --- | --- |\n| Create a card | Required; blank or whitespace-only values are rejected. |\n| Update a card | Optional; when supplied, the title must pass trimming and length validation. |\n| Duplicate a card | Optional; when supplied, the title must pass the same validation. |\n\nOmitting an optional title differs from supplying an empty string. A description-only update can omit the title; supplying `\"\"`, spaces, tabs or line breaks does not bypass title validation.\n\nFor example, `\"  Release checklist  \"` normalizes to `\"Release checklist\"`. A whitespace-only title fails input validation before the requested database write.\n\nThese rules apply in addition to the operation\u2019s other required fields and permissions.\n",
+      "reason": "Document the title-validation behavior in packages/api/src/routers/card.ts changed by PR #15."
+    }
+  ]
+}

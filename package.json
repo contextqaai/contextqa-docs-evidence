@@ -6,6 +6,7 @@
     "node": ">=22"
   },
   "scripts": {
-    "test:ai": "node --test test-ai/*.test.js"
+    "test:ai": "node --test test-ai/*.test.js",
+    "test:ui": "node --test test-ui/*.test.js"
   }
 }

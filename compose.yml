@@ -1,0 +1,54 @@
+# Development-only deployment. Production must use OIDC and HTTPS.
+services:
+  database:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: docs
+      POSTGRES_DB: docs
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set a local database password}
+    volumes:
+      - database:/var/lib/postgresql/data
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U docs -d docs']
+      interval: 5s
+      timeout: 3s
+      retries: 10
+  migrate:
+    build: .
+    environment:
+      DATABASE_URL: postgresql://docs:${POSTGRES_PASSWORD}@database:5432/docs
+    command: ['python', '-m', 'cqa_artifacts.hosted.manage', 'migrate']
+    depends_on:
+      database:
+        condition: service_healthy
+  app:
+    build: .
+    environment:
+      DATABASE_URL: postgresql://docs:${POSTGRES_PASSWORD}@database:5432/docs
+      APP_ORIGIN: http://127.0.0.1:8080
+      APP_ENV: development
+      AUTH_MODE: development
+      DEV_ACCESS_TOKEN: ${DEV_ACCESS_TOKEN:?Set a random development token of at least 32 characters}
+      DEV_SUBJECT: ${DEV_SUBJECT:-local-operator}
+    ports: ['127.0.0.1:8080:8080']
+    volumes: ['evidence:/data']
+    restart: unless-stopped
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+  # Optional: load the labelled historical Kan PR #15 snapshot. Run explicitly with
+  #   docker compose --profile kan-example run --rm provision-kan
+  # The example is mounted read-only from this checkout and is not baked into the image.
+  provision-kan:
+    profiles: ['kan-example']
+    build: .
+    environment:
+      DATABASE_URL: postgresql://docs:${POSTGRES_PASSWORD}@database:5432/docs
+    volumes: ['./examples/kan-pr15:/seed:ro']
+    command: ['python', '-m', 'cqa_artifacts.hosted.manage', 'provision', '--organization', 'contextqa', '--name', 'ContextQA', '--subject', '${DEV_SUBJECT:-local-operator}', '--manifest', '/seed/manifest.json', '--event', '/seed/event.json']
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+volumes:
+  database:
+  evidence:

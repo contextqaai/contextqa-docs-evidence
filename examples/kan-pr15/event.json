@@ -1,0 +1,135 @@
+{
+  "id": "github:nigharsh/kan:15:de9eb589ade097555b573473f9c833192d9af5a2",
+  "source": "github",
+  "title": "Reject whitespace-only card titles",
+  "text": "Merged Kan PR #15 rejects whitespace-only card titles in create, rename and API paths. Three new article proposals are derived from its diff. Historical ContextQA analysis 19 completed with 0 passed and 15 failed; this is not a passing validation.",
+  "source_url": "https://github.com/nigharsh/kan/pull/15",
+  "pr_number": 15,
+  "area": "Card management",
+  "head_sha": "de9eb589ade097555b573473f9c833192d9af5a2",
+  "revision": "448514ba6f41a8789e4c2307294dc79bdedd6528",
+  "changed_paths": [
+    "apps/web/src/views/board/components/NewCardForm.tsx",
+    "apps/web/src/views/card/index.tsx",
+    "packages/api/src/routers/card.ts"
+  ],
+  "requires_capture": true,
+  "requires_screenshots": true,
+  "verification": {
+    "summary": "15 tests failed \u00b7 shared prerequisite blocker",
+    "blocker": "PRE_Login (case 126), step 207 compares expected /boards with actual https://kan-qa.vercel.app/boards using an exact URL assertion. Investigate and correct the prerequisite before attributing these failures to PR #15. Historical results do not attest the current deployment revision.",
+    "url": "https://ship-5.contextqa.com/td/1/uploaded-files/pr-impact/19",
+    "cases": [
+      {
+        "testCaseId": 97,
+        "name": "Edit an existing comment and display edited indicator",
+        "result": "FAILED",
+        "testCaseResultId": 340
+      },
+      {
+        "testCaseId": 134,
+        "name": "Update card description in card details view",
+        "result": "FAILED",
+        "testCaseResultId": 338
+      },
+      {
+        "testCaseId": 78,
+        "name": "Filter cards by due date criteria and reset with Clear filters",
+        "result": "FAILED",
+        "testCaseResultId": 348
+      },
+      {
+        "testCaseId": 158,
+        "name": "End-to-End Custom Template Lifecycle: Creation, List & Task Setup, and Favorite Management",
+        "result": "FAILED",
+        "testCaseResultId": 350
+      },
+      {
+        "testCaseId": 132,
+        "name": "Add list column and task card to a template board",
+        "result": "FAILED",
+        "testCaseResultId": 344
+      },
+      {
+        "testCaseId": 95,
+        "name": "Add checklist, create items, and track completion progress",
+        "result": "FAILED",
+        "testCaseResultId": 352
+      },
+      {
+        "testCaseId": 127,
+        "name": "Move card to a different list column via card details",
+        "result": "FAILED",
+        "testCaseResultId": 354
+      },
+      {
+        "testCaseId": 151,
+        "name": "Search card in command palette using leading whitespace and mixed casing",
+        "result": "FAILED",
+        "testCaseResultId": 342
+      },
+      {
+        "testCaseId": 143,
+        "name": "Validate required constraint on card title in new card modal",
+        "result": "FAILED",
+        "testCaseResultId": 320
+      },
+      {
+        "testCaseId": 155,
+        "name": "End-to-End Card Lifecycle: Creation, Metadata Enrichment, and Column Transition",
+        "result": "FAILED",
+        "testCaseResultId": 327
+      },
+      {
+        "testCaseId": 148,
+        "name": "Accept oversized card title at upper boundary and verify card creation",
+        "result": "FAILED",
+        "testCaseResultId": 326
+      },
+      {
+        "testCaseId": 137,
+        "name": "Prevent card creation when card title is empty",
+        "result": "FAILED",
+        "testCaseResultId": 329
+      },
+      {
+        "testCaseId": 149,
+        "name": "Assign far-future boundary due date to card and verify calendar persistence",
+        "result": "FAILED",
+        "testCaseResultId": 332
+      },
+      {
+        "testCaseId": 138,
+        "name": "Prevent posting an empty comment in card activity discussion",
+        "result": "FAILED",
+        "testCaseResultId": 334
+      },
+      {
+        "testCaseId": 77,
+        "name": "Create a card in a list and delete it via the card context menu",
+        "result": "FAILED",
+        "testCaseResultId": 336
+      }
+    ]
+  },
+  "edits": [
+    {
+      "path": "guides/cards/create-card.md",
+      "before": "",
+      "after": "# Create a card\n\nOpen a board and start a new card. Enter a title with at least one non-whitespace character before submitting the form.\n\nThe create action stays disabled while the title is empty or contains only whitespace. Leading and trailing whitespace is removed before the card is submitted.\n\nThe API also rejects a blank title, so this rule applies even when a client bypasses the form.\n\n## Validation status\n\nThese instructions are derived from Kan pull request #15. The historical ContextQA run failed at its shared login prerequisite before reaching this workflow. A reviewed capture from the target revision is required before this article is delivered.\n",
+      "reason": "Source-derived proposal from apps/web/src/views/board/components/NewCardForm.tsx in Kan PR #15; browser validation remains blocked."
+    },
+    {
+      "path": "guides/cards/rename-card.md",
+      "before": "",
+      "after": "# Rename a card\n\nOpen an existing card and edit its title. Use at least one non-whitespace character.\n\nWhen the title is saved, leading and trailing whitespace is removed. If the edited title is blank after trimming, Kan restores the previous title and displays \u201cUnable to update card\u201d with \u201cCard title cannot be empty.\u201d\n\n## Validation status\n\nThis behavior is supported by the source changes in Kan pull request #15. A fresh browser test of blank-title recovery and whitespace trimming is still required. The historical run failed before it reached the card workflow.\n",
+      "reason": "Source-derived proposal from apps/web/src/views/card/index.tsx in Kan PR #15; browser validation remains blocked."
+    },
+    {
+      "path": "api/card-titles.md",
+      "before": "",
+      "after": "# Card title validation\n\nCard creation requires a title. The card router trims leading and trailing whitespace, then validates that the title contains between 1 and 2,000 characters.\n\nUpdate and duplicate operations accept an optional title. When supplied, it is subject to the same trimming and length validation. Omitting an optional title is distinct from supplying an empty string.\n\nWhitespace-only titles fail validation before a database write. The focused router tests cover empty strings, spaces, tabs and newlines, and Unicode whitespace. The description-update tests verify that an omitted title remains optional.\n\n## Validation status\n\nThis article is derived from the source and tests in Kan pull request #15. API unit-test results and browser workflow evidence are tracked separately. Browser evidence is still blocked by the shared login prerequisite.\n",
+      "reason": "Source-derived proposal from packages/api/src/routers/card.ts in Kan PR #15; browser validation remains blocked."
+    }
+  ]
+}

@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "project_id": "kan",
+  "name": "Kan documentation",
+  "repository": "nigharsh/kan",
+  "application_url": "https://kan-qa.vercel.app",
+  "environment": "QA \u00b7 deployment revision not attested",
+  "contextqa": {
+    "workspace_name": "Ship 5 / 1.0",
+    "workspace_version_id": 1,
+    "url": "https://ship-5.contextqa.com/"
+  },
+  "instructions": "Write task-based product documentation using exact UI labels. Separate source-derived behavior from executed evidence. Require a reviewed ContextQA capture at the expected revision and editor approval before delivery.",
+  "sections": [
+    {
+      "id": "create",
+      "title": "Create a card",
+      "path": "guides/cards/create-card.md",
+      "owner": "owner",
+      "code_paths": [
+        "apps/web/src/views/board/components/NewCardForm.tsx"
+      ],
+      "module_ids": [
+        "cards"
+      ],
+      "keywords": [
+        "card title"
+      ]
+    },
+    {
+      "id": "rename",
+      "title": "Rename a card",
+      "path": "guides/cards/rename-card.md",
+      "owner": "owner",
+      "code_paths": [
+        "apps/web/src/views/card/index.tsx"
+      ],
+      "module_ids": [
+        "cards"
+      ],
+      "keywords": [
+        "card title"
+      ]
+    },
+    {
+      "id": "api",
+      "title": "Card title validation",
+      "path": "api/card-titles.md",
+      "owner": "owner",
+      "code_paths": [
+        "packages/api/src/routers/card.ts"
+      ],
+      "module_ids": [
+        "cards"
+      ],
+      "keywords": [
+        "card title"
+      ]
+    }
+  ]
+}

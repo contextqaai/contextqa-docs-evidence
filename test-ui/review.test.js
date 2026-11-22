@@ -1,0 +1,7 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {markdown,safeURL,itemMatches,canFinish} from '../cqa_artifacts/loop_ui/ui-core.js';
+test('untrusted article HTML remains text',()=>{const html=markdown('# Title\n<img src=x onerror=alert(1)>\n```\n</code><script>alert(1)</script>');assert.ok(!html.includes('<script>'));assert.ok(!html.includes('<img'));assert.ok(html.endsWith('</code></pre>'));});
+test('unsafe source URLs are not links',()=>{for(const url of ['javascript:alert(1)','data:text/html,test','https://user:secret@example.com','/relative'])assert.equal(safeURL(url),null);assert.equal(safeURL('https://github.com/nigharsh/kan/pull/15'),'https://github.com/nigharsh/kan/pull/15');});
+test('review cannot finish with missing evidence or pending article decisions',()=>{assert.equal(canFinish({questions:['capture required'],changes:[{decision:'accepted'}],status:'needs_input'}),false);assert.equal(canFinish({questions:[],changes:[{decision:'pending'}],status:'open'}),false);assert.equal(canFinish({questions:[],changes:[{decision:'accepted'}],status:'open'}),true);});
+test('inbox search composes with assignment and state filters',()=>{const item={title:'Card title',source:'github',event_id:'pr15',assignee:'editor',status:'needs_input'};assert.equal(itemMatches(item,'blocked','CARD','owner'),true);assert.equal(itemMatches(item,'assigned','','owner'),false);assert.equal(itemMatches(item,'review','','editor'),false);});

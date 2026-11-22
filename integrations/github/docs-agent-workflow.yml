@@ -1,0 +1,31 @@
+# Copy into the PRODUCT repository after vendoring a reviewed agent checkout
+# into tooling/docs-agent. This template does not execute automatically here.
+name: Documentation impact
+on:
+  pull_request:
+    types: [closed]
+permissions:
+  contents: read
+jobs:
+  documentation:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: ./tooling/docs-agent/.github/actions/docs-agent
+        with:
+          base-sha: ${{ github.event.pull_request.base.sha }}
+          head-sha: ${{ github.event.pull_request.merge_commit_sha }}
+          source-url: ${{ github.event.pull_request.html_url }}
+          draft: 'false'
+          submit: 'false'
+      # The artifact contains source code and documentation context. Keep access
+      # restricted to the same audience as the repository.
+      - uses: actions/upload-artifact@v4
+        with:
+          name: documentation-impact
+          path: .docs-agent-output/plan.json
+          retention-days: 7

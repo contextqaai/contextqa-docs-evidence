@@ -1,0 +1,22 @@
+{
+  "schema": 1,
+  "project_id": "kan-writer",
+  "name": "Kan documentation",
+  "repository": "nigharsh/kan",
+  "application_url": "https://kan-qa.vercel.app",
+  "environment": "QA",
+  "instructions": "Write task-based guides using only reviewed ContextQA execution evidence.",
+  "require_capture": true,
+  "require_screenshots": true,
+  "sections": [
+    {
+      "id": "board-list-card",
+      "path": "docs/guides/board-list-card.md",
+      "title": "Create a board, list and card",
+      "owner": "owner",
+      "code_paths": [
+        "apps/web/**"
+      ]
+    }
+  ]
+}
