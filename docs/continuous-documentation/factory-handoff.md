@@ -67,3 +67,7 @@ The [M04 workflow receipt](m04-results.md) maps the local scheduler checks and t
 ## Resume from the implemented application
 
 Start with the [17-module acceptance ledger](platform-acceptance.md) and the individual ticket rows in BACKLOG.csv. For a feature affecting an existing guide, keep the imported baseline, exercise the user journey in Ship 5, review its run/step evidence, and compare the proposed update with that baseline. The [operator guide](platform-operations.md) lists worker bindings, deployer and publication receipts and recovery commands. The [library walkthrough](guide-library-walkthrough.md) illustrates a completed training export and the OpenAPI proposal flow.
+
+## Phase 10 — External integrations
+
+For each affected integration, identify the provider action, the intended consumer outcome, the scoped environment, and the revision or event that joins them. Exercise access denial and a provider failure locally before delivery. On staging, collect the provider receipt and use ContextQA to verify the consumer journey, a dependent resource and an expected failure. Record case, result, revision and documentation disposition. A pending or failed required assertion holds promotion. [GitHub Pages worked example](pages-acceptance.md)
