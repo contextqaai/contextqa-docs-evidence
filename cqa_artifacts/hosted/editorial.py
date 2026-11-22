@@ -1,6 +1,7 @@
 """Scoped writing rounds over an imported baseline and reviewed ContextQA captures."""
 
 from datetime import datetime, timezone
+import base64
 import difflib
 import mimetypes
 import posixpath
@@ -8,6 +9,7 @@ import re
 from pathlib import Path
 from typing import Literal
 from uuid import UUID
+from urllib.parse import unquote, urlsplit
 
 from fastapi import APIRouter, Depends, HTTPException, Response
 from pydantic import BaseModel, Field
@@ -17,7 +19,7 @@ from ..changes import reviewed
 from ..loop import fingerprint, path_name
 from .captures import private_root
 from .github_intake import BoundConnection
-from .onboarding import PREFIX, setup
+from .onboarding import PREFIX, binding, setup
 from .store import PostgresStore
 
 
@@ -266,6 +268,66 @@ def propose(item, articles, path, guide, reason):
 
 def router(pool, auth):
     routes = APIRouter()
+
+    @routes.get(PREFIX + "/writing/{item_id}/repository-media")
+    def repository_media(org: str, project: str, item_id: str, change: str,
+                         side: Literal["before", "after"], ref: str, actor=Depends(auth)):
+        missing = HTTPException(404, "The linked repository media is unavailable.")
+        if ":" in ref or ref.startswith("//"):
+            raise missing
+        link = urlsplit(ref)
+        if link.scheme or link.netloc or not link.path or link.path.startswith("/") or "\\" in ref:
+            raise missing
+        with pool.connection() as db:
+            row = db.execute(
+                """SELECT p.state->'items'->%s, m.role FROM docs_projects p
+                   JOIN docs_memberships m ON m.organization_id=p.organization_id
+                   WHERE p.organization_id=%s AND p.id=%s AND m.subject=%s""",
+                (item_id, org, project, actor)
+            ).fetchone()
+            if not row or not row[0] or row[1] not in ("admin", "editor", "contributor"):
+                raise missing
+            item, role = row
+            if role == "contributor" and item.get("assignee") != actor:
+                raise missing
+            entry = next((c for c in item["changes"] if c["id"] == change), None)
+            if not entry or not any(ref == match[1] for match in
+                    re.finditer(r"!?\[[^\]\n]*\]\(([^)\s]+)\)", entry[side] or "")):
+                raise missing
+            path = posixpath.normpath(posixpath.join(posixpath.dirname(entry["path"]), unquote(link.path)))
+            if path.startswith(("/", "../")) or path == ".." or "\\" in path:
+                raise missing
+            # Proposed files can be newer than the imported baseline. Only an
+            # operator can bind their local bytes and digest to this exact request.
+            pinned = (binding(org, project).get("review_media", {}).get(item_id, {}).get(path)
+                      if side == "after" else None)
+            if pinned:
+                try:
+                    raw = core.regular_file(Path(pinned["file"]))
+                except OSError:
+                    raise missing from None
+                if core.digest(raw) != pinned["sha256"]:
+                    raise core.Rejected("The repository media changed after capture.")
+            else:
+                source = db.execute(
+                    """SELECT f.data->>'src' FROM docs_import_versions v
+                       JOIN docs_import_files f ON f.job_id=v.job_id AND f.path=%s
+                       WHERE v.organization_id=%s AND v.project_id=%s AND v.path=%s AND v.body=%s
+                       AND f.kind='image' AND f.status='ready'
+                       AND EXISTS (SELECT FROM jsonb_array_elements(v.source->'images') img
+                                   WHERE img->>'path'=f.path AND img->>'sha'=f.sha)
+                       ORDER BY v.version DESC LIMIT 1""",
+                    (path, org, project, entry["path"], entry["before"]),
+                ).fetchone()
+                if not source or not source[0]:
+                    raise missing
+                raw = base64.b64decode(source[0].split(",", 1)[1], validate=True)
+        kind = "video" if path.lower().endswith((".mp4", ".webm")) else "screenshot"
+        ext = core.media_extension(raw, kind)
+        media_types = {".png": "image/png", ".jpg": "image/jpeg", ".webp": "image/webp",
+                       ".mp4": "video/mp4", ".webm": "video/webm"}
+        return Response(raw, media_type=media_types[ext],
+                        headers={"Cache-Control": "private, no-store"})
 
     @routes.get(PREFIX + "/writing/{item_id}/figures/{export_digest}/{media_id}")
     def figure(

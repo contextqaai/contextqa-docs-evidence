@@ -551,6 +551,13 @@ export function GuideLibrary({
             </button>
           )}
           {asset && (
+            <section aria-label="Material preview">
+              <h3>Material preview</h3>
+              <ReviewedArticle text={copy || asset.body} prefix={prefix} item={asset.id}
+                versionPath={asset.path} version={asset.digest} />
+            </section>
+          )}
+          {asset && (
             <fieldset
               disabled={busy || asset.stale || asset.owner !== state.actor}
             >

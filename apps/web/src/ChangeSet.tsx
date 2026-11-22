@@ -29,7 +29,7 @@ export function ChangeSet({
         accepted.map((c) => (
           <details key={c.id}>
             <summary>{c.path}</summary>
-            <ReviewedArticle prefix={prefix} item={item.id} text={c.after} />
+            <ReviewedArticle prefix={prefix} item={item.id} change={c.id} text={c.after} />
           </details>
         ))
       ) : (

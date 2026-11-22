@@ -2,7 +2,9 @@
 
 import json
 import os
+from hashlib import sha256
 from pathlib import Path
+from unittest.mock import patch
 import unittest
 from uuid import uuid4
 
@@ -172,6 +174,26 @@ class HostedFixture(unittest.TestCase):
 
 
 class EditorialReviewTests(HostedFixture):
+    def test_relative_screenshot_is_scoped_to_the_selected_revision_and_reviewer(self):
+        ref = "../.gitbook/assets/invitation.jpg"
+        ident = self.create(edits=[dict(path=self.path, before=self.original,
+            after=self.original + "\n\n![Invitation](" + ref + ")", reason="Show the invitation")])
+        params = dict(change=self.item(ident)["changes"][0]["id"], side="after", ref=ref)
+        url = self.base + "writing/" + ident + "/repository-media"
+        asset = Path(__file__).resolve().parents[1] / "docs/continuous-documentation/m05-evidence/article-draft.jpg"
+        raw = asset.read_bytes()
+        pinned = {"file": str(asset), "sha256": sha256(raw).hexdigest()}
+        config = {"review_media": {ident: {".gitbook/assets/invitation.jpg": pinned}}}
+        with patch("cqa_artifacts.hosted.editorial.binding", return_value=config):
+            response = self.api.get(url, params=params)
+            self.assertEqual((response.status_code, response.content), (200, raw))
+            self.assertEqual(response.headers["content-type"], "image/jpeg")
+            for overrides in ({"side": "before"}, {"change": "other"}, {"ref": "../other.jpg"}, {"ref": "//["}):
+                self.assertEqual(self.api.get(url, params={**params, **overrides}).status_code, 404)
+            self.assertEqual(self.client("writer").get(url, params=params).status_code, 404)
+            pinned["sha256"] = "0" * 64
+            self.assertGreaterEqual(self.api.get(url, params=params).status_code, 400)
+
     def test_partial_round_stale_submit_and_preserved_baseline(self):
         ident = self.create()
         saved = self.write(ident, "save", {**self.brief, "fact": ""})

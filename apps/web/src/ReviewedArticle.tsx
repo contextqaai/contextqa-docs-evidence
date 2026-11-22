@@ -57,16 +57,20 @@ export function ReviewedArticle({
   text,
   prefix,
   item,
+  change,
+  side = "after",
   versionPath,
   version,
 }: {
   text: string;
   prefix?: string;
   item: string;
+  change?: string;
+  side?: "before" | "after";
   versionPath?: string;
   version?: string;
 }) {
-  // Only resolve internal, content-addressed media against this item's protected route.
+  // Resolve evidence and repository-relative figures through authenticated routes.
   const nodes: React.ReactElement[] = [];
   let lines: string[] = [],
     inCode = false;
@@ -91,6 +95,17 @@ export function ReviewedArticle({
       line.match(
         /^!?\[(.+)\]\((?:\.\.\/)*evidence\/([a-f0-9]{64})\/assets\/([a-f0-9]{64})\.(png|jpg|webp|mp4|webm)\)$/,
       );
+    const local = !inCode && !match && prefix && change && line.trim().match(
+      /^(!?)\[([^\]]*)\]\(([^):\s]+\.(?:png|jpe?g|webp|mp4|webm))\)$/i,
+    );
+    if (local && !local[3].startsWith("/") && (local[1] || /\.(mp4|webm)$/i.test(local[3]))) {
+      flush();
+      const params = new URLSearchParams({ change, side, ref: local[3] });
+      nodes.push(<Figure key={"repo-" + nodes.length} caption={local[2] || local[3]}
+        video={/\.(mp4|webm)$/i.test(local[3])}
+        path={"/api/" + prefix + "/writing/" + item + "/repository-media?" + params} />);
+      continue;
+    }
     if (!match) {
       lines.push(line);
       continue;

@@ -8,6 +8,10 @@ For **solutions engineers and technical writers**: turn selected ContextQA workf
 
 **Build your documentation agent:** customize the audience, evidence selection and review policy while reusing ContextQA execution and this renderer. [See it → try it → build it → own it](docs/custom-agent-builder.md).
 
+The guide reader displays the reviewed article with its captured evidence. [Ship 5 capture and recording](docs/continuous-documentation/studio-evidence/training-export-provenance.json)
+
+![SoFa Docs guide reader captured by ContextQA](docs/continuous-documentation/studio-evidence/guide-reader.jpg)
+
 ## Salesforce-focused starter
 
 [Salesforce context, testing and learning center](docs/salesforce/README.md): 24 reusable candidate scenarios, customer-context preparation, practical module guides, an eight-module learning path, market research and local landing-page drafts. [Try the offline adaptation tutorial](docs/salesforce/guides/adapt-assets.md). Templates are not executed tests; live customer evidence and publication require their own review.
