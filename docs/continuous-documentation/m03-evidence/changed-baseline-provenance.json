@@ -1,0 +1,43 @@
+{
+  "case_id": 207,
+  "result_id": 474,
+  "step_result_id": 857,
+  "viewport": [
+    1280,
+    720
+  ],
+  "frontend": {
+    "path": "/assets/index-CaWNtHsg.js",
+    "http_status": 200
+  },
+  "source_trace_sha256": "fe7440839a98a2b710c4d33ae41fa3245612c9d47bd29d8e8296fb7632085c48",
+  "assets": [
+    {
+      "file": "changed-baseline.mp4",
+      "source_recording_sha256": "34a785ec73fe8e9dfa4203338365f30f5ea00ce3048c59b7b275d644e4e81a43",
+      "start_seconds": 188.0,
+      "end_seconds": 228.0,
+      "sha256": "d21b5651b267ca267893f82ece8bf8127c60017b2f85cdf6ecfd936b535fadcf"
+    },
+    {
+      "file": "before-version.jpg",
+      "trace_timestamp_ms": 84580.144,
+      "resource": "page@738330a99cbc726d2af7950fdbc26909-1795328892415.jpeg",
+      "sha256": "90de971090c2ef1cd8e6ec135b78bf607e4cbebe42a61e5e0de06db848308963",
+      "encoded_frame_bounds": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "after-version.jpg",
+      "trace_timestamp_ms": 228610.7,
+      "resource": "page@738330a99cbc726d2af7950fdbc26909-1795329036445.jpeg",
+      "sha256": "b06cf8d4a09620f1580c065587caa9954198bd62705cfb7680407e5c18d3190c",
+      "encoded_frame_bounds": [
+        1280,
+        720
+      ]
+    }
+  ]
+}

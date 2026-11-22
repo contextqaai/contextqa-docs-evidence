@@ -1,6 +1,6 @@
 # M03 — Knowledge-base import and content inventory
 
-Status: planned; phase: Pilot. Dependencies: M02.
+Status: implemented locally and in acceptance review. Phase: Pilot. Depends on M02. See the [acceptance report](../m03-results.md) and [illustrated guide](../m03-walkthrough.md).
 
 ## User outcome
 

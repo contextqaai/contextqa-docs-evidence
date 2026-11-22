@@ -2,7 +2,7 @@
 
 Planning date: 2026-11-21, America/Chicago. Reference: Pageloop's public documentation, not access to its private application or architecture. All new requirements are proposed ContextQA product decisions unless explicitly marked as reference behavior. This package defines the implementation backlog; it does not claim the platform is implemented or production-ready.
 
-M00, M01 and M02 are implemented on the local platform branch and in acceptance review. For onboarding, ContextQA discovery and GitHub intake, see the [implementation results](m01-m02-results.md), [illustrated walkthrough](m01-m02-walkthrough.md) and [operator workflow](m01-m02-operations.md). Open the [illustrated before-and-after guide](m00-journey-guide.md), the [criterion-level results](m00-acceptance-results.md), or the [module build order](roadmap.md).
+M00 through M03 are implemented on the local platform branch and in acceptance review. For existing documentation, see the [repository import guide](m03-walkthrough.md) and [acceptance report](m03-results.md). For onboarding, ContextQA discovery and GitHub intake, see the [implementation results](m01-m02-results.md), [illustrated walkthrough](m01-m02-walkthrough.md) and [operator workflow](m01-m02-operations.md). Open the [illustrated before-and-after guide](m00-journey-guide.md), the [criterion-level results](m00-acceptance-results.md), or the [module build order](roadmap.md).
 
 ## Recommendation
 

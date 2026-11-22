@@ -34,7 +34,7 @@ For a writable workspace, the [operator guide](m01-m02-operations.md) covers bin
 
 ![Review inbox shows one request in the queue and no matches for the current search](m01-m02-evidence/inbox-filter.jpg)
 
-**Check whether a baseline exists.** Open **Knowledge base**. The fixture displays **No article baselines yet** and offers **Import article**. A proposed article can appear in the inbox before a baseline is present.
+**Check whether a baseline exists.** Open **Knowledge base**. The fixture displays **No article baselines yet** and offers **Import article**. A proposed article can appear in the inbox before a baseline is present. M03 adds **Preview repository** to this screen. [Import existing documentation](m03-walkthrough.md)
 
 ![The Knowledge base empty state explains how to import a baseline](m01-m02-evidence/knowledge-base.jpg)
 
