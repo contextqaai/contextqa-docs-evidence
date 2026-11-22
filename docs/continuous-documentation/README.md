@@ -2,7 +2,7 @@
 
 Planning date: 2026-11-21, America/Chicago. Reference: Pageloop's public documentation, not access to its private application or architecture. All new requirements are proposed ContextQA product decisions unless explicitly marked as reference behavior. This package defines the implementation backlog; it does not claim the platform is implemented or production-ready.
 
-The first implementation pass is available on the local platform branch. See the [M00 route audit and test results](m00-implementation.md).
+M00 is implemented on the local platform branch and in acceptance review. Open the [illustrated before-and-after guide](m00-journey-guide.md), the [criterion-level results](m00-acceptance-results.md), or the [module build order](roadmap.md).
 
 ## Recommendation
 
@@ -32,4 +32,4 @@ The user's screenshot motivates a later extension: approved product knowledge sh
 - **Proposed:** our target implementation or deliberate deviation.
 - **Deferred:** included in the long-term inventory, intentionally outside the first release.
 
-This package is the forward product plan. Older dated receipts remain authoritative for what their own checks established; this package does not rewrite them. No app code, provider account, paid execution, remote branch or deployment is changed by this planning task.
+This package is the forward product plan. Older dated receipts remain authoritative for what their own checks established; this package does not rewrite them. The linked M00 implementation and validation receipts record the work completed after planning.

@@ -1,0 +1,23 @@
+[
+  {
+    "file": "keyboard-cancel.mp4",
+    "result_id": 462,
+    "source": "ContextQA screen recording",
+    "start_seconds": 129.0,
+    "end_seconds": 210.0,
+    "original_sha256": "858930fe2bc018578766b1070562f7cfed70856b4b8c2435be4fbc6d88ee2d33",
+    "sha256": "f50d2951d6d6864595c6a8d7f270c8bb0ad891834d29441c1be6edefb91f40c8"
+  },
+  {
+    "file": "keyboard-dialog.jpg",
+    "result_id": 462,
+    "source": "ContextQA trace screencast frame",
+    "resource": "page@e7e2e09c91bc0a4937958396eb871965-1795322835985.jpeg",
+    "trace_timestamp_ms": 192914.946,
+    "viewport": [
+      1440,
+      900
+    ],
+    "sha256": "3a987847f854f4463f8048c2579431e4931f9c6379fc76a3eee5b27406eba469"
+  }
+]

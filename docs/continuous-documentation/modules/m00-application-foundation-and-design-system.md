@@ -1,6 +1,6 @@
 # M00 — Application foundation and design system
 
-Implemented locally in the pilot phase. Deployed ContextQA acceptance is pending. See the [route audit and validation receipt](../m00-implementation.md).
+Implemented on the local platform branch and in acceptance review. See the [Ship 5 journeys and criterion-level findings](../m00-acceptance-results.md) and the [route audit](../m00-implementation.md).
 
 ## User outcome
 

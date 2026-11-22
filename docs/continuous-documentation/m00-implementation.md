@@ -21,7 +21,7 @@ The shared sidebar and design tokens live in the web app. The workspace loader c
 
 ## Verification
 
-Based on the local merge of PR #10 at `1d62a9a`. All checks below were run in this checkout.
+Based on the local merge of PR #10 at `1d62a9a`. The implementation-pass checks below predate the five Ship 5 acceptance runs. See the current results below.
 
 | Check | Result |
 |---|---|
@@ -32,4 +32,8 @@ Based on the local merge of PR #10 at `1d62a9a`. All checks below were run in th
 | React tests | 11 passed, including late workspace responses, history restoration, contributor empty state, retry, dialog focus and compact details |
 | TypeScript and Vite production build | Passed |
 
-The React tests use synthetic workspace responses. Layout and keyboard acceptance at 1440, 1024, and 390 pixels remains pending on a deployed candidate. Record the deployment revision and saved ContextQA case/result IDs here when available. M00 is ready for that review. M01 is the next implementation module.
+The React tests use synthetic workspace responses. Live execution against the isolated before and after frontend builds is recorded below. M01 is the next implementation module.
+
+## ContextQA journey definitions
+
+[Illustrated guide and case links](m00-journey-guide.md) · [Machine-readable capture record](m00-capture.json). See the [live run results and remaining acceptance gaps](m00-acceptance-results.md).

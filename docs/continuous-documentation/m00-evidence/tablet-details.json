@@ -1,0 +1,23 @@
+[
+  {
+    "file": "tablet-details.mp4",
+    "result_id": 461,
+    "source": "ContextQA screen recording",
+    "start_seconds": 168.0,
+    "end_seconds": 251.0,
+    "original_sha256": "1adee1321091f1bf5df6fabfa0293841d284ffcaeef74a298afec03300eae039",
+    "sha256": "0e4acdbee80042d8b64d8bf1e146f87ceb2234cae57e2c7c1aff8d7e1967fa9b"
+  },
+  {
+    "file": "tablet-context.jpg",
+    "result_id": 461,
+    "source": "ContextQA trace screencast frame",
+    "resource": "page@a203f8784ffc4bb7b1c77bcb6c7d8b66-1795322871068.jpeg",
+    "trace_timestamp_ms": 241050.755,
+    "viewport": [
+      1024,
+      768
+    ],
+    "sha256": "0a7e4a0c3082276e29b048e5e47eba82e2d04a53c4e75a21b2ebf5c0323ef1dd"
+  }
+]

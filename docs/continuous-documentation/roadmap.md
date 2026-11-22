@@ -45,4 +45,4 @@ Use Kan or a controlled ContextQA fixture app with an identifiable deployed revi
 - Implement one additional connector through the full lifecycle before adding the rest.
 - Keep review mandatory for the pilot; scheduled research never implies scheduled publication.
 - No time estimate from the attached payments-demo instructions applies here. Estimate tickets after baseline validation and dependency sizing.
-- M00 implementation and local checks are complete. Deployed viewport acceptance is pending. M01 is next. See the [M00 implementation receipt](m00-implementation.md).
+- M00 is implemented and in acceptance review. The [M00 test report](m00-acceptance-results.md) identifies the remaining cases. M01–M16 are planned. M01 is next in build order.

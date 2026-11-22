@@ -27,3 +27,22 @@ it('opens and closes the compact review context without changing an article deci
  expect(screen.getByRole('button',{name:'Show request details'}).getAttribute('aria-expanded')).toBe('false');
  expect(review).not.toHaveBeenCalled();
 });
+
+it('preserves edited Markdown after a rejected save and retries the same revision', async () => {
+  const mutate = vi.fn().mockRejectedValueOnce(new Error('Temporary write failure')).mockResolvedValueOnce({});
+  const user = userEvent.setup();
+  render(<Review item={item} state={state} busy={false} dirty={true} setDirty={vi.fn()}
+    back={vi.fn()} review={vi.fn()} mutate={mutate} confirm={(_title, _text, action) => action()}/>);
+  await user.click(screen.getByRole('tab', {name: 'Article'}));
+  await user.click(screen.getByRole('button', {name: 'Edit Markdown'}));
+  const editor = screen.getByLabelText<HTMLTextAreaElement>('Article Markdown');
+  await user.clear(editor);
+  await user.type(editor, '# Revised instructions');
+  await user.click(screen.getByRole('button', {name: 'Save draft'}));
+  expect(screen.getByLabelText<HTMLTextAreaElement>('Article Markdown').value).toBe('# Revised instructions');
+  await user.click(screen.getByRole('button', {name: 'Save draft'}));
+  expect(mutate).toHaveBeenCalledTimes(2);
+  expect(mutate.mock.calls[1]).toEqual(mutate.mock.calls[0]);
+  expect(mutate.mock.calls[1][1]).toMatchObject({version: 1, data: {after: '# Revised instructions'}});
+  expect(screen.queryByLabelText('Article Markdown')).toBeNull();
+});
