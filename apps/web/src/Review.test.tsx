@@ -17,3 +17,13 @@ describe('review console',()=>{
  it('hides health actions from contributors',()=>{render(<HealthReport state={{...state,role:'contributor'}} importArticle={()=>{}} newRequest={()=>{}} result={{issues:[{path:'setup.md',kind:'coverage_gap',detail:'setup'}],external_links_checked:false,semantic_contradictions_checked:false}}/>);expect(screen.queryByRole('button',{name:'Import article'})).toBeNull()});
  it('prefills the missing path when a health finding opens intake',()=>{HTMLDialogElement.prototype.showModal??=function(this:HTMLDialogElement){this.setAttribute('open','')};HTMLDialogElement.prototype.close??=function(this:HTMLDialogElement){this.removeAttribute('open')};render(<Intake kind="request" state={state} initialPath="setup.md" close={()=>{}} submit={vi.fn()}/>);expect((screen.getByLabelText('New article path') as HTMLInputElement).value).toBe('setup.md')});
 });
+
+it('opens and closes the compact review context without changing an article decision',async()=>{
+ const review=vi.fn();
+ render(<Review item={item} state={state} busy={false} dirty={false} setDirty={()=>{}} back={()=>{}} review={review} mutate={vi.fn()} confirm={()=>{}}/>);
+ await userEvent.click(screen.getByRole('button',{name:'Show request details'}));
+ expect(screen.getByRole('button',{name:'Hide request details'}).getAttribute('aria-expanded')).toBe('true');
+ await userEvent.click(screen.getByRole('button',{name:'Hide request details'}));
+ expect(screen.getByRole('button',{name:'Show request details'}).getAttribute('aria-expanded')).toBe('false');
+ expect(review).not.toHaveBeenCalled();
+});

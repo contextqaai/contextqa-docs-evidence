@@ -1,5 +1,7 @@
 # PageLoop workflow parity matrix
 
+**New research and forward plan (2026-11-21):** [45-page reference inventory](continuous-documentation/feature-inventory.md), [current code audit](continuous-documentation/baseline-audit.md), and [module plan](continuous-documentation/roadmap.md). The dated implementation matrix below remains historical; the new plan does not upgrade any verification claim.
+
 Status date: 2026-11-19. This matrix compares publicly described PageLoop behavior with this independent, open-source implementation. It is not based on PageLoop code and does not use PageLoop branding. The PageLoop column restates `docs/pageloop-research.md` (official docs, product article and video transcript checked 2026-11-19). The official docs could not be fetched again from the 2026-11-19 implementation session because of a network allowlist, so re-check those pages before publishing a comparison.
 
 **Status key.** *Implemented*: code exists and an automated test exercises it in this repository. *Partial*: some of the behavior exists; the gap is named. *Not implemented*: no code. "Evidence required" names the receipt that a release claim needs and that does not exist yet.

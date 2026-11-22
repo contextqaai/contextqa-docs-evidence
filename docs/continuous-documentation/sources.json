@@ -1,0 +1,611 @@
+{
+  "checked": "2026-11-21",
+  "scope": "All 45 guide/reference pages linked by public docs index; no exhaustive authenticated feature claim",
+  "index_url": "https://docs.pageloop.ai/",
+  "sources": [
+    {
+      "id": "PL-01",
+      "url": "https://docs.pageloop.ai/guides/account-settings",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "e31f056feacad82137ab7b6b11a934641d07c7151700559ec6c5acaf73f9b6e0",
+      "modules": [
+        "M01"
+      ],
+      "documented_capabilities": "Profile name, read-only sign-in email, password change where password auth exists and sign-out.",
+      "boundary_or_proposed_deviation": "Use our OIDC account lifecycle; do not duplicate reference password constraints.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-02",
+      "url": "https://docs.pageloop.ai/guides/ask-pageloop",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "6e039504af73fbd327a31a0253be1d91cc4966930ea0cba300b0071d51989a9b",
+      "modules": [
+        "M11"
+      ],
+      "documented_capabilities": "Page-context and full-page chats, history, suggested questions, model-depth selection, docs-run requests and Slack question handling.",
+      "boundary_or_proposed_deviation": "Answer depth changes model selection, not necessarily search breadth; keep answer versus mutation intent explicit.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-03",
+      "url": "https://docs.pageloop.ai/guides/automated-screenshots",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "0a33ee1b5e17d9b3e347e71e88f0020b81b3f48bc939287c20c646bf43a3b199",
+      "modules": [
+        "M06"
+      ],
+      "documented_capabilities": "Named environment/role logins, sign-in test stages, capture restrictions, activation state and activity history.",
+      "boundary_or_proposed_deviation": "Reference supports bounded login setups; we use ContextQA credential/environment references and execution receipts.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-04",
+      "url": "https://docs.pageloop.ai/guides/change-sets",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "81427b77b1136772ce5be5bd968ebd3352311f578441b95966e355de134765c8",
+      "modules": [
+        "M08",
+        "M09"
+      ],
+      "documented_capabilities": "Group page, media, navigation and settings edits; branch/PR review; previews; upstream text/move/delete/path conflicts.",
+      "boundary_or_proposed_deviation": "Save, push, merge and live sync are distinct. Our pilot keeps merge in GitHub.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-05",
+      "url": "https://docs.pageloop.ai/guides/connect-knowledge-base",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "e2bba0cead7aad2282e4053245a8fe1efd9d533bf96f1bfb489dd651940c73dd",
+      "modules": [
+        "M02",
+        "M12",
+        "M13"
+      ],
+      "documented_capabilities": "Assign a documentation destination separately from support-ticket source; repository-backed or external help-center paths.",
+      "boundary_or_proposed_deviation": "A connected service is not automatically the active destination. Provider roles/capabilities differ.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-06",
+      "url": "https://docs.pageloop.ai/guides/correct-images-in-drafts",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "c661d2df06e63715b8982bd096c52a7fe281ca11f8edd944572475d21be3eee7",
+      "modules": [
+        "M06",
+        "M14"
+      ],
+      "documented_capabilities": "Request retakes, explain missing screenshots, compare old/new, place images and inspect them in the finished article.",
+      "boundary_or_proposed_deviation": "Manual uploads exist in reference; our workflow-proof media must come from ContextQA.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-07",
+      "url": "https://docs.pageloop.ai/guides/document360-integration",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "415a6eab91236b5036a4d56260b2cf2038592bf57cba23e12d5dd46879101475",
+      "modules": [
+        "M12"
+      ],
+      "documented_capabilities": "API-token connection, selected project version, published-article sync, category/author selection and draft/live delivery.",
+      "boundary_or_proposed_deviation": "API documentation versions are excluded; saved version and destination role are required.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-08",
+      "url": "https://docs.pageloop.ai/guides/faq-and-glossary",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "c209a8d6942bb46f764719dae17ef3ec37b281202917b24ba61054709645a4bd",
+      "modules": [
+        "M00",
+        "M04",
+        "M09"
+      ],
+      "documented_capabilities": "Terminology and distinctions among runs, review, roles and publication schedules.",
+      "boundary_or_proposed_deviation": "No fixed run duration; scheduled research differs from approved scheduled publication.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-09",
+      "url": "https://docs.pageloop.ai/guides/finish-an-inbox-item",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "e00b1b6b0c1fdb25d0b444705fd11289de6db94ffbf236fdc1353cc72e3ca829",
+      "modules": [
+        "M07",
+        "M09"
+      ],
+      "documented_capabilities": "Contributor-to-publisher handoff; selected-change delivery; PR/build verification; provider-specific publication recovery.",
+      "boundary_or_proposed_deviation": "Delivered drafts may not be public. Provider creation with an unknown result needs reconciliation.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-10",
+      "url": "https://docs.pageloop.ai/guides/freshdesk-integration",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "3a0f06eca06038e7610f2df575c443554af523b9f8b2b3b5952b3bc61b28d2ce",
+      "modules": [
+        "M12"
+      ],
+      "documented_capabilities": "Agent API key, solution content hierarchy, independent ticket role, folder destination and draft/live publishing.",
+      "boundary_or_proposed_deviation": "Live publishing depends on key-owner permissions; upstream drafts can be overwritten.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-11",
+      "url": "https://docs.pageloop.ai/guides/github-integration",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "072dfcab44cadd7ed5d76e9f77797b3ed351924bb07d06c27984a095d398706c",
+      "modules": [
+        "M02"
+      ],
+      "documented_capabilities": "GitHub App connection, docs repository versus product repositories, installation health and merged-default-branch events.",
+      "boundary_or_proposed_deviation": "Product source is read-only; connection alone does not activate a workflow.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-12",
+      "url": "https://docs.pageloop.ai/guides/gitlab-integration",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "0b86365b7d2cdb7754cf1929297de0aab7258b2d62ca0d6f2c097f78e8be484f",
+      "modules": [
+        "M12"
+      ],
+      "documented_capabilities": "Token/instance setup, selected docs/product projects, webhooks, merge requests and scoped issue evidence.",
+      "boundary_or_proposed_deviation": "Self-managed connection does not establish full code/issue research support; capability check required.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-13",
+      "url": "https://docs.pageloop.ai/guides/help-center-design",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "ebc4505fa61bc820272d88924b55066d783ab6d1d5a3b3c3a47b1816f6f8d965",
+      "modules": [
+        "M13"
+      ],
+      "documented_capabilities": "Theme, identity, light/dark colors, logos/favicon, font settings, navbar and previewable draft configuration.",
+      "boundary_or_proposed_deviation": "Style-document upload is disabled; default cover/card settings are saved but not used on live site. Do not count them as shipped capabilities.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-14",
+      "url": "https://docs.pageloop.ai/guides/helpscout-integration",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "b9502bd070e9b7ae85759b4c004def9e2ecfd7fd4fede3abc09bfd3157255242",
+      "modules": [
+        "M12"
+      ],
+      "documented_capabilities": "Docs API key, one selected site, article/category/collection sync and reviewed delivery.",
+      "boundary_or_proposed_deviation": "Not a ticket source. Draft body delivery may still make title/category changes immediately visible.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-15",
+      "url": "https://docs.pageloop.ai/guides/how-pageloop-works",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "92a269e2e0181fc1b3c78d428bed9f31540e8193857a6feda22c76695ca44508",
+      "modules": [
+        "M02",
+        "M04",
+        "M05",
+        "M07",
+        "M09"
+      ],
+      "documented_capabilities": "Detect product change, research existing docs, draft text/images, review in Inbox and publish.",
+      "boundary_or_proposed_deviation": "Source scope and workflow determine what is watched; connectivity alone is insufficient.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-16",
+      "url": "https://docs.pageloop.ai/guides/image-editor",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "9e64c23d17e34aa83e4efc09ef6e842049e6668499268dffb7ddc4a70c67d719",
+      "modules": [
+        "M14"
+      ],
+      "documented_capabilities": "Crop, annotations, redaction, filters, save/cancel and workspace annotation palette.",
+      "boundary_or_proposed_deviation": "Draft image editing is not publication; our derivatives must retain evidence lineage.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-17",
+      "url": "https://docs.pageloop.ai/guides/import-existing-content",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "d081feb995d4fbe194676cdcc62f1f5512906f5fd41a74711ad1743cc56aab5a",
+      "modules": [
+        "M03",
+        "M13"
+      ],
+      "documented_capabilities": "Intercom article migration, GitBook/Fern repository conversion, import PR/results/resume and OpenAPI reference input.",
+      "boundary_or_proposed_deviation": "URL spec fetch is one-time; generated reference pages derive from spec. Imported content requires rendered review.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-18",
+      "url": "https://docs.pageloop.ai/guides/intercom-integration",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "f81ee48d9b1f4dc9b0815537ca40761f8dcef639dcb8d12d6054277d8c6928a9",
+      "modules": [
+        "M12"
+      ],
+      "documented_capabilities": "OAuth region/workspace selection, separate article and conversation roles, sync and reviewed draft/live delivery.",
+      "boundary_or_proposed_deviation": "Articles-only authorization cannot act as ticket source; provider drafts require explicit handling.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-19",
+      "url": "https://docs.pageloop.ai/guides/jira-integration",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "c8ceb59e009075ef906f0e5422d8728c7b6496e270958c8717d28fedbe28986e",
+      "modules": [
+        "M12"
+      ],
+      "documented_capabilities": "Jira Cloud OAuth, configured projects, issue/JQL evidence, scheduled research and separate mention-app setup.",
+      "boundary_or_proposed_deviation": "Reading connection and mention app are separate; project scope must be enforced.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-20",
+      "url": "https://docs.pageloop.ai/guides/knowledge-base-publishing-settings",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "278855d1887637a04f17d1a2463a6e122da82afafec623b65171ac1c37ab9d56",
+      "modules": [
+        "M13"
+      ],
+      "documented_capabilities": "Custom domains/TLS status, redirects, documentation/API versions and reader authentication.",
+      "boundary_or_proposed_deviation": "Default address must obey access policy too. Saved-but-inactive login protection is not private access.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-21",
+      "url": "https://docs.pageloop.ai/guides/linear-integration",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "526f11d7fe0ec8697c3610f5497fc3a533cdc3fbac6d4acfcbe7820542e8560f",
+      "modules": [
+        "M12"
+      ],
+      "documented_capabilities": "OAuth team/projects, issue research, scheduled completed-work checks and mention/delegation responses.",
+      "boundary_or_proposed_deviation": "Reference monitored team is not a universal authorization boundary; our adapters enforce configured resource scope.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-22",
+      "url": "https://docs.pageloop.ai/guides/manage-members",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "8fbede64584024f63ab6d3bee5c4c61b9dbbb03efb42c240cd1f6e683c154a6c",
+      "modules": [
+        "M01"
+      ],
+      "documented_capabilities": "Admin/editor/contributor permissions, invitations, expiry/resend, role changes and last-admin protection.",
+      "boundary_or_proposed_deviation": "Reference offers no member-removal action. Our audited deactivation is a proposed addition.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-23",
+      "url": "https://docs.pageloop.ai/guides/mintlify-integration",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "003e20fe07446244399d788bd44026a1bd2cb723e32d8fc69524aacc54b2f5e7",
+      "modules": [
+        "M02",
+        "M12"
+      ],
+      "documented_capabilities": "Legacy Mintlify configuration/disconnect and GitHub repository path.",
+      "boundary_or_proposed_deviation": "New connections use GitHub. Do not create a new standalone Mintlify tile merely for parity.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-24",
+      "url": "https://docs.pageloop.ai/guides/pageloop-sidebar",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "0af98b2b69d9864ce17558731f044c342f08a8f64280b1e4fe5842680f5936f0",
+      "modules": [
+        "M00"
+      ],
+      "documented_capabilities": "Home, Ask, Inbox, Knowledge Base, Workflows, Integrations and grouped settings with role-aware navigation.",
+      "boundary_or_proposed_deviation": "Contributors lack Ask/Workflows navigation; API permissions still need independent enforcement.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-25",
+      "url": "https://docs.pageloop.ai/guides/plans-and-billing",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "c80e331a1f553385eea8e9d6561e2ef797998126783f14356893e725236813f1",
+      "modules": [
+        "M15"
+      ],
+      "documented_capabilities": "Contact-led plans and billing changes.",
+      "boundary_or_proposed_deviation": "No self-service pricing or upgrade workflow documented; no evidence for particular prices or usage limits.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-26",
+      "url": "https://docs.pageloop.ai/guides/pull-request-checks",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "076ecd9198e01cd1fec61f72ccabbca61678c67464f34958317c8a534284065a",
+      "modules": [
+        "M09",
+        "M10"
+      ],
+      "documented_capabilities": "Latest-commit docs checks, findings, explicit fix request, reviewed fix delivery and outdated-branch refusal.",
+      "boundary_or_proposed_deviation": "Passed-with-warnings is not clean content. Reference auto-fix has public/fork restrictions; our policy needs explicit definition.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-27",
+      "url": "https://docs.pageloop.ai/guides/pylon-integration",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "ec349fa700d9d512f49741a97411d8758c44b72fc4133ea5407f792dc2c3a6c4",
+      "modules": [
+        "M12"
+      ],
+      "documented_capabilities": "Admin API token, one knowledge base, collection/article sync and draft/live delivery.",
+      "boundary_or_proposed_deviation": "Knowledge-base-only role; created articles use token owner; switching KB requires reconnect in reference.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-28",
+      "url": "https://docs.pageloop.ai/guides/review-inbox-item",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "4e40bf835e66a8174e16957e45a227912b9350f5062bc9e2cb10e1fb371d287d",
+      "modules": [
+        "M07",
+        "M08"
+      ],
+      "documented_capabilities": "Changes/article/activity views, decisions and undo, source explanations, clean final article, questions and threaded feedback.",
+      "boundary_or_proposed_deviation": "Page-level and whole-item bulk decisions differ; submitted answers resume work but do not approve it.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-29",
+      "url": "https://docs.pageloop.ai/guides/set-up-your-workspace",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "53f06644f76fa7e2e0323b995249133071c3841c3866740cf97c73ab49c412c0",
+      "modules": [
+        "M01"
+      ],
+      "documented_capabilities": "Identity/product setup, hosted-versus-existing-help-center choice, optional source setup, derived checklist and workspace switch.",
+      "boundary_or_proposed_deviation": "Checklist completion is configuration/activity based; capture enabled does not mean all screenshots were refreshed.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-30",
+      "url": "https://docs.pageloop.ai/guides/slack-integration",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "a7e76e16f3d4a581b4c7f983eb994244d5a257d977308b8a241912e7a1013507",
+      "modules": [
+        "M12"
+      ],
+      "documented_capabilities": "Configured monitored/notification channels, research, threaded Ask, interactive questions and workflow summaries.",
+      "boundary_or_proposed_deviation": "Reference Slack membership access differs from app roles; proposed product uses explicit user mapping and backend scope checks.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-31",
+      "url": "https://docs.pageloop.ai/guides/style-and-templates",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "e53939c3a5a44fa0f925bbf32916efecf328e4db5251079278a537f45a7da6c7",
+      "modules": [
+        "M05"
+      ],
+      "documented_capabilities": "Product context, tone/terminology settings and example-article templates chosen for new drafts.",
+      "boundary_or_proposed_deviation": "Template structure supplies no product facts; palette management is admin-only in reference.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-32",
+      "url": "https://docs.pageloop.ai/guides/troubleshooting",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "d4f1cde69916e2d2722a35674c28253a9c3c7bdd43c400ea435ebbf58ab8769a",
+      "modules": [
+        "M00",
+        "M15"
+      ],
+      "documented_capabilities": "Failure-specific recovery for connections, runs, publication, screenshots, docs checks and MCP.",
+      "boundary_or_proposed_deviation": "Help should link to the failed object/stage instead of a generic retry-all instruction.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-33",
+      "url": "https://docs.pageloop.ai/guides/use-chrome-extension",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "02b0efa3710a3df2c9daa26ec0c1d97e4ab3cb253cf6a6c4e38f080910015ee6",
+      "modules": [
+        "M14"
+      ],
+      "documented_capabilities": "Recorded flow, optional narration, screenshots, captured steps and create/update intake.",
+      "boundary_or_proposed_deviation": "Recording completion does not start publication. Separate recorder proof is intentionally outside our ContextQA-only policy.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-34",
+      "url": "https://docs.pageloop.ai/guides/use-the-inbox",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "255e49a88645a28ef475e54529091e391868fdb067568b46e22706a32bdb80d5",
+      "modules": [
+        "M07"
+      ],
+      "documented_capabilities": "Role-filtered tabs, priority/reasons, sources, assignments, selection, archive/restore/resolve and failed-run recovery.",
+      "boundary_or_proposed_deviation": "Selection is scoped to loaded eligible rows; progress and publication labels are separate.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-35",
+      "url": "https://docs.pageloop.ai/guides/where-inbox-items-come-from",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "f655e21fd3df67fac1fc4547d532a00a3ec4bfda32882463cfca2e58b2d3c6c1",
+      "modules": [
+        "M04",
+        "M05"
+      ],
+      "documented_capabilities": "Manual/chat/recording/source/schedule/MCP work enters durable runs and review items; no-change results retained.",
+      "boundary_or_proposed_deviation": "A run may update existing proposals or pause before a proposal exists.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-36",
+      "url": "https://docs.pageloop.ai/guides/workflows",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "4ba70fd04a0f9da85ca3eb9bb7e5d34d5fe40565aae765d464cf4c1e5a03dc90",
+      "modules": [
+        "M04"
+      ],
+      "documented_capabilities": "Triggers, timezone schedules, plain-language instructions, resource mentions, versioned runs, tests, activation/pause/duplicate and backlog choice.",
+      "boundary_or_proposed_deviation": "Tests do not advance live source cursors; pause does not cancel accepted work; publication has a separate boundary.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-37",
+      "url": "https://docs.pageloop.ai/guides/working-in-the-knowledge-base",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "c9650f8d18d799ce7825308ea08a75347713a3f89a05816d8acea66eec3c5d28",
+      "modules": [
+        "M03",
+        "M08"
+      ],
+      "documented_capabilities": "Page/folder/tab tree, landing pages, title/path/redirect controls, source/visual editing, diff, preview and selective publishing.",
+      "boundary_or_proposed_deviation": "Navigation movement differs from URL change; generated pages have restricted editing.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-38",
+      "url": "https://docs.pageloop.ai/guides/write-an-article",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "f0afac7ab7abaf70dec954efd1767615300ff9e88d84f565ec0360b8629a29b5",
+      "modules": [
+        "M05"
+      ],
+      "documented_capabilities": "Audience/outcome brief with notes or recording, template selection, clarification and a reviewable article draft.",
+      "boundary_or_proposed_deviation": "A chat answer is not the finished article; review content, figures and destination before publication.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-39",
+      "url": "https://docs.pageloop.ai/guides/writing-docs",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "b4db1d6964d452f465a59ef2b67ee7915a16ccfa5ea811fdbac63359cd1ab338",
+      "modules": [
+        "M03",
+        "M08"
+      ],
+      "documented_capabilities": "Markdown/MDX, frontmatter, navigation config, supported components, assets, slugs and link validation.",
+      "boundary_or_proposed_deviation": "File creation does not add navigation; safe component subset rather than arbitrary executable MDX.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-40",
+      "url": "https://docs.pageloop.ai/guides/writing-settings",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "4d0bad42217d68d03481366979de0a991d2c117284a4cff3235b055a40b380b1",
+      "modules": [
+        "M05"
+      ],
+      "documented_capabilities": "Product description, terminology exceptions, tone, example templates and annotation colors.",
+      "boundary_or_proposed_deviation": "Reference tone is read-only and templates are replaced rather than edited; our versioned editing is a proposed improvement.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-41",
+      "url": "https://docs.pageloop.ai/mcp/choose-access",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "83585c8bd397a51a97b856c13b58c3504ac936e3f00d9a060ba384bf444908fd",
+      "modules": [
+        "M11"
+      ],
+      "documented_capabilities": "Site selection and read/propose/full/custom grants capped by role; separate read, draft, submit, run, manage and publish powers.",
+      "boundary_or_proposed_deviation": "Full or Publish live can delegate publication without per-change approval; not our pilot default.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-42",
+      "url": "https://docs.pageloop.ai/mcp/connect",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "50a89431f5b7aa80f248a9af50dc961980d081aac340aefb510f96933f649a47",
+      "modules": [
+        "M11"
+      ],
+      "documented_capabilities": "Remote HTTP MCP, browser sign-in/consent and selected workspace/site access.",
+      "boundary_or_proposed_deviation": "Reference applies to hosted docs sites, not external help-center destinations.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-43",
+      "url": "https://docs.pageloop.ai/mcp/manage-connections",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "11e2efaaef2f1ebb73df0dba7cd640cbca44a736decfb967901f71c22a9f7f97",
+      "modules": [
+        "M11"
+      ],
+      "documented_capabilities": "Inspect app access and revoke immediately; reconnect to change scope.",
+      "boundary_or_proposed_deviation": "Clearing client sign-in alone does not revoke server-side access.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-44",
+      "url": "https://docs.pageloop.ai/mcp/overview",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "a2a2635133ac980c0d2904bb17a412ebeae9ffb09799fa30f07edc60ebe9202c",
+      "modules": [
+        "M11"
+      ],
+      "documented_capabilities": "Assistant-based documentation search, proposal/review and workspace-management capabilities.",
+      "boundary_or_proposed_deviation": "Workspace configuration writes are direct effects, distinct from page change-set drafting.",
+      "status": "documented"
+    },
+    {
+      "id": "PL-45",
+      "url": "https://docs.pageloop.ai/reference/mcp-tools-and-prompts",
+      "checked": "2026-11-21",
+      "method": "public HTML fetch and text inspection; no authenticated product execution",
+      "sha256": "f3348b90fe2843376325c2b2f78b9dbc2455c2a58e8c23730fd146a7adacd236",
+      "modules": [
+        "M11"
+      ],
+      "documented_capabilities": "Discovery/search/read; inbox/comments/decisions; change-set drafts/preview/drift; agent runs/questions; submit/merge; workflows/team/capture/settings and reusable prompts.",
+      "boundary_or_proposed_deviation": "Optimistic review tokens and draft hashes required; internal run retry IDs do not prove ContextQA trigger idempotency.",
+      "status": "documented"
+    }
+  ]
+}

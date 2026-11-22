@@ -1,5 +1,7 @@
 # ContextQA Docs Evidence
 
+**Continuous documentation platform plan (2026-11-21):** [product, UI, architecture and 17 modules](docs/continuous-documentation/README.md), with a [build order](docs/continuous-documentation/roadmap.md) and [68-ticket backlog](docs/continuous-documentation/BACKLOG.csv). This is the forward specification; implementation and production verification remain separate.
+
 For **solutions engineers and technical writers**: turn selected ContextQA workflow evidence into reviewed guides, then compare versions when the application changes.
 
 [Usage guide](docs/how-to-use.md) · [Technical guide](docs/POWERFUL.md) · [Capture and refresh](docs/capture-and-refresh.md) · [Proof status](docs/documentation-proof.md)
