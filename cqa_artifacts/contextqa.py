@@ -401,7 +401,7 @@ def collect_results(client, root, run_id, case_ids=(), step_ids=(), suite_ids=()
             "media_downloaded": False, "transport": client.transport_label, "paid_execution_started": False}
 
 
-def import_result_steps(root):
+def import_result_steps(root, *, execution_order=False):
     root = Path(root)
     data = core.load_json(root / "private" / "contextqa-results.json")
     steps = data.get("steps", [])
@@ -410,10 +410,31 @@ def import_result_steps(root):
     manifest = core.manifest(root)
     if manifest["steps"] or manifest.get("execution"):
         raise core.Rejected("Import result steps into a fresh empty workspace only")
+    if execution_order and all(isinstance(s.get("startTime"), str) for s in steps):
+        # Inserted saved steps can have later IDs while executing before older steps.
+        order = {case["id"]: i for i, case in enumerate(data["cases"])}
+        try:
+            starts = [datetime.datetime.fromisoformat(s["startTime"]) for s in steps]
+        except ValueError:
+            starts = []
+        if starts and all(t.tzinfo is not None for t in starts):
+            by_id = {s["id"]: t for s, t in zip(steps, starts)}
+            steps = sorted(steps, key=lambda s: (order[s["testCaseResultId"]], by_id[s["id"]]))
     for item in steps:
         details = item.get("stepDetails") or {}
-        observed = "Observed ContextQA result: " + str(item.get("result", "UNKNOWN")) + ". " + str(item.get("message", ""))
-        manifest["steps"].append({"title": core.redact(details.get("stepDescription") or details.get("action") or "Step result " + str(item["id"])),
+        event = item["event"] if isinstance(item.get("event"), dict) else {}
+        title = details.get("stepDescription") or details.get("action") or event.get("label")
+        observed = "Observed ContextQA result: " + str(item.get("result", "UNKNOWN")) + "."
+        if item.get("message"):
+            observed += " " + str(item["message"])
+        if event.get("customEvent") == "click" and event.get("label"):
+            observed = "Select “" + event["label"] + "”."
+        elif event.get("customEvent") == "verifyTextContains" and event.get("value"):
+            observed = "Check for the message “" + str(event["value"]) + "”."
+        elif event.get("customEvent") in ("ai_verify", "ai_text_actions"):
+            observed = event.get("description") or event.get("ai_task") or observed
+            title = title or ("Check the result" if event["customEvent"] == "ai_verify" else "Follow the recorded action")
+        manifest["steps"].append({"title": core.redact(title or "Step result " + str(item["id"])),
                                   "instruction": core.redact(observed), "media": [], "needs_review": True,
                                   "case_result_id": item["testCaseResultId"], "step_result_id": item["id"]})
     summary = data["summary"]
