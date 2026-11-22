@@ -60,7 +60,7 @@ export function WorkspaceSidebar({
         }}
       >
         <img src="/logo.svg" alt="ContextQA" />
-        <span className="product-label">Docs</span>
+        <span className="product-label">SoFa Docs</span>
       </a>
       <div className="workspace-switch">
         <label htmlFor="workspace-select" className="sr-only">

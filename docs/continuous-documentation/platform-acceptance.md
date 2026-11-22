@@ -46,3 +46,5 @@ The observed Ship 5 balance ended at 14,725, down 48 from the user-reported 14,7
 ## Start the next acceptance pass
 
 Use the [operator guide](platform-operations.md) to bind the private worker, deployment receipt and publication origin. Replay one guide through its entire lifecycle. Capture screenshots at the same task step before and after the UI change, then compare text, steps, evidence and approvals. Use the [verification workflow](feature-verification.md) to record the other criteria and the decision for every affected guide.
+
+The [Ship 5 acceptance map](contextqa-acceptance.md) identifies the test method and companion evidence for all 88 criteria, including external receipts and reader evaluation. It also links the additional acceptance runs made against the local application candidate.

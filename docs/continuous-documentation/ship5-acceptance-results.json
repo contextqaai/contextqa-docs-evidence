@@ -1,0 +1,169 @@
+{
+  "workspace": "Ship 5 / 1.0",
+  "baseline": "68ec2838f7ba73b2ba2aae933942fab244b35070",
+  "runs": [
+    {
+      "case": 227,
+      "result": 495,
+      "url": "https://ship-5.contextqa.com/run-result-view?testCaseId=227&runResultId=495",
+      "verdict": "SUCCESS",
+      "steps": [
+        {
+          "id": 891,
+          "verdict": "SUCCESS",
+          "action": "REST_API: get - Identify the original approved version"
+        },
+        {
+          "id": 892,
+          "verdict": "SUCCESS",
+          "action": "REST_API: post - Save previous reader path"
+        },
+        {
+          "id": 893,
+          "verdict": "SUCCESS",
+          "action": "REST_API: get - Resolve old path to exact guide version"
+        },
+        {
+          "id": 894,
+          "verdict": "SUCCESS",
+          "action": "REST_API: post - Reject a self redirect"
+        },
+        {
+          "id": 895,
+          "verdict": "SUCCESS",
+          "action": "REST_API: post - Record inconclusive removal as an investigation"
+        },
+        {
+          "id": 896,
+          "verdict": "SUCCESS",
+          "action": "REST_API: post - Reject retirement without a reviewed removal event"
+        },
+        {
+          "id": 897,
+          "verdict": "SUCCESS",
+          "action": "REST_API: get - Keep the approved head after both attempts"
+        },
+        {
+          "id": 898,
+          "verdict": "SUCCESS",
+          "action": "REST_API: post - Reject out-of-bounds rectangle"
+        },
+        {
+          "id": 899,
+          "verdict": "SUCCESS",
+          "action": "REST_API: post - Save derivative tied to its original and recipe"
+        },
+        {
+          "id": 900,
+          "verdict": "SUCCESS",
+          "action": "REST_API: get - Original guide still points at its original screenshot"
+        }
+      ]
+    },
+    {
+      "case": 229,
+      "result": 496,
+      "url": "https://ship-5.contextqa.com/run-result-view?testCaseId=229&runResultId=496",
+      "verdict": "SUCCESS",
+      "steps": [
+        {
+          "id": 901,
+          "verdict": "SUCCESS",
+          "action": "REST_API: post - Create an audience-specific lesson draft"
+        },
+        {
+          "id": 902,
+          "verdict": "SUCCESS",
+          "action": "REST_API: post - Reject export before owner approval"
+        },
+        {
+          "id": 903,
+          "verdict": "SUCCESS",
+          "action": "REST_API: post - Reject edits removing all verified figures"
+        },
+        {
+          "id": 904,
+          "verdict": "SUCCESS",
+          "action": "REST_API: post - Approve the original illustrated lesson"
+        },
+        {
+          "id": 905,
+          "verdict": "SUCCESS",
+          "action": "REST_API: post - Reject an edit using the stale draft revision"
+        },
+        {
+          "id": 906,
+          "verdict": "SUCCESS",
+          "action": "REST_API: get - Approval and export timestamps are independent"
+        }
+      ]
+    },
+    {
+      "case": 230,
+      "result": 497,
+      "url": "https://ship-5.contextqa.com/run-result-view?testCaseId=230&runResultId=497",
+      "verdict": "SUCCESS",
+      "steps": [
+        {
+          "id": 907,
+          "verdict": "SUCCESS",
+          "action": "REST_API: post - Save the first reviewer priority"
+        },
+        {
+          "id": 908,
+          "verdict": "SUCCESS",
+          "action": "REST_API: post - Reject the stale reviewer priority"
+        },
+        {
+          "id": 909,
+          "verdict": "SUCCESS",
+          "action": "REST_API: post - Report failed row in stale page acceptance"
+        },
+        {
+          "id": 910,
+          "verdict": "SUCCESS",
+          "action": "REST_API: get - Verify committed priority and pending article"
+        },
+        {
+          "id": 911,
+          "verdict": "SUCCESS",
+          "action": "REST_API: post - Accept after reloading the latest revision"
+        },
+        {
+          "id": 912,
+          "verdict": "SUCCESS",
+          "action": "REST_API: post - Archive accepted review"
+        },
+        {
+          "id": 913,
+          "verdict": "SUCCESS",
+          "action": "REST_API: post - Restore archived request"
+        }
+      ]
+    },
+    {
+      "case": 228,
+      "result": 498,
+      "verdict": "FAILURE",
+      "steps": [
+        {
+          "id": 914,
+          "verdict": "FAILURE",
+          "action": "Successful redirect confirmation not visible in current viewport"
+        }
+      ]
+    },
+    {
+      "case": 228,
+      "result": 499,
+      "verdict": "SUCCESS",
+      "steps": [
+        {
+          "id": 915,
+          "verdict": "SUCCESS",
+          "action": "Reject occupied reader path and save corrected address with inline feedback"
+        }
+      ]
+    }
+  ]
+}

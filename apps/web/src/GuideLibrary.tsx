@@ -84,6 +84,11 @@ export function GuideLibrary({
     [reason, setReason] = useState(""),
     [verified, setVerified] = useState(false),
     [proposal, setProposal] = useState("");
+  const [redirectFeedback, setRedirectFeedback] = useState<{
+    key: string;
+    role: "alert" | "status";
+    text: string;
+  } | null>(null);
   const versions = data?.versions || [],
     selected = versions.find((v) => v.path + "@" + v.digest === key);
   const asset = data?.assets.find((a) => a.id === assetId);
@@ -141,6 +146,19 @@ export function GuideLibrary({
       reload((x) => x + 1);
     } catch (e) {
       fail((e as Error).message);
+    } finally {
+      lock(false);
+    }
+  }
+  async function saveRedirect() {
+    if (!selected) return;
+    lock(true);
+    setRedirectFeedback(null);
+    try {
+      await request(prefix + "/reader/redirects", { source: alias, target: selected.path });
+      setRedirectFeedback({ key, role: "status", text: "Reader redirect saved." });
+    } catch (e) {
+      setRedirectFeedback({ key, role: "alert", text: (e as Error).message });
     } finally {
       lock(false);
     }
@@ -258,23 +276,22 @@ export function GuideLibrary({
                     Old reader path
                     <input
                       value={alias}
-                      onChange={(e) => setAlias(e.target.value)}
+                      disabled={busy}
+                      onChange={(e) => {
+                        setAlias(e.target.value);
+                        setRedirectFeedback(null);
+                      }}
                     />
                   </label>
                   <button
                     disabled={busy || !alias}
-                    onClick={() =>
-                      void act(async () => {
-                        await request(prefix + "/reader/redirects", {
-                          source: alias,
-                          target: selected.path,
-                        });
-                        tell("Reader redirect saved.");
-                      })
-                    }
+                    onClick={() => void saveRedirect()}
                   >
                     Add redirect to this guide
                   </button>
+                  {redirectFeedback?.key === key && (
+                    <p role={redirectFeedback.role}>{redirectFeedback.text}</p>
+                  )}
                   <label>
                     Removal review request ID
                     <input

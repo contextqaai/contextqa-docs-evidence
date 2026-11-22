@@ -42,3 +42,16 @@ The export journey checked the original illustration, run and step references, e
 ![New review request showing GET /invites and its description](studio-evidence/api-proposal.jpg)
 
 The first broad run timed out. A focused rerun verified the new request after the app refreshed its inbox on import. [Watch the import](studio-evidence/openapi-import.mp4) · [Inspect Ship 5 result 494](https://ship-5.contextqa.com/run-result-view?testCaseId=226&runResultId=494)
+
+## Redirect an old reader address
+
+1. In **Guide library**, choose the current version of the destination guide. Expand **Reader address and retirement**.
+2. Under **Old reader path**, enter the path readers used previously. Choose **Add redirect to this guide**. If the path is occupied, the reason appears below the button. Here the editor entered the destination guide's own path.
+
+![The occupied reader address is rejected in the redirect form](studio-evidence/occupied-reader-path.jpg)
+
+3. Replace the occupied path with the unused old address, then choose **Add redirect to this guide** again. Look for **Reader redirect saved** beside the button. The API verification also followed an old path and checked that it resolved to the destination guide's exact version.
+
+![The corrected address and inline confirmation](studio-evidence/saved-reader-redirect.jpg)
+
+[Watch the corrected redirect](studio-evidence/reader-redirect.mp4) · [Inspect the Ship 5 browser result](https://ship-5.contextqa.com/run-result-view?testCaseId=228&runResultId=499) · [Inspect the API result](https://ship-5.contextqa.com/run-result-view?testCaseId=227&runResultId=495)

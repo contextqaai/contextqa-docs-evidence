@@ -1,0 +1,43 @@
+{
+  "case_id": 228,
+  "result_id": 499,
+  "step_result_id": 915,
+  "viewport": [
+    1280,
+    720
+  ],
+  "frontend": {
+    "path": "/assets/index-DjhBmHDv.js",
+    "http_status": 200
+  },
+  "source_trace_sha256": "a94712f6788b4d8c2211539caea7cdfd1a329d2e2a6759c351b602054561fc7a",
+  "assets": [
+    {
+      "file": "reader-redirect.mp4",
+      "source_recording_sha256": "5a14ca0e7c49e4e60c08c09df47229fc2b8eec1f550686ae852b9591b6ab4804",
+      "start_seconds": 225.0,
+      "end_seconds": 244.0,
+      "sha256": "66dd85d95a5c59ff26447a0f48cf87bd68156a486fbab265971b680da8e4fec0"
+    },
+    {
+      "file": "occupied-reader-path.jpg",
+      "trace_timestamp_ms": 154455.861,
+      "resource": "page@14860cf3543cdbf6e359b2365df3ebfc-1795337161268.jpeg",
+      "sha256": "80f0051e27bdc57e75ef473132b16c30a05bfefe0aa45644f53d5ecb487086b4",
+      "encoded_frame_bounds": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "saved-reader-redirect.jpg",
+      "trace_timestamp_ms": 259368.215,
+      "resource": "page@14860cf3543cdbf6e359b2365df3ebfc-1795337266181.jpeg",
+      "sha256": "b5828205a987065710f274701784d847a315c5b58db47d44ea7fdd555d96921a",
+      "encoded_frame_bounds": [
+        1280,
+        720
+      ]
+    }
+  ]
+}

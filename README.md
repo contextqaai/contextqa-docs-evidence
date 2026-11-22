@@ -1,4 +1,4 @@
-# ContextQA Docs Evidence
+# SoFa Docs
 
 **Continuous documentation platform plan (2026-11-21):** [product, UI, architecture and 17 modules](docs/continuous-documentation/README.md), with a [build order](docs/continuous-documentation/roadmap.md) and [68-ticket backlog](docs/continuous-documentation/BACKLOG.csv). This is the forward specification; implementation and production verification remain separate.
 
