@@ -39,6 +39,7 @@ type Job = {
   receipt_digest: string | null;
 };
 type Data = {
+  provider_configured: boolean;
   profiles: Profile[];
   jobs: Job[];
   meter: string | null;
@@ -180,6 +181,13 @@ export function Captures({ prefix, role }: { prefix: string; role: string }) {
                   Workspace {data.workspace} · {profile.environment} · Plan{" "}
                   {profile.plan} · Cases {profile.cases.join(", ")}
                 </p>
+                {!data.provider_configured && (
+                  <p role="status">
+                    Ask your administrator to configure the ContextQA workspace
+                    API credential for this worker before registering or
+                    replaying a plan.
+                  </p>
+                )}
                 {profile.drift && (
                   <p role="status">
                     The saved journey changed. Register the current definition
@@ -189,7 +197,7 @@ export function Captures({ prefix, role }: { prefix: string; role: string }) {
                 {role === "admin" && (
                   <>
                     <button
-                      disabled={busy}
+                      disabled={busy || !data.provider_configured}
                       onClick={() => void action(profile.id + "/register", {})}
                     >
                       {profile.digest
@@ -222,6 +230,7 @@ export function Captures({ prefix, role }: { prefix: string; role: string }) {
                     <button
                       disabled={
                         busy ||
+                        !data.provider_configured ||
                         !profile.digest ||
                         !data.meter ||
                         !confirmed ||

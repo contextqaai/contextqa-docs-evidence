@@ -107,6 +107,7 @@ def router(pool, auth):
             ).fetchone()
             return {
                 "discovery": discovery[0] if discovery else None,
+                "provider_configured": bool(cfg.get("capture_api_token")),
                 "profiles": [
                     {
                         "id": j["id"],
