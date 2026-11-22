@@ -1,0 +1,43 @@
+{
+  "case_id": 226,
+  "result_id": 494,
+  "step_result_id": 890,
+  "viewport": [
+    1280,
+    720
+  ],
+  "frontend": {
+    "path": "/assets/index-YTHHwi37.js",
+    "http_status": 200
+  },
+  "source_trace_sha256": "973fe23be31698b169d311bb2f952177ac92460c990a45027a453487ca3f41a0",
+  "assets": [
+    {
+      "file": "openapi-import.mp4",
+      "source_recording_sha256": "ae63180f86900eed1f30c381a906b640f6e9ed0a986061469873f0ce995daa44",
+      "start_seconds": 76.0,
+      "end_seconds": 99.0,
+      "sha256": "ab82118afce017771dafda85940dc2f4dd8330f308ca8b24051175976ef665c0"
+    },
+    {
+      "file": "api-form.jpg",
+      "trace_timestamp_ms": 103606.098,
+      "resource": "page@0455c783bbb5d4dbbc2e1d40e1b90951-1795335120986.jpeg",
+      "sha256": "b4329f6cc6cc2cf09ec52b806021ad55650fa3f74b2ed6e8ad931cadf53ed316",
+      "encoded_frame_bounds": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "api-proposal.jpg",
+      "trace_timestamp_ms": 148504.916,
+      "resource": "page@0455c783bbb5d4dbbc2e1d40e1b90951-1795335165885.jpeg",
+      "sha256": "8046ee2455017ec1f19ee00c28cc151a28d15129701fda91ab13e29118c3db13",
+      "encoded_frame_bounds": [
+        1280,
+        720
+      ]
+    }
+  ]
+}

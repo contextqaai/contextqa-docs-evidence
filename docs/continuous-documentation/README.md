@@ -35,3 +35,7 @@ The user's screenshot motivates a later extension: approved product knowledge sh
 This package is the forward product plan. Older dated receipts remain authoritative for what their own checks established; this package does not rewrite them. The linked M00 implementation and validation receipts record the work completed after planning.
 
 Use the [capture and replay guide](m06-results.md) to configure the worker and see the current M06 verification scope.
+
+Use the [writing and reviewer walkthrough](m05-m07-walkthrough.md) to draft against a baseline and hand a request to the next editor.
+
+The [guide library walkthrough](guide-library-walkthrough.md) follows a captured screenshot into a downloadable training lesson. The [module acceptance ledger](platform-acceptance.md) covers all 17 modules.

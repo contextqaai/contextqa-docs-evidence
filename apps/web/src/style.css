@@ -75,3 +75,10 @@
 .inventory-article figcaption {color:#5d6473}
 
 .deployment-identifiers { white-space: pre-wrap; overflow-wrap: anywhere; }
+
+.writing-panel fieldset { border: 0; padding: 0; margin: 0; min-width: 0; }
+.writing-panel fieldset > label { display: grid; gap: .3rem; margin: .8rem 0; }
+.writing-panel input,.writing-panel select,.writing-panel textarea { width: 100%; min-width: 0; }
+.writing-actions { display: flex; flex-wrap: wrap; gap: .45rem; margin: .8rem 0; }
+
+.reviewed-figure{margin:1rem 1.5rem}.reviewed-figure img,.reviewed-figure video{max-width:100%;height:auto}.reviewed-figure figcaption{margin-top:.4rem;font-size:.9rem}

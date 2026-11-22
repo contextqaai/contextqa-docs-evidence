@@ -1,6 +1,6 @@
 # M08 — Article editor, change sets and conflict resolution
 
-Status: planned; phase: Pilot. Dependencies: M03,M07.
+A local implementation is in acceptance review. See the [working scope and remaining checks](../platform-acceptance.md). Upstream modules are M03 and M07.
 
 ## User outcome
 

@@ -1,3 +1,7 @@
+import {clearDrafts} from './drafts';
+import {GuideLibrary} from './GuideLibrary';
+import {Operations} from './Operations';
+import {Ask} from './Ask';
 import {Captures} from './Captures';
 import {Workflows} from './Workflows';
 import {Articles} from './Inventory';
@@ -197,6 +201,7 @@ export default function App({ onSignOut }: { onSignOut: () => void }) {
   const signOut = () => {
     const action = async () => {
       if (manager) await manager.removeUser();
+      clearDrafts();
       sessionStorage.removeItem('docs-development-token');
       onSignOut();
     };
@@ -208,6 +213,10 @@ export default function App({ onSignOut }: { onSignOut: () => void }) {
         )
       : void action();
   };
+  function openRequest(id: string) {
+    navigate('inbox', id);
+    if (!state?.items[id]) void refresh();
+  }
   const item = state?.items[route.item];
   return (
     <div className={mobile ? 'nav-open' : ''}>
@@ -307,6 +316,7 @@ export default function App({ onSignOut }: { onSignOut: () => void }) {
             <>
               {item ? (
                 <Review
+                  prefix={prefix}
                   key={item.id}
                   item={item}
                   state={state}
@@ -332,7 +342,7 @@ export default function App({ onSignOut }: { onSignOut: () => void }) {
               newRequest={() => setModal('request')}
             />
           ) : route.view === 'inbox' ? (
-            <InboxPage state={state} open={(id) => navigate('inbox', id)} />
+            <InboxPage key={prefix} state={state} mutate={mutate} busy={busy} open={(id) => navigate('inbox', id)} />
           ) : route.view === 'articles' ? (
             <Articles key={prefix} prefix={prefix} refresh={refresh} state={state} create={() => setModal('article')} />
           ) : route.view === 'journeys' ? (
@@ -341,6 +351,12 @@ export default function App({ onSignOut }: { onSignOut: () => void }) {
             <Workflows key={prefix} prefix={prefix} role={state.role}/>
           ) : route.view === 'sources' ? (
             <Sources state={state} />
+          ) : route.view === 'library' ? (
+            <GuideLibrary key={prefix} prefix={prefix} state={state} open={openRequest}/>
+          ) : route.view === 'ask' ? (
+            <Ask key={prefix} prefix={prefix} open={openRequest}/>
+          ) : route.view === 'operations' ? (
+            <Operations key={prefix} prefix={prefix} open={openRequest}/>
           ) : route.view === 'health' ? (
             <Health
               prefix={prefix}

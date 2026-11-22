@@ -5,3 +5,9 @@ test('untrusted article HTML remains text',()=>{const html=markdown('# Title\n<i
 test('unsafe source URLs are not links',()=>{for(const url of ['javascript:alert(1)','data:text/html,test','https://user:secret@example.com','/relative'])assert.equal(safeURL(url),null);assert.equal(safeURL('https://github.com/nigharsh/kan/pull/15'),'https://github.com/nigharsh/kan/pull/15');});
 test('review cannot finish with missing evidence or pending article decisions',()=>{assert.equal(canFinish({questions:['capture required'],changes:[{decision:'accepted'}],status:'needs_input'}),false);assert.equal(canFinish({questions:[],changes:[{decision:'pending'}],status:'open'}),false);assert.equal(canFinish({questions:[],changes:[{decision:'accepted'}],status:'open'}),true);});
 test('inbox search composes with assignment and state filters',()=>{const item={title:'Card title',source:'github',event_id:'pr15',assignee:'editor',status:'needs_input'};assert.equal(itemMatches(item,'blocked','CARD','owner'),true);assert.equal(itemMatches(item,'assigned','','owner'),false);assert.equal(itemMatches(item,'review','','editor'),false);});
+test('compiled editorial text renders escaped punctuation and encoded text safely',()=>{
+ const html=markdown('Invitations remain pending\\. &lt;sample&gt; [Source](https://example.org/invites)');
+ assert.ok(html.includes('pending. &lt;sample&gt;'));
+ assert.ok(html.includes('<a href="https://example.org/invites"'));
+ assert.ok(!html.includes('<sample>'));
+});

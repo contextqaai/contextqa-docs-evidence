@@ -1,0 +1,63 @@
+{
+  "case_id": 220,
+  "result_id": 491,
+  "step_result_id": 887,
+  "viewport": [
+    1280,
+    720
+  ],
+  "frontend": {
+    "path": "/assets/index-BFuFjpQM.js",
+    "http_status": 200
+  },
+  "source_trace_sha256": "d43efe671c024f5bd86614d6118fbb84b746638ac981e97729e4cee7d0070a9d",
+  "assets": [
+    {
+      "file": "training-export.mp4",
+      "source_recording_sha256": "fa51b512192949b3c5fc87adcac43d2256b1f9e3e3651ba55e85740c19eca748",
+      "start_seconds": 412.0,
+      "end_seconds": 448.0,
+      "sha256": "891dfd4a79901343910c7293cba563c32a371d607459a1bafd1ae0ef7fb5bb90"
+    },
+    {
+      "file": "guide-reader.jpg",
+      "trace_timestamp_ms": 67064.656,
+      "resource": "page@332751e734775288b7c9ca7dd2155c1d-1795333774408.jpeg",
+      "sha256": "51064e4af65a2d99c14ca9b614d14e7582b4c4e0cb3bbffb0934dba91b8641a4",
+      "encoded_frame_bounds": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "evidence-editor.jpg",
+      "trace_timestamp_ms": 236307.266,
+      "resource": "page@332751e734775288b7c9ca7dd2155c1d-1795333943651.jpeg",
+      "sha256": "7d11fd048172b629293a69a42d60e3f3457da572ac0051040136a193b14af6cb",
+      "encoded_frame_bounds": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "material-editor.jpg",
+      "trace_timestamp_ms": 387156.041,
+      "resource": "page@332751e734775288b7c9ca7dd2155c1d-1795334094499.jpeg",
+      "sha256": "8e44f274eb6b70657d7da325f19d37452211e7da5007e5113018a4ec0007b607",
+      "encoded_frame_bounds": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "export-receipt.jpg",
+      "trace_timestamp_ms": 462151.21,
+      "resource": "page@332751e734775288b7c9ca7dd2155c1d-1795334169495.jpeg",
+      "sha256": "52c13e770c72e67b186415516adf6d547819d477902582413df3a8f3cea97a0d",
+      "encoded_frame_bounds": [
+        1280,
+        720
+      ]
+    }
+  ]
+}

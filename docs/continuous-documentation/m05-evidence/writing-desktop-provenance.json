@@ -1,0 +1,53 @@
+{
+  "case_id": 215,
+  "result_id": 483,
+  "step_result_id": 876,
+  "viewport": [
+    1280,
+    720
+  ],
+  "frontend": {
+    "path": "/assets/index-ByYRmYvK.js",
+    "http_status": 200
+  },
+  "source_trace_sha256": "d91f333aa4ad4e49530b750a15b2ce9bd5156cc8c98e2cad9a5abe34b4b73515",
+  "assets": [
+    {
+      "file": "writing-desktop.mp4",
+      "source_recording_sha256": "5013ef30e01d7c0cefb76a659b342aa4fc67810515dcd9ba92158289b12d6427",
+      "start_seconds": 280.0,
+      "end_seconds": 310.0,
+      "sha256": "c3a3f54c9ecf86dc96df167b7d4ce9936337a955732ae3a7896a50efcad0bdde"
+    },
+    {
+      "file": "writing-brief.jpg",
+      "trace_timestamp_ms": 72418.239,
+      "resource": "page@9aa5fe8ca0a59d76d5d3a68d0b9f2b96-1795332734451.jpeg",
+      "sha256": "6178c78b3fe3dac4f350ea27af76b27175ae0e1118f17b2e41a065659cb76043",
+      "encoded_frame_bounds": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "partial-answer.jpg",
+      "trace_timestamp_ms": 169650.965,
+      "resource": "page@9aa5fe8ca0a59d76d5d3a68d0b9f2b96-1795332831684.jpeg",
+      "sha256": "0d126823ade4b1c1d59d6fa51d5582ca9e8d77b4685272d79d4e36923290f990",
+      "encoded_frame_bounds": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "article-draft.jpg",
+      "trace_timestamp_ms": 359117.252,
+      "resource": "page@9aa5fe8ca0a59d76d5d3a68d0b9f2b96-1795333021150.jpeg",
+      "sha256": "3b966da9ad474079f2477234c34448fde452a1edf05253d2986b6c9b5cdd1562",
+      "encoded_frame_bounds": [
+        1280,
+        720
+      ]
+    }
+  ]
+}

@@ -1,6 +1,6 @@
 # M10 — Continuous refresh, health and dependency graph
 
-Status: planned; phase: Pilot. Dependencies: M04,M09.
+A local implementation is in acceptance review. See the [working scope and remaining checks](../platform-acceptance.md). Upstream modules are M04 and M09.
 
 ## User outcome
 

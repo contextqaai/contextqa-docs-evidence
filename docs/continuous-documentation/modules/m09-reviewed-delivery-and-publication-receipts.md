@@ -1,6 +1,6 @@
 # M09 — Reviewed delivery and publication receipts
 
-Status: planned; phase: Pilot. Dependencies: M02,M08.
+A local implementation is in acceptance review. See the [working scope and remaining checks](../platform-acceptance.md). Upstream modules are M02 and M08.
 
 ## User outcome
 

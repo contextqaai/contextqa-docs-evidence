@@ -204,6 +204,8 @@ def receive(pool, org, project, raw, headers):
                 Jsonb({k: current[k] for k in ("docs_repo", "branch", "docs_root")}),
             ),
         )
+        from .refresh import record
+        record(db,org,project,event,item_id)
         return {
             "status": "duplicate" if prior else "received",
             "item_id": item_id,

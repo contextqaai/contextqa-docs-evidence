@@ -63,3 +63,7 @@ Do not let a builder rewrite a failing acceptance test simply to make it pass. I
 Record ticket/module/AC IDs; base and candidate commit; target URL and deployed revision evidence; test case and execution IDs; result and covered assertions; original failures; media source; reviewer decision; blocked checks; next ticket. No secrets, private recordings or signed URLs in committed receipts.
 
 The [M04 workflow receipt](m04-results.md) maps the local scheduler checks and the three Ship 5 cases. Use the [workflow guide](m04-walkthrough.md) to test a paused version before activation. M06 connects a saved ContextQA replay to the research brief.
+
+## Resume from the implemented application
+
+Start with the [17-module acceptance ledger](platform-acceptance.md) and the individual ticket rows in BACKLOG.csv. For a feature affecting an existing guide, keep the imported baseline, exercise the user journey in Ship 5, review its run/step evidence, and compare the proposed update with that baseline. The [operator guide](platform-operations.md) lists worker bindings, deployer and publication receipts and recovery commands. The [library walkthrough](guide-library-walkthrough.md) illustrates a completed training export and the OpenAPI proposal flow.

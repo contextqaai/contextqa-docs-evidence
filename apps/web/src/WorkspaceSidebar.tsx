@@ -33,7 +33,7 @@ export function WorkspaceSidebar({
     if (mobile) closeButton.current?.focus();
   }, [mobile]);
   const open = Object.values(state?.items || {}).filter(
-    (item) => !['resolved', 'delivered', 'no_change'].includes(item.status),
+    (item) => !['resolved', 'delivered', 'no_change', 'archived'].includes(item.status),
   ).length;
   return (
     <aside
@@ -80,7 +80,7 @@ export function WorkspaceSidebar({
         </select>
       </div>
       <nav aria-label="Main navigation">
-        {navigation.map(([id, label, Icon]) => (
+        {navigation.filter(([id])=>state?.role!=='contributor'||!['library','operations'].includes(id)).map(([id, label, Icon]) => (
           <button
             key={id}
             className={view === id ? 'active' : ''}

@@ -1,6 +1,6 @@
 # M07 — Review inbox, collaboration and handoff
 
-Status: planned; phase: Pilot. Dependencies: M01,M05.
+A local implementation is in acceptance review. See the [working scope and remaining checks](../platform-acceptance.md). Upstream modules are M01 and M05.
 
 ## User outcome
 

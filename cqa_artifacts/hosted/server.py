@@ -12,7 +12,7 @@ from starlette.middleware.trustedhost import TrustedHostMiddleware
 from psycopg_pool import ConnectionPool
 from .auth import Settings, Authenticator
 from .store import PostgresStore
-from . import onboarding, github_intake, discovery, inventory, workflows, captures
+from . import onboarding, github_intake, discovery, inventory, workflows, captures, editorial, library, ask, media_editor, operations, publication, destinations, reader
 from ..core import Rejected
 from ..docs_loop import package_bundle
 
@@ -60,7 +60,7 @@ def create_app(settings=None, pool=None, web_root=None):
         response.headers['X-Content-Type-Options']='nosniff'
         response.headers['Referrer-Policy']='no-referrer'
         response.headers['Cache-Control']='no-store'
-        response.headers['Content-Security-Policy']="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' "+((urlsplit(settings.issuer).scheme+'://'+urlsplit(settings.issuer).netloc) if settings.auth_mode=='oidc' else '')+"; frame-ancestors 'none'; base-uri 'none'; object-src 'none'"
+        response.headers['Content-Security-Policy']="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' "+((urlsplit(settings.issuer).scheme+'://'+urlsplit(settings.issuer).netloc) if settings.auth_mode=='oidc' else '')+"; frame-ancestors 'none'; base-uri 'none'; object-src 'none'"
         if settings.mode=='production': response.headers['Strict-Transport-Security']='max-age=31536000'
         return response
     @app.exception_handler(RequestValidationError)
@@ -77,7 +77,7 @@ def create_app(settings=None, pool=None, web_root=None):
     @app.get('/healthz')
     def health():
         with pool.connection() as db:
-            ready=db.execute('SELECT version FROM docs_schema_versions WHERE version=5').fetchone()
+            ready=db.execute('SELECT version FROM docs_schema_versions WHERE version=6').fetchone()
         if not ready: raise HTTPException(503,'Database migration required')
         return {'status':'ok'}
     @app.get('/api/config')
@@ -94,7 +94,7 @@ def create_app(settings=None, pool=None, web_root=None):
         with pool.connection() as db:
             rows=db.execute("SELECT p.organization_id,p.id,p.state->'manifest'->>'name',o.name,m.role FROM docs_projects p JOIN docs_memberships m ON m.organization_id=p.organization_id JOIN docs_organizations o ON o.id=p.organization_id WHERE m.subject=%s ORDER BY o.name,p.id",(subject,)).fetchall()
         return {'subject':subject,'projects':[dict(organization_id=o,id=i,name=n,organization=org,role=role) for o,i,n,org,role in rows]}
-    for module in (onboarding, github_intake, discovery, inventory, workflows, captures):
+    for module in (onboarding, github_intake, discovery, inventory, workflows, captures, editorial, library, ask, media_editor, operations, publication, destinations, reader):
         app.include_router(module.router(pool,auth))
     prefix='/api/orgs/{org}/projects/{project}'
     @app.get(prefix+'/state')
@@ -118,9 +118,21 @@ def create_app(settings=None, pool=None, web_root=None):
                 return store.ingest(*common,data)
             if action=='articles':return store.article(*common,data['path'],data['title'],data['body'],data.get('expected'))
             if action=='review':
-                if data.get('action') not in ('accept','ignore','undo','edit','comment','answer','assign','ready'):
+                if data.get('action') not in ('accept','ignore','undo','edit','comment','answer','assign','ready','priority','archive','resolve','handoff','accept_item','restore','reconcile'):
                     raise HTTPException(400,'Unsupported review action')
                 return store.review(*common,data['item_id'],data['version'],data['action'],**data.get('data',{}))
+            if action=='review-page':
+                rows=data.get('items')
+                if not isinstance(rows,list) or not 1<=len(rows)<=10 or any(not isinstance(r,dict) or not isinstance(r.get('id'),str) or type(r.get('version'))!=int for r in rows) or len({r['id'] for r in rows})!=len(rows):
+                    raise HTTPException(422,'Select up to ten different versioned requests.')
+                results=[]
+                for row in rows:
+                    try:
+                        store.review(*common,row['id'],row['version'],'accept_item')
+                        results.append(dict(id=row['id'],accepted=True))
+                    except Rejected:
+                        results.append(dict(id=row['id'],accepted=False,reason='Unavailable, closed or changed. Refresh and review again.'))
+                return {'results':results}
             if action=='approve':return store.approve(*common,data['item_id'],data['version'],data.get('confirmed'))
             if action=='bundle':return Response(package_bundle(store.bundle(*common,data['item_id'])),media_type='application/zip',headers={'Content-Disposition':'attachment; filename="contextqa-reviewed-draft.zip"'})
             if action=='apply-local':return store.apply_local(*common,data['item_id'],data.get('confirmed'))

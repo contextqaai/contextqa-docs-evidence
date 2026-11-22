@@ -1,6 +1,6 @@
 # M13 — Hosted docs reader, migrations and API reference
 
-Status: planned; phase: Parity. Dependencies: M03,M09.
+A local implementation is in acceptance review. See the [working scope and remaining checks](../platform-acceptance.md). Upstream modules are M03 and M09.
 
 ## User outcome
 

@@ -1,6 +1,6 @@
 # M05 — Impact research, editorial writing and questions
 
-Status: planned; phase: Pilot. Dependencies: M03,M06.
+A local implementation is in acceptance review. See the [working scope and remaining checks](../platform-acceptance.md). Upstream modules are M03 and M06.
 
 ## User outcome
 

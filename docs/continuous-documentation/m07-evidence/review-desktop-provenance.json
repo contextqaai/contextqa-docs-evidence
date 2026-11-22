@@ -1,0 +1,53 @@
+{
+  "case_id": 216,
+  "result_id": 484,
+  "step_result_id": 877,
+  "viewport": [
+    1280,
+    720
+  ],
+  "frontend": {
+    "path": "/assets/index-ByYRmYvK.js",
+    "http_status": 200
+  },
+  "source_trace_sha256": "9f58282fd07f878a62a03db18e53375c768ac8b36ce3c5eff8181c3e9bfa0742",
+  "assets": [
+    {
+      "file": "review-desktop.mp4",
+      "source_recording_sha256": "7540cd6db9402863f60478780ff6e229b0f15a73ea805546d3068cf9c180e150",
+      "start_seconds": 496.0,
+      "end_seconds": 530.0,
+      "sha256": "ecb52b2738a2dd9330a634a4c94c96a57560d116d10ad8d37784b248474d3696"
+    },
+    {
+      "file": "handoff-blocked.jpg",
+      "trace_timestamp_ms": 304265.508,
+      "resource": "page@0a345025a8169e23dfe5adcbb5084dde-1795332971881.jpeg",
+      "sha256": "30a3bf2351bdda563662c24018ebe996dac31346e75ee95867c3cecbdda024bb",
+      "encoded_frame_bounds": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "accept-request.jpg",
+      "trace_timestamp_ms": 436302.434,
+      "resource": "page@0a345025a8169e23dfe5adcbb5084dde-1795333103918.jpeg",
+      "sha256": "c3e005bd7f234271bd16ec6fd0e423b21a75648458731ccf24801b9c10ea3654",
+      "encoded_frame_bounds": [
+        1280,
+        720
+      ]
+    },
+    {
+      "file": "handoff-receipt.jpg",
+      "trace_timestamp_ms": 644091.873,
+      "resource": "page@0a345025a8169e23dfe5adcbb5084dde-1795333311707.jpeg",
+      "sha256": "25c293fdb144ea3c0a20e5af0115112f9420bb17edec0a64d447572e02f0646b",
+      "encoded_frame_bounds": [
+        1280,
+        720
+      ]
+    }
+  ]
+}

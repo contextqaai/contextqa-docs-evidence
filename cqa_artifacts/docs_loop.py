@@ -23,7 +23,9 @@ def package_bundle(bundle):
     with zipfile.ZipFile(stream,'w',zipfile.ZIP_DEFLATED) as z:
         z.writestr('delivery.json',json.dumps({k:v for k,v in bundle.items() if k!='evidence_files'},indent=2))
         for path,payload in bundle.get('evidence_files',{}).items():
-            z.writestr(path,base64.b64decode(payload,validate=True))
+            raw=base64.b64decode(payload,validate=True)
+            z.writestr(path,raw)
+            z.writestr('docs/'+path,raw)
         z.writestr('changes.patch',bundle['patch'])
         for path,body in bundle['files'].items():
             z.writestr('docs/'+path,body)

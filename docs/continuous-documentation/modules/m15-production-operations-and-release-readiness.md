@@ -1,6 +1,6 @@
 # M15 — Production operations and release readiness
 
-Status: planned; phase: Pilot gate. Dependencies: M09,M10.
+A local implementation is in acceptance review. See the [working scope and remaining checks](../platform-acceptance.md). Upstream modules are M09 and M10.
 
 ## User outcome
 

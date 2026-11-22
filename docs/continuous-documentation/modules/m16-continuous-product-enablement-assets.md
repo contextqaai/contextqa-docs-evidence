@@ -1,6 +1,6 @@
 # M16 — Continuous product enablement assets
 
-Status: planned; phase: Expansion. Dependencies: M10,M14.
+A local implementation is in acceptance review. See the [working scope and remaining checks](../platform-acceptance.md). Upstream modules are M10 and M14.
 
 ## User outcome
 

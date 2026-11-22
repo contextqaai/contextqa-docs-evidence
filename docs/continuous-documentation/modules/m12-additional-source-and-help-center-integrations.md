@@ -1,6 +1,6 @@
 # M12 — Additional source and help-center integrations
 
-Status: planned; phase: Parity. Dependencies: M02,M09.
+A local implementation is in acceptance review. See the [working scope and remaining checks](../platform-acceptance.md). Upstream modules are M02 and M09.
 
 ## User outcome
 

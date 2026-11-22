@@ -144,9 +144,11 @@ def checkpoint(pool, ident, token):
 
 
 def tick(pool):
+    from .refresh import tick as refresh_tick
+    refresh_work=refresh_tick(pool)
     dispatch(pool)
     task = claim(pool)
-    return bool(task and checkpoint(pool, *task))
+    return bool(task and checkpoint(pool, *task)) or refresh_work
 
 
 def main():

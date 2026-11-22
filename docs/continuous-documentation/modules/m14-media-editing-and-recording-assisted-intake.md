@@ -1,6 +1,6 @@
 # M14 — Media editing and recording-assisted intake
 
-Status: planned; phase: Parity. Dependencies: M06,M08.
+A local implementation is in acceptance review. See the [working scope and remaining checks](../platform-acceptance.md). Upstream modules are M06 and M08.
 
 ## User outcome
 

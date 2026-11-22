@@ -275,21 +275,54 @@ class Store:
     def editable(item, version):
         if type(version) is not int or item['version'] != version:
             raise Rejected('Review changed; reload before continuing')
-        if item['status'] in ('delivered','resolved'):
+        if item['status'] in ('delivered','resolved','archived'):
             raise Rejected('Delivered/resolved items are immutable; create a new event')
 
     def review(self, project, actor, item_id, version, action, **data):
         with self.transaction(project) as s:
             item = self.get_item(s,item_id)
             self.authorize(s,actor,('admin','editor','contributor'),item)
+            if action=='restore':
+                self.authorize(s,actor)
+                if item['status']!='archived' or item['version']!=version:raise Rejected('Refresh the archived request before restoring it')
+                item['status']=item.pop('previous_status','open')
+                item['version']+=1
+                self.log(s,actor,'review:restore',item_id)
+                return copy.deepcopy(item)
             self.editable(item,version)
-            if action == 'assign':
+            if action in ('priority','archive','resolve','handoff','accept_item'):
+                if action in ('priority','archive','resolve'): self.authorize(s,actor)
+                if action=='priority':
+                    if data.get('priority') not in ('normal','high','urgent'):raise Rejected('Choose a valid review priority')
+                    item['priority']=data['priority']
+                elif action=='accept_item':
+                    if not any(c['decision']=='pending' for c in item['changes']):
+                        raise Rejected('There are no pending articles in this request')
+                    for change in item['changes']:
+                        if change['decision']=='pending':change['decision']='accepted'
+                    item['status']='needs_input' if item['questions'] else 'open'
+                elif action=='handoff':
+                    recipient=data.get('assignee')
+                    if recipient in (actor,item.get('assignee')) or s['members'].get(recipient) not in ('editor','admin'):
+                        raise Rejected('Choose a different editor or administrator to receive this handoff')
+                    self.check_journeys(s,item)
+                    if item['questions'] or not item['changes'] or any(c['decision']=='pending' for c in item['changes']) or item.get('writing',{}).get('status')=='in_progress':
+                        raise Rejected('Complete the writing round and decide every change before handoff')
+                    item['assignee']=recipient
+                    item['status']='ready'
+                    item.setdefault('handoffs',[]).append(dict(sender=actor,recipient=recipient,note=text(data.get('note'),'handoff note',2000),at=time.time(),channel='inbox'))
+                else:
+                    if action=='archive':item['previous_status']=item['status']
+                    item['status']='archived' if action=='archive' else 'resolved'
+            elif action == 'assign':
                 self.authorize(s,actor)
                 if data.get('assignee') not in s['members']:
                     raise Rejected('Choose an existing member')
                 item['assignee']=data['assignee']
             elif action == 'comment':
-                item['comments'].append(dict(actor=actor,text=text(data.get('text'),'comment',10000),at=time.time()))
+                anchor=data.get('change_id')
+                if anchor and not any(c['id']==anchor for c in item['changes']):raise Rejected('Choose an article in this request')
+                item['comments'].append(dict(actor=actor,text=text(data.get('text'),'comment',10000),at=time.time(),change_id=anchor))
             elif action == 'answer':
                 self.check_journeys(s,item)
                 if any(s['events'][item['event_id']]['event'].get(k) for k in ('requires_capture','requires_screenshots')) and not item['evidence']:
@@ -298,6 +331,18 @@ class Store:
                 item['comments'].append(dict(actor=actor,text=answer,at=time.time(),kind='answer',questions=item['questions']))
                 item['questions']=[]
                 item['status']='open' if item['changes'] else 'no_change'
+            elif action=='reconcile':
+                self.authorize(s,actor)
+                change=next((c for c in item['changes'] if c['id']==data.get('change_id')),None)
+                if not change:raise Rejected('Unknown article')
+                target=path_name(data.get('path') or change['path'])
+                if any(c is not change and c['path']==target for c in item['changes']):raise Rejected('A proposal already exists for that path')
+                before=s['articles'].get(target,{}).get('body','')
+                if (s['articles'][target]['digest'] if target in s['articles'] else None)!=data.get('base_digest'):raise Rejected('The article changed again. Refresh before resolving.')
+                after=text(data.get('after'),'resolved draft')
+                change.update(path=target,before=before,after=after,base_digest=fingerprint(before),decision='pending',kind='update' if before else 'new',
+                              diff=''.join(difflib.unified_diff(before.splitlines(True),after.splitlines(True),fromfile='before/'+target,tofile='after/'+target)))
+                item['status']='needs_input' if item['questions'] else 'open'
             elif action in ('accept','ignore','undo','edit'):
                 change=next((c for c in item['changes'] if c['id']==data.get('change_id')),None)
                 if not change:
@@ -308,6 +353,7 @@ class Store:
                 change['decision']={'accept':'accepted','ignore':'ignored'}.get(action,'pending')
             elif action == 'ready':
                 self.check_journeys(s,item)
+                if item.get('writing',{}).get('status')=='in_progress':raise Rejected('Submit the writing round first')
                 if item['questions'] or any(c['decision']=='pending' for c in item['changes']):
                     raise Rejected('Answer questions and decide every change first')
                 item['status']='ready'
@@ -318,6 +364,8 @@ class Store:
                 item['status']='needs_input' if item['questions'] else 'open'
             item['version']+=1
             self.log(s,actor,'review:'+action,item_id)
+            if action=='handoff' and s['members'][actor]=='contributor':
+                return dict(id=item_id,version=item['version'],assignee=item['assignee'],status=item['status'])
             return copy.deepcopy(item)
 
     def attach_evidence(self, project, actor, item_id, version, export_path):
@@ -364,7 +412,7 @@ class Store:
 
     @staticmethod
     def approval_payload(s,item):
-        return dict(changes=item['changes'],evidence=item['evidence'],instructions=fingerprint(s['manifest']['instructions']),
+        return dict(**({'writing':item['writing']} if item.get('writing') else {}),changes=item['changes'],evidence=item['evidence'],instructions=fingerprint(s['manifest']['instructions']),
                     source=s['events'][item['event_id']]['digest'],comments=item['comments'])
 
     def approve(self, project, actor, item_id, version, confirmed=False):
@@ -375,10 +423,20 @@ class Store:
                 raise Rejected('Ready item and explicit content/rights review required')
             self.check_journeys(s,item)
             self.check_bases(s,item)
+            from .editions import verify_article_links
+            verify_article_links(item)
+            self.check_generated_media(s,item)
             item['approval']=dict(actor=actor,digest=fingerprint(self.approval_payload(s,item)),at=time.time())
             item['version']+=1
             self.log(s,actor,'review:approve',item_id)
             return copy.deepcopy(item)
+
+    @staticmethod
+    def check_generated_media(s,item):
+        event=s['events'][item['event_id']]['event']
+        if item.get('writing',{}).get('status')=='drafted' or event.get('id','').startswith(('guide:','openapi:')):
+            from .editions import checked_media
+            checked_media(item,event)
 
     @staticmethod
     def check_bases(s,item):
@@ -395,6 +453,7 @@ class Store:
                 raise Rejected('Current hash-bound approval required')
             self.check_bases(s,item)
             accepted=[c for c in item['changes'] if c['decision']=='accepted']
+            self.check_generated_media(s,item)
             self.check_journeys(s,item)
             if not accepted:
                 raise Rejected('No accepted changes to deliver')
@@ -423,7 +482,10 @@ class Store:
                 evidence=[{k:v for k,v in e.items() if k!='export_path'} for e in item['evidence']],
                 baseline={c['path']:c['base_digest'] for c in accepted},evidence_files=evidence_files,published=False,
                 note='Reviewed local draft bundle. No external pull request or publication has occurred.')
+            if item.get('writing',{}).get('destination'):
+                result['source']={**result['source'],'documentation_destination':item['writing']['destination']}
             digest=fingerprint(result)
+            if item.get('delivery',{} ) and item['delivery']['digest']==digest:return result
             item['delivery']=dict(digest=digest,at=time.time(),mode='local_draft_bundle')
             item['status']='delivered'; item['version']+=1
             self.log(s,actor,'delivery:bundle',item_id)
@@ -434,6 +496,7 @@ class Store:
         with self.transaction(project) as s:
             self.authorize(s,actor)
             item=self.get_item(s,item_id)
+            self.check_generated_media(s,item)
             if confirmed is not True or item['status']!='delivered' or not item['delivery']:
                 raise Rejected('Deliver and explicitly confirm local application first')
             self.check_bases(s,item)
