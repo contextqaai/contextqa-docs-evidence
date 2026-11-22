@@ -71,3 +71,5 @@ Start with the [17-module acceptance ledger](platform-acceptance.md) and the ind
 ## Phase 10 — External integrations
 
 For each affected integration, identify the provider action, the intended consumer outcome, the scoped environment, and the revision or event that joins them. Exercise access denial and a provider failure locally before delivery. On staging, collect the provider receipt and use ContextQA to verify the consumer journey, a dependent resource and an expected failure. Record case, result, revision and documentation disposition. A pending or failed required assertion holds promotion. [GitHub Pages worked example](pages-acceptance.md)
+
+Workspace administrators can set defaults for new briefs using the [writing profile guide and captured form](writing-profile.md).
