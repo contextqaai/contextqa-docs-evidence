@@ -61,3 +61,5 @@ Do not let a builder rewrite a failing acceptance test simply to make it pass. I
 ## Standard receipt
 
 Record ticket/module/AC IDs; base and candidate commit; target URL and deployed revision evidence; test case and execution IDs; result and covered assertions; original failures; media source; reviewer decision; blocked checks; next ticket. No secrets, private recordings or signed URLs in committed receipts.
+
+The [M04 workflow receipt](m04-results.md) maps the local scheduler checks and the three Ship 5 cases. Use the [workflow guide](m04-walkthrough.md) to test a paused version before activation. M06 connects a saved ContextQA replay to the research brief.

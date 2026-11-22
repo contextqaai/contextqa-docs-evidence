@@ -1,6 +1,6 @@
 # M04 — Durable runs and workflow automation
 
-Status: planned; phase: Pilot. Dependencies: M02,M03.
+Implemented locally and in acceptance review. Dependencies are M02 and M03. See the [workflow guide](../m04-walkthrough.md) and [verified coverage](../m04-results.md).
 
 ## User outcome
 
