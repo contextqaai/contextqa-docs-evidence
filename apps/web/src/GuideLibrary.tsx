@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { accessToken, request } from "./api";
 import { Heading, Empty, SourceLink } from "./components";
+import { PagesHandoff } from "./PagesHandoff";
 import { ReviewedArticle } from "./ReviewedArticle";
 import type { State } from "./types";
 
@@ -269,6 +270,9 @@ export function GuideLibrary({
                   {detail.media.length} current
                 </p>
               </details>
+              {selected.current && state.role === "admin" && (
+                <PagesHandoff key={prefix + key} prefix={prefix} path={selected.path} version={selected.digest} />
+              )}
               {selected.current && (
                 <details>
                   <summary>Reader address and retirement</summary>

@@ -43,7 +43,9 @@ function Figure({
         video ? (
           <video aria-label={caption} src={url} controls preload="metadata" />
         ) : (
-          <img src={url} alt={caption} />
+          <a href={url} target="_blank" rel="noreferrer" aria-label={'Open original screenshot: ' + caption}>
+            <img src={url} alt={caption} style={{maxWidth: "100%", width: "auto", height: "auto"}} />
+          </a>
         )
       ) : (
         <p role="status">{error || "Loading reviewed evidence…"}</p>

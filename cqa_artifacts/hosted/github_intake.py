@@ -33,8 +33,8 @@ class Version(BaseModel):
     revision: int = Field(ge=0)
 
 
-def github_access(config):
-    """Mint a short-lived read credential for this installation, or use a mounted rotating token."""
+def github_access(config, *, permissions=None, repository=None):
+    """Mint a short-lived installation token with the requested scope. Default to read-only."""
     if config.get("installation_token") or not config.get("app_private_key"):
         return config
     ident = str(config.get("installation_id", ""))
@@ -46,7 +46,8 @@ def github_access(config):
                             config["app_private_key"],algorithm="RS256")
         response = httpx.post(f"https://api.github.com/app/installations/{ident}/access_tokens",
                               headers={"Authorization":"Bearer "+signed, "Accept":"application/vnd.github+json"},
-                              json={"permissions":{"contents":"read"}},timeout=10)
+                              json={"permissions": permissions or {"contents": "read"},
+                                    **({"repositories": [repository]} if repository else {})}, timeout=10)
         response.raise_for_status()
         return {**config,"installation_token":response.json()["token"]}
     except (KeyError, ValueError, jwt.PyJWTError, httpx.HTTPError):

@@ -11,7 +11,7 @@ import psycopg
 from psycopg import sql
 
 # Foreign-key order. Expiring connection material is intentionally invalidated on restore.
-TABLES = (
+V6_TABLES = (
     "docs_organizations",
     "docs_memberships",
     "docs_projects",
@@ -39,6 +39,7 @@ TABLES = (
     "docs_reader_redirects",
     "docs_guide_retirements",
 )
+TABLES = (*V6_TABLES, "docs_writing_profiles")
 
 
 def snapshot(db, path):
@@ -67,21 +68,22 @@ def snapshot(db, path):
                         digest.update(chunk)
                         output.write(chunk)
                 rows[table] = digest.hexdigest()
-            archive.writestr("manifest.json", json.dumps(dict(schema=6, tables=rows)))
+            archive.writestr("manifest.json", json.dumps(dict(schema=7, tables=rows)))
         os.link(tmp.name, path)
 
 
 def restore(db, path):
     with zipfile.ZipFile(path) as archive, db.transaction():
         meta = json.loads(archive.read("manifest.json"))
-        if meta.get("schema") != 6 or set(meta["tables"]) != set(TABLES):
+        tables = {6: V6_TABLES, 7: TABLES}.get(meta.get("schema"))
+        if tables is None or set(meta["tables"]) != set(tables):
             raise ValueError("Unexpected backup format.")
         for table in TABLES:
             if db.execute(
                 sql.SQL("SELECT EXISTS(SELECT 1 FROM {})").format(sql.Identifier(table))
             ).fetchone()[0]:
                 raise ValueError("Restore requires an empty migrated database.")
-        for table in TABLES:
+        for table in tables:
             digest = hashlib.sha256()
             with (
                 archive.open(table) as source,

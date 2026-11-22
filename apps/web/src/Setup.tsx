@@ -1,5 +1,6 @@
 import { useEffect, useState, type FormEvent } from 'react';
 import { BookOpen, Github, Users } from 'lucide-react';
+import { WritingProfile } from './WritingProfile';
 import { request } from './api';
 import { Heading, SourceLink } from './components';
 
@@ -121,7 +122,7 @@ export function WorkspaceSetup({
   org: string;
   openItem: (id: string) => void;
 }) {
-  const [tab, setTab] = useState<'app' | 'github' | 'members'>('app');
+  const [tab, setTab] = useState<'app' | 'github' | 'members' | 'writing'>('app');
   const [data, setData] = useState<Setup | null>(null);
   const [repos, setRepos] = useState<Record<string, string>>({});
   const [busy, setBusy] = useState(false),
@@ -181,6 +182,9 @@ export function WorkspaceSetup({
         </button>
         <button aria-pressed={tab === 'github'} disabled={busy} onClick={() => selectTab('github')}>
           <Github size={16} /> GitHub
+        </button>
+        <button aria-pressed={tab === 'writing'} disabled={busy} onClick={() => selectTab('writing')}>
+          Writing profile
         </button>
         <button aria-pressed={tab === 'members'} disabled={busy} onClick={() => selectTab('members')}>
           <Users size={16} /> Members
@@ -388,6 +392,18 @@ export function WorkspaceSetup({
                   </button>
                 </>
               )}
+              <h3>GitHub Pages</h3>
+              <p>Check that GitHub publishes the selected documentation branch and directory as a public site.</p>
+              <button disabled={!data.connected} onClick={() => void act(async () => {
+                const result = await request(prefix + '/pages/check', {});
+                setMessage('Pages configuration verified for ' + result.branch + ' (' + result.root +
+                  ') at ' + result.url + '. Reader verification is a separate check.');
+              }, '')}>Check Pages configuration</button>
+              <button disabled={!data.connected} onClick={() => void act(async () => {
+                const result = await request(prefix + '/pages/verify', {});
+                setMessage(result.verified_files.length + ' public files matched the Pages build for commit ' +
+                  result.revision + '.');
+              }, '')}>Verify deployed files</button>
               <h3>Recent source deliveries</h3>
               {data.deliveries.length ? (
                 data.deliveries.map((d) => (
@@ -411,6 +427,7 @@ export function WorkspaceSetup({
               ))}
             </section>
           )}
+          {tab === 'writing' && <WritingProfile prefix={prefix} />}
           {tab === 'members' && (
             <section className="panel setup-card">
               <h2>Organization members</h2>
