@@ -33,3 +33,5 @@ The user's screenshot motivates a later extension: approved product knowledge sh
 - **Deferred:** included in the long-term inventory, intentionally outside the first release.
 
 This package is the forward product plan. Older dated receipts remain authoritative for what their own checks established; this package does not rewrite them. The linked M00 implementation and validation receipts record the work completed after planning.
+
+Use the [capture and replay guide](m06-results.md) to configure the worker and see the current M06 verification scope.

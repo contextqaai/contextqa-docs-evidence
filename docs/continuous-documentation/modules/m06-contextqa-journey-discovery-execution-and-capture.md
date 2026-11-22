@@ -1,6 +1,6 @@
 # M06 — ContextQA journey discovery, execution and capture
 
-Status: planned; phase: Pilot. Dependencies: M01,M04.
+Status is in development. The [capture implementation and results](../m06-results.md) cover the hosted worker, replay UI and open pilot gates. Dependencies are M01 and M04.
 
 ## User outcome
 

@@ -203,3 +203,140 @@ class CaptureTests(unittest.TestCase):
             self.assertEqual(
                 self.api.get(self.base).json()["jobs"][0]["status"], "blocked"
             )
+
+    def test_same_replay_becomes_reviewable_after_deployment_is_known(self):
+        from cqa_artifacts import journeys, media
+        from cqa_artifacts.hosted import captures, capture_worker
+        from cqa_artifacts.loop import fingerprint
+        from tests.test_journeys import FakeClient, PASS
+
+        class Provider(FakeClient):
+            def call(self, operation, **kwargs):
+                if operation == "listTestSteps":
+                    return {"content": [self.step], "last": True}
+                return super().call(operation, **kwargs)
+
+            def poll_run(self, run_id, **kwargs):
+                return {"verdict": "passed", "summary": PASS}
+
+        provider = Provider()
+        root = Path(self.tmp.name)
+        journey = {
+            "id": "cards",
+            "name": "Create card",
+            "sections": ["card"],
+            "code_paths": ["card.ts"],
+            "application_url": "https://demo.example",
+            "environment": "QA",
+            "workspace_version_id": 1,
+            "case_ids": [10],
+            "required_media": ["screenshot", "video"],
+            "profile": {
+                "schema": 1,
+                "name": "Card",
+                "plan": {"id": 40, "expect": {"workspaceVersionId": 1}},
+                "cases": [{"id": 10, "expect": {"workspaceVersionId": 1}}],
+            },
+        }
+        reg = {"schema": 1, "repository": "example/cards", "journeys": [journey]}
+        (root / "registry.json").write_text(json.dumps(reg))
+        cfg = {
+            "capture_registry_file": str(root / "registry.json"),
+            "workspace_version_id": 1,
+            "app_url": journey["application_url"],
+            "capture_plan_ids": [40],
+            "capture_api_token": "test",
+            "capture_meter_note": "simulated",
+            "capture_storage_hosts": ["media.example"],
+            "deployment_receipt_directory": str(root),
+        }
+        with self.pool.connection() as db:
+            db.execute(
+                "INSERT INTO docs_setup(organization_id,project_id,app_url,product_repo) VALUES(%s,'docs',%s,%s) ON CONFLICT(organization_id,project_id) DO UPDATE SET app_url=excluded.app_url,product_repo=excluded.product_repo",
+                (self.org, journey["application_url"], reg["repository"]),
+            )
+        fetch = media.fetch_media
+
+        def fixture_media(path, index, kind, host):
+            data = (
+                b"\x89PNG\r\n\x1a\nfixture"
+                if kind == "screenshot"
+                else b"\0\0\0\x18ftypmp42fixture"
+            )
+            return fetch(
+                path,
+                index,
+                kind,
+                host,
+                transport=lambda *args: data,
+                resolver=lambda *a, **k: [
+                    (None, None, None, None, ("93.184.216.34", 443))
+                ],
+            )
+
+        with (
+            patch.object(captures, "binding", return_value=cfg),
+            patch.object(captures, "capture_client", return_value=provider),
+            patch.object(capture_worker, "capture_client", return_value=provider),
+            patch.object(media, "fetch_media", side_effect=fixture_media),
+        ):
+            path = self.base + "/cards"
+            result = self.api.post(path + "/register")
+            self.assertEqual(result.status_code, 200, result.text)
+            args = {
+                "confirm": True,
+                "digest": result.json()["digest"],
+                "revision": "1" * 40,
+                "request_id": str(uuid4()),
+            }
+            accepted = self.api.post(path + "/replay", json=args)
+            self.assertEqual(accepted.status_code, 200, accepted.text)
+            ident = accepted.json()["id"]
+            job_path = self.base + "/jobs/" + ident
+
+            def advance():
+                with self.pool.connection() as db:
+                    db.execute(
+                        "UPDATE docs_capture_jobs SET next_at=now() WHERE id=%s",
+                        (ident,),
+                    )
+                self.assertTrue(tick(self.pool))
+                return self.api.get(self.base).json()["jobs"][0]
+
+            self.assertEqual(advance()["status"], "running")
+            self.assertEqual(advance()["status"], "needs_evidence")
+            with self.pool.connection() as db:
+                locked = db.execute(
+                    "SELECT registry FROM docs_capture_jobs WHERE id=%s", (ident,)
+                ).fetchone()[0]
+            proof = {
+                "run_id": 30,
+                "commit_sha": args["revision"],
+                "application_url": journey["application_url"],
+                "environment": "QA",
+                "journey_digest": fingerprint(journeys.select(locked, "cards")),
+                "verified_by": "Fixture deployer",
+                "evidence_ref": "Synthetic deployment",
+                "confirmed": True,
+            }
+            (root / "30.json").write_text(json.dumps(proof))
+            self.assertEqual(self.api.post(job_path + "/check").status_code, 200)
+            reviewed = advance()
+            self.assertEqual(reviewed["status"], "awaiting_review", reviewed)
+            item = reviewed["receipt"]["media"][0]
+            self.assertEqual(
+                self.api.get(job_path + "/media/" + item["id"]).status_code, 200
+            )
+            self.assertEqual(
+                self.api.post(
+                    job_path + "/review", json={"digest": "f" * 64, "confirm": True}
+                ).status_code,
+                409,
+            )
+            result = self.api.post(
+                job_path + "/review",
+                json={"digest": reviewed["receipt_digest"], "confirm": True},
+            )
+            self.assertEqual(result.status_code, 200, result.text)
+            self.assertEqual(result.json()["status"], "reviewed")
+            self.assertEqual(provider.started, 1)
