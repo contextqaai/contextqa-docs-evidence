@@ -29,7 +29,7 @@ A deployer writes an attributable receipt to `<run_id>.json` after identifying t
 | AC-5 · Source evidence | The worker regression resolved selected media to case and step results, retrieved the file by checksum and approved the reviewed export. Live Ship 5 screenshots and a recording were separately checked in the client documentation pilot. |
 | AC-6 · Coverage gaps | The worker withholds review until the deployment is verified and the configured prerequisite list is clear. An operator still needs to supply meaningful coverage requirements for each client. |
 
-The hosted suite passed 34 tests against isolated PostgreSQL, the core suite passed 193 tests, the React suite passed 14 checks, and the production frontend build succeeded. The local provider regression uses a synthetic transport. The private client pilot used the real Ship 5 connector. The code-to-documentation pipeline still needs a worker-side connection, independently supplied deployed commit and verified review/delivery/refresh modules before production release.
+The hosted suite passed 34 tests against isolated PostgreSQL, the core suite passed 193 tests, the React suite passed 15 checks, and the production frontend build succeeded. The local provider regression uses a synthetic transport. The private client pilot used the real Ship 5 connector. The code-to-documentation pipeline still needs a worker-side connection, independently supplied deployed commit and verified review/delivery/refresh modules before production release.
 
 ## New workspace on mobile
 
