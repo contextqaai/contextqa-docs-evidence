@@ -32,7 +32,7 @@ Based on the local merge of PR #10 at `1d62a9a`. The implementation-pass checks 
 | React tests | 11 passed, including late workspace responses, history restoration, contributor empty state, retry, dialog focus and compact details |
 | TypeScript and Vite production build | Passed |
 
-The React tests use synthetic workspace responses. Live execution against the isolated before and after frontend builds is recorded below. M01 is the next implementation module.
+The React tests use synthetic workspace responses. Live execution against the isolated before and after frontend builds is recorded below. M01 and M02 now have a separate [implementation receipt](m01-m02-results.md).
 
 ## ContextQA journey definitions
 

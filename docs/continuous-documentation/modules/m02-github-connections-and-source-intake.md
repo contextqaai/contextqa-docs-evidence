@@ -1,6 +1,6 @@
 # M02 — GitHub connections and source intake
 
-Status: planned; phase: Pilot. Dependencies: M01.
+Status: implemented locally, in acceptance review. See the [M01/M02 results](../m01-m02-results.md) and [operator workflow](../m01-m02-operations.md). Pilot phase. Dependencies: M01.
 
 ## User outcome
 

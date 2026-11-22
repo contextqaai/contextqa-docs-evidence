@@ -1,6 +1,6 @@
 # M01 — Workspace onboarding, identity and roles
 
-Status: planned; phase: Pilot. Dependencies: M00.
+Status: implemented locally, in acceptance review. See the [M01/M02 results](../m01-m02-results.md) and [operator workflow](../m01-m02-operations.md). Pilot phase. Dependencies: M00.
 
 ## User outcome
 

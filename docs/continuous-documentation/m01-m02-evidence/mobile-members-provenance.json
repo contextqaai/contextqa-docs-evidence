@@ -1,0 +1,39 @@
+{
+  "case_id": 203,
+  "frontend_asset": {
+    "path": "/assets/index-x-1P2AWL.js",
+    "http_status": 200
+  },
+  "result_id": 467,
+  "step_result_id": 806,
+  "source": "Ship 5 Chromium read-only synthetic preview",
+  "assets": [
+    {
+      "file": "mobile-members.mp4",
+      "sha256": "6315208adb47ff305a34e918d29886d7bdf2a6c96a788adea3ab7548e8b2c893",
+      "source_recording_sha256": "024c76a19cafb3845256d085f2c3556524bff4f4ad17a3365c8167377b160edd",
+      "start_seconds": 96.0,
+      "end_seconds": 124.0
+    },
+    {
+      "file": "mobile-github.jpg",
+      "sha256": "49d4d7545537cd027a3d0695612b1949f7940b2efa197f572274c36c3d6604db",
+      "trace_resource": "page@f169448bca5e69cf6f19f8bb9dd2278b-1795327598526.jpeg",
+      "trace_timestamp_ms": 118274.364,
+      "viewport": [
+        390,
+        844
+      ]
+    },
+    {
+      "file": "mobile-invite.jpg",
+      "sha256": "9fd0a22a15b91e4ccb08d7a7fe94e9e6d930a7f1517892b94cbb5da2c80a15c1",
+      "trace_resource": "page@f169448bca5e69cf6f19f8bb9dd2278b-1795327652311.jpeg",
+      "trace_timestamp_ms": 172059.663,
+      "viewport": [
+        390,
+        844
+      ]
+    }
+  ]
+}

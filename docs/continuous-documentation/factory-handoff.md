@@ -8,7 +8,7 @@ Use `BACKLOG.csv` as the module ticket queue. A ticket's spec must include goal,
 
 Suggested factory statuses: todo, ready, implementing, awaiting_test, failed, needs_input, reviewing, accepted. A ticket is accepted only after its specific behavior and necessary integration checks pass. “Code generated” and “tests authored” are intermediate states.
 
-The [M00 receipt](m00-implementation.md) covers FND-01 through FND-04. FND-05 begins M01.
+The [M00 receipt](m00-implementation.md) covers FND-01 through FND-04. The [M01/M02 implementation receipt](m01-m02-results.md) covers the onboarding and source intake work that followed.
 
 ## First implementation batch
 
