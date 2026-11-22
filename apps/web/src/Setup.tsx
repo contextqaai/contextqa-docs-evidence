@@ -399,6 +399,11 @@ export function WorkspaceSetup({
                 setMessage('Pages configuration verified for ' + result.branch + ' (' + result.root +
                   ') at ' + result.url + '. Reader verification is a separate check.');
               }, '')}>Check Pages configuration</button>
+              <button disabled={!data.connected} onClick={() => void act(async () => {
+                const result = await request(prefix + '/pages/verify', {});
+                setMessage(result.verified_files.length + ' public files matched the Pages build for commit ' +
+                  result.revision + '.');
+              }, '')}>Verify deployed files</button>
               <h3>Recent source deliveries</h3>
               {data.deliveries.length ? (
                 data.deliveries.map((d) => (
