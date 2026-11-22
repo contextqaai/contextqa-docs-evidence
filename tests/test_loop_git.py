@@ -71,6 +71,20 @@ class GitDeliveryTests(unittest.TestCase):
         self.assertEqual(self.deliver(approved=True,current_destination=destination)['stage'],'draft_pr_created')
         self.assertIn(['git','add','--','manual/guide.md'],self.calls)
 
+    def test_refresh_reuses_identical_evidence_without_rewriting(self):
+        import base64, hashlib
+        path='evidence/'+'a'*64+'/assets/'+'b'*64+'.jpg'
+        raw=b'previously delivered screenshot'
+        self.bundle['evidence_files']={path:base64.b64encode(raw).decode()}
+        original=self.command
+        def command(args,cwd):
+            if args==['git','rev-parse','HEAD:'+path]:
+                return hashlib.sha1(b'blob '+str(len(raw)).encode()+b'\0'+raw).hexdigest()
+            return original(args,cwd)
+        self.command=command
+        self.deliver(approved=True)
+        self.assertIn(['git','add','--','guide.md'],self.calls)
+
     def test_remote_drift_blocks_delivery(self):
         original=self.command
         self.command=lambda args,cwd: ('b'*40+'\trefs/heads/main') if args[:2]==['git','ls-remote'] else original(args,cwd)

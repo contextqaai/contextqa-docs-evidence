@@ -53,4 +53,7 @@ it('loads authorized GitHub choices and submits the selected destination separat
     branch: 'main',
     docs_root: '',
   });
+  await userEvent.click(screen.getByRole('button', { name: 'Members' }));
+  expect(await screen.findByRole('heading', { name: 'Organization members' })).toBeTruthy();
+  expect(screen.queryByText('GitHub scope saved.')).toBeNull();
 });

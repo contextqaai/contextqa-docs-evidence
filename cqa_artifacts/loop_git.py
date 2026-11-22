@@ -4,6 +4,7 @@ No branch merge, no site publication, no automatic retry after a remote write.
 The local checkout is read; changes are assembled in a new temporary clone.
 """
 import json
+import hashlib
 import base64
 import os
 from pathlib import Path
@@ -78,11 +79,20 @@ def deliver(bundle,checkout,repository,base_sha,branch,journal,approved=False,ru
         current=run(['git','show',f'HEAD:{relative}'],checkout) if tracked else ''
         if fingerprint(current)!=bundle['baseline'][path]:
             raise Rejected('Destination content differs from reviewed article baseline')
-    for relative in evidence:
-        # Content-addressed paths must be new. Never overwrite an existing asset,
-        # even when a malicious checkout has placed a symlink at that path.
-        if run(['git','ls-tree','--format=%(objectmode)','HEAD','--',relative],checkout):
-            raise Rejected('Evidence destination already exists; use a fresh reviewed delivery')
+    new_evidence={}
+    for relative,raw in evidence.items():
+        mode=run(['git','ls-tree','--format=%(objectmode)','HEAD','--',relative],checkout)
+        if not mode:
+            new_evidence[relative]=raw
+            continue
+        if mode!='100644':
+            raise Rejected('Existing evidence must be an ordinary file')
+        oid=run(['git','rev-parse','HEAD:'+relative],checkout)
+        blob=b'blob '+str(len(raw)).encode()+b'\0'+raw
+        algorithm='sha256' if len(oid)==64 else 'sha1'
+        if hashlib.new(algorithm,blob).hexdigest()!=oid:
+            raise Rejected('Existing evidence differs from the approved bytes')
+    evidence=new_evidence
     journal.parent.mkdir(parents=True,exist_ok=True,mode=0o700)
     fd=os.open(journal,os.O_CREAT|os.O_EXCL|os.O_WRONLY,0o600)
     def record(value):

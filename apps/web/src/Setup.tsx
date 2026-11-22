@@ -162,6 +162,12 @@ export function WorkspaceSetup({
     const r = await request('orgs/' + org + '/invites', fields);
     setInvitation(r.token);
   };
+  function selectTab(next: typeof tab) {
+    setTab(next);
+    setMessage('');
+    setError('');
+    setInvitation('');
+  }
   const loadedRepos = Object.keys(repos);
   return (
     <>
@@ -170,13 +176,13 @@ export function WorkspaceSetup({
         description="Configure product discovery, documentation sources and team access."
       />
       <div className="setup-tabs" aria-label="Setup sections">
-        <button aria-pressed={tab === 'app'} onClick={() => setTab('app')}>
+        <button aria-pressed={tab === 'app'} disabled={busy} onClick={() => selectTab('app')}>
           <BookOpen size={16} /> App discovery
         </button>
-        <button aria-pressed={tab === 'github'} onClick={() => setTab('github')}>
+        <button aria-pressed={tab === 'github'} disabled={busy} onClick={() => selectTab('github')}>
           <Github size={16} /> GitHub
         </button>
-        <button aria-pressed={tab === 'members'} onClick={() => setTab('members')}>
+        <button aria-pressed={tab === 'members'} disabled={busy} onClick={() => selectTab('members')}>
           <Users size={16} /> Members
         </button>
       </div>
