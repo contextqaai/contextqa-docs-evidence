@@ -142,6 +142,13 @@ def advance(db, row):
         return
     receipt = {
         "deployment_verified": verified,
+        "requested_deployment": {
+            "run_id": run,
+            "commit_sha": row["revision"],
+            "application_url": journey["application_url"],
+            "environment": journey["environment"],
+            "journey_digest": fingerprint(journey),
+        },
         "verdict": "passed",
         "steps": record["receipt"]["step_results_read"],
         "cases": record["receipt"]["case_results_read"],

@@ -19,6 +19,7 @@ type Artifact = {
 };
 type Receipt = {
   deployment_verified: boolean;
+  requested_deployment?: Record<string, string | number>;
   steps: number;
   coverage_gaps: string[];
   instructions?: {
@@ -313,6 +314,24 @@ export function Captures({ prefix, role }: { prefix: string; role: string }) {
                       : "Deployment unverified"}{" "}
                     · {job.receipt.steps} recorded steps
                   </p>
+                  {!job.receipt.deployment_verified &&
+                    job.receipt.requested_deployment && (
+                      <details>
+                        <summary>Deployment receipt details</summary>
+                        <p>
+                          Give these identifiers to the deployment owner.
+                          Confirm the commit against the release that served
+                          this run before attaching a receipt.
+                        </p>
+                        <pre className="deployment-identifiers">
+                          {JSON.stringify(
+                            job.receipt.requested_deployment,
+                            null,
+                            2,
+                          )}
+                        </pre>
+                      </details>
+                    )}
                   {job.receipt.coverage_gaps.map((g) => (
                     <p key={g}>Coverage gap · {g}</p>
                   ))}

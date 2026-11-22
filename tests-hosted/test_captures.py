@@ -304,7 +304,9 @@ class CaptureTests(unittest.TestCase):
                 return self.api.get(self.base).json()["jobs"][0]
 
             self.assertEqual(advance()["status"], "running")
-            self.assertEqual(advance()["status"], "needs_evidence")
+            pending = advance()
+            self.assertEqual(pending["status"], "needs_evidence")
+            self.assertEqual(pending["receipt"]["requested_deployment"]["run_id"], 30)
             with self.pool.connection() as db:
                 locked = db.execute(
                     "SELECT registry FROM docs_capture_jobs WHERE id=%s", (ident,)
@@ -319,6 +321,19 @@ class CaptureTests(unittest.TestCase):
                 "evidence_ref": "Synthetic deployment",
                 "confirmed": True,
             }
+            self.assertEqual(
+                pending["receipt"]["requested_deployment"],
+                {
+                    k: proof[k]
+                    for k in (
+                        "run_id",
+                        "commit_sha",
+                        "application_url",
+                        "environment",
+                        "journey_digest",
+                    )
+                },
+            )
             (root / "30.json").write_text(json.dumps(proof))
             self.assertEqual(self.api.post(job_path + "/check").status_code, 200)
             reviewed = advance()

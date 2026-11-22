@@ -73,3 +73,5 @@
 .inventory-article figure {margin:1rem 0}
 .inventory-article img {max-width:100%;height:auto}
 .inventory-article figcaption {color:#5d6473}
+
+.deployment-identifiers { white-space: pre-wrap; overflow-wrap: anywhere; }

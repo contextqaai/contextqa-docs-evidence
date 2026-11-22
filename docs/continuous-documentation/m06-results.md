@@ -16,7 +16,7 @@ Apply migration 005. Run the API and `python -m cqa_artifacts.hosted.capture_wor
 
 The connection file is keyed by organization/project. Configure `app_url`, `workspace_version_id`, `capture_registry_file`, `capture_plan_ids`, `capture_api_token`, `capture_meter_note`, `capture_storage_hosts` and `deployment_receipt_directory`. Optional `coverage_gaps` maps a journey ID to outstanding prerequisites. Supply the workspace-scoped service credential through the deployment secret store. An app-under-test sign-in profile authenticates the browser journey. The worker's credential authenticates the API client.
 
-A deployer writes an attributable receipt to `<run_id>.json` after identifying the serving build. Include the accepted run ID, full commit SHA, configured application URL and environment, digest of the registered journey, verifier identity, evidence reference and confirmation. Record the actual deployed revision from the deployment system. A repository head or a successful sign-in alone cannot identify the binary that served the journey.
+Open **Deployment receipt details** in the stopped run to find its run ID, target URL, environment, requested commit and registered journey digest. A deployer writes an attributable receipt to `<run_id>.json` after identifying the serving build. Include the accepted run ID, full commit SHA, configured application URL and environment, digest of the registered journey, verifier identity, evidence reference and confirmation. Record the actual deployed revision from the deployment system. A repository head or a successful sign-in alone cannot identify the binary that served the journey.
 
 ## Acceptance coverage
 
