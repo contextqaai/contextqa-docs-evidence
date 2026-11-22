@@ -182,7 +182,7 @@ def capture(client,value,ident,run_id,head,out,deployment=None):
     if len(steps)>100:raise core.Rejected('Journey exceeds the 100 selected-step evidence limit')
     core.init(out,journey['name'])
     receipt=collect_results(client,out,run_id,[r['id'] for r in cases],[r['id'] for r in steps],plan_id=journey['profile']['plan']['id'])
-    if steps:import_result_steps(out)
+    if steps:import_result_steps(out, execution_order=True)
     core.set_context(out,dict(workflow_id=ident,commit_sha=head,environment=journey['environment'],capture_method='ContextQA saved journey'))
     refs=core.load_json(out/'private/artifact-references.json')
     inventory=[{'index':i,'record':r['record'],'field':r['field']} for i,r in enumerate(refs)]
@@ -399,7 +399,7 @@ def review_capture(root,recipe,out,reviewer,confirmed=False):
     return dict(export=str(out),steps=len(recipe['steps']),media=len(selected),review_required_for_documentation=True)
 
 
-def fetch_capture_media(root,hosts,max_files=20,recording_frames=False):
+def fetch_capture_media(root,hosts,max_files=20,recording_frames=False,prefer_primary_screenshots=False):
     """Download selected journey media privately and propose step associations.
 
     The generated recipe still requires content review; downloading is not approval.
@@ -418,6 +418,12 @@ def fetch_capture_media(root,hosts,max_files=20,recording_frames=False):
         if recording_frames and kind!='video':continue
         if kind and urlsplit(ref['url']).hostname in hosts and ref['record'].split(':')[0] in ('cases','steps'):
             selected.append((i,ref,kind))
+    if prefer_primary_screenshots:
+        # A step may also carry before/after captures. Use its canonical result
+        # image when available, retaining the original references for diagnostics.
+        primary_records = {ref['record'] for _,ref,_ in selected if ref['field'] == 'screenShotURL'}
+        selected = [item for item in selected if item[2] != 'screenshot'
+                    or item[1]['record'] not in primary_records or item[1]['field'] == 'screenShotURL']
     if len(selected)>max_files:raise core.Rejected('Media exceeds the selected download limit; use individual fetch-media selections')
     recipe={'steps':[dict(step_result_id=s['step_result_id'],title=s['title'],instruction=s['instruction'],media_ids=[]) for s in data['steps']]}
     for i,ref,kind in selected:

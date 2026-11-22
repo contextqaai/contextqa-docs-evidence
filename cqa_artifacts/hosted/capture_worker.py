@@ -167,7 +167,9 @@ def advance(db, row):
         return
     if not (capture / "review-recipe.json").exists():
         journeys.fetch_capture_media(
-            capture, cfg.get("capture_storage_hosts", []), max_files=20
+            capture, cfg.get("capture_storage_hosts", []), max_files=20,
+            prefer_primary_screenshots=True,
+            recording_frames=cfg.get("capture_recording_frames") is True,
         )
     manifest = core.manifest(capture)
     recipe = core.load_json(capture / "review-recipe.json")

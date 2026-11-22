@@ -288,6 +288,37 @@ class JourneyTests(unittest.TestCase):
         self.assertEqual(result['downloaded'],2);self.assertFalse(result['attached'])
         self.assertEqual(core.manifest(root)['steps'][0]['media'],[])
         self.assertEqual(len(core.load_json(root/'review-recipe.json')['steps'][0]['media_ids']),2)
+    def test_hosted_capture_prefers_primary_screenshot_within_download_limit(self):
+        root = self.captured()
+        path = root/'private/artifact-references.json'
+        refs = core.load_json(path)
+        primary = next(r for r in refs if r['field'] == 'screenShotURL')
+        refs.extend([{**primary, 'field': 'screenshots/'+name} for name in ('before','after')])
+        core.write_json(path, refs)
+        with patch('cqa_artifacts.media.fetch_media', return_value={'media_id':'sample'}) as fetch:
+            j.fetch_capture_media(root, ['media.example'], max_files=2, prefer_primary_screenshots=True)
+        self.assertEqual(fetch.call_count, 2)
+        self.assertIn(refs.index(primary), [call.args[1] for call in fetch.call_args_list])
+
+    def test_step_added_later_uses_execution_time_and_observed_event_label(self):
+        root = self.captured()
+        fresh = self.root/'ordered-guide'
+        core.init(fresh, 'Approve delivery')
+        (fresh/'private').mkdir(exist_ok=True)
+        snapshot = core.load_json(root/'private/contextqa-results.json')
+        base = {**snapshot['steps'][0], 'stepDetails': None}
+        snapshot['steps'] = [
+            {**base, 'id': 200, 'startTime': '2026-11-22T13:01:00+00:00',
+             'event': {'customEvent':'verifyTextContains','label':'Status','value':'Approved'}},
+            {**base, 'id': 201, 'startTime': '2026-11-22T13:00:00+00:00',
+             'event': {'customEvent':'click','label':'Approve delivery'}},
+        ]
+        core.write_json(fresh/'private/contextqa-results.json', snapshot)
+        j.import_result_steps(fresh, execution_order=True)
+        first, second = core.manifest(fresh)['steps']
+        self.assertEqual((first['step_result_id'], first['title']), (201, 'Approve delivery'))
+        self.assertEqual(second['instruction'], 'Check for the message “Approved”.')
+
     def test_registered_definition_lock_detects_unmapped_step_changes(self):
         original=self.client.call
         def call(operation,**kwargs):
