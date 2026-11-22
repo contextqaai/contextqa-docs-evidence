@@ -89,11 +89,12 @@ it('clears old content during a workspace switch and ignores a late refresh', as
 });
 
 it('restores the workspace together with its view on browser navigation', async () => {
-  vi.mocked(request)
-    .mockResolvedValueOnce({ projects })
-    .mockResolvedValueOnce(snapshot('alpha'))
-    .mockResolvedValueOnce(snapshot('beta'))
-    .mockResolvedValueOnce(snapshot('alpha'));
+  vi.mocked(request).mockImplementation(async path => {
+    if(path==='projects') return {projects};
+    if(path.endsWith('/inventory')) return null;
+    if(path.endsWith('/state')) return snapshot(path.includes('/beta/')?'beta':'alpha');
+    throw new Error('Unexpected route '+path);
+  });
   render(<App onSignOut={vi.fn()} />);
   await screen.findByText('alpha writer');
   await userEvent.click(screen.getByRole('button', { name: 'Knowledge base' }));

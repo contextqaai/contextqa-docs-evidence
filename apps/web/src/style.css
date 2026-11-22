@@ -57,3 +57,19 @@
 .setup-card input[type=checkbox] { width:auto; }
 .setup-card .member-row { display:flex; overflow-wrap:anywhere; }
 .setup-card .member-row label { flex:1; min-width:10rem; }
+.inventory-actions,.inventory-bar,.inventory-title,.inventory-tree h3,.inventory-bar h2 {display:flex;align-items:center;gap:.65rem;flex-wrap:wrap}
+.inventory-actions {margin-block:.6rem}
+.inventory-bar {justify-content:space-between;margin:1.5rem 0 .75rem}
+.inventory-bar h2,.inventory-title h2 {margin:0}
+.inventory-tree h3 {color:var(--muted,#596174);font-size:.85rem}
+.inventory-tree,.inventory-article,.inventory-preview,.inventory-metadata {margin-block:1rem;overflow-wrap:anywhere}
+.inventory-item {width:100%;text-align:left;justify-content:start;padding:.8rem .6rem;border:0;border-top:1px solid #e6e7ed;border-radius:0}
+.inventory-item small {display:block;color:#5d6473;margin-top:.2rem}
+.inventory-files {max-height:17rem;overflow:auto;padding-left:1rem}
+.inventory-files li {margin-block:.45rem}
+.inventory-files li span {margin-inline-start:.75rem;color:#5d6473}
+.inventory-metadata dl {display:grid;grid-template-columns:max-content 1fr;gap:.45rem 1rem}
+.inventory-metadata dd {margin:0;min-width:0}
+.inventory-article figure {margin:1rem 0}
+.inventory-article img {max-width:100%;height:auto}
+.inventory-article figcaption {color:#5d6473}

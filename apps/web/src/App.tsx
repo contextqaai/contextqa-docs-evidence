@@ -1,8 +1,9 @@
+import {Articles} from './Inventory';
 import { useEffect, useRef, useState } from 'react';
 import { Plus, RefreshCw, Menu } from 'lucide-react';
 import { request, manager } from './api';
 import { Empty, Modal, Heading, SourceLink, date } from './components';
-import { InboxPage, Articles, Sources, Health, Intake } from './pages';
+import { InboxPage, Sources, Health, Intake } from './pages';
 import Review from './Review';
 import type { Project, Item } from './types';
 import { useWorkspaceState } from './useWorkspaceState';
@@ -331,7 +332,7 @@ export default function App({ onSignOut }: { onSignOut: () => void }) {
           ) : route.view === 'inbox' ? (
             <InboxPage state={state} open={(id) => navigate('inbox', id)} />
           ) : route.view === 'articles' ? (
-            <Articles state={state} create={() => setModal('article')} />
+            <Articles key={prefix} prefix={prefix} refresh={refresh} state={state} create={() => setModal('article')} />
           ) : route.view === 'sources' ? (
             <Sources state={state} />
           ) : route.view === 'health' ? (
