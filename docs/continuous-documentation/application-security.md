@@ -42,3 +42,5 @@ Classify each category as passed for the listed controls, failed, blocked, or in
 | A10 | A simulated lost response after branch creation recovered the same branch and produced one PR. | Reconcile the live PR and Pages receipt after installation. |
 
 The hosted publisher cases use disposable PostgreSQL and a simulated GitHub transport. The anonymous Pages reader has separate live evidence. [Publisher regression cases](../../tests-hosted/test_pages_handoff.py)
+
+A repository maintainer can install the supplied workflow as `.github/workflows/publishing-security.yml`. Once installed, **Publishing security controls** runs the handoff and hosted identity suites with a disposable PostgreSQL service. GitHub retains the individual test outcomes in the check log. Deployment-only controls stay open until their owner supplies evidence. [Installable workflow](../../integrations/github/publishing-security.yml)
