@@ -27,3 +27,13 @@ The figure comes from [Ship 5 case 199, result 460](https://ship-5.contextqa.com
 A push to `staging-publish` changed the guide edition to `kan-review-2` and added the recording. GitHub Pages automatically deployed commit `5070e062d90f6b94304e655d1d0eecfce2314e3f`. The product verifier matched the manifest and all four files, including the JPEG and MP4, against this commit. The provider metadata check used the operator’s GitHub CLI login. [GitHub build 1393451649](https://api.github.com/repos/contextqaai/contextqa-docs-evidence/pages/builds/1393451649) · [Deployed guide with screenshot and video](https://contextqaai.github.io/contextqa-docs-evidence/guides/review.html)
 
 Ship 5 passed the second-edition reader journey in one agent step. The journey checked the edition, the screenshot caption and the recording link. The three native REST assertions passed for the edition marker, available image and absent image. Video bytes were checked by the product verifier. Playback through to the end was outside the browser case. [Browser case 263, result 732](https://ship-5.contextqa.com/run-result-view?testCaseId=263&runResultId=732) · [API case 260, result 729](https://ship-5.contextqa.com/run-result-view?testCaseId=260&runResultId=729)
+
+## Read the original screenshot
+
+The overview figure from result 460 came from an 800 × 450 screencast frame of a 1280 × 720 viewport. The recording is also 800 × 450. The original end-of-step JPEG shows the review inbox at 1280 × 720. From **Review inbox**, find **Reject whitespace-only card titles** under **Request**. Select the figure to view the original pixels.
+
+[![Review inbox showing the request in the original Ship 5 capture](m00-evidence/review-inbox-original.jpg)](m00-evidence/review-inbox-original.jpg)
+
+For new guides, use the original step attachment for the matching action. Record its actual pixel dimensions. If only a smaller trace frame shows that action, label its dimensions and schedule a dedicated step capture when the text is hard to read. [Case 199, result 460](https://ship-5.contextqa.com/run-result-view?testCaseId=199&runResultId=460)
+
+To open a publishing PR from a saved guide, follow the [Pages publication procedure](pages-publishing-pr.md).

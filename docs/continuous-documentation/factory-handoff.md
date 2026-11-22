@@ -73,3 +73,5 @@ Start with the [17-module acceptance ledger](platform-acceptance.md) and the ind
 For each affected integration, identify the provider action, the intended consumer outcome, the scoped environment, and the revision or event that joins them. Exercise access denial and a provider failure locally before delivery. On staging, collect the provider receipt and use ContextQA to verify the consumer journey, a dependent resource and an expected failure. Record case, result, revision and documentation disposition. A pending or failed required assertion holds promotion. [GitHub Pages worked example](pages-acceptance.md)
 
 Workspace administrators can set defaults for new briefs using the [writing profile guide and captured form](writing-profile.md).
+
+Before release, record a control and evidence disposition for each applicable OWASP risk. [Phase 11 application security](application-security.md)

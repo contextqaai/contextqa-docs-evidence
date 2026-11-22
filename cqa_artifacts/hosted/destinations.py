@@ -9,7 +9,7 @@ from urllib.parse import quote, urlsplit
 from fastapi import APIRouter, Depends
 from ..core import Rejected
 from .onboarding import PREFIX, setup, binding, admin
-from .github_intake import github_get
+from .github_intake import github_access, github_get
 from .repository_docs import sha
 from .publication import fetch_public
 
@@ -56,6 +56,21 @@ def pages_configuration(cfg, site):
                 url=address, status="configuration_verified", public_site_verified=False)
 
 
+def manifest_files(raw):
+    try:
+        manifest = json.loads(raw)
+        files = manifest["files"]
+        if not isinstance(files, dict) or "index.html" not in files or len(files) > 32:
+            raise ValueError()
+        for rel, digest in files.items():
+            if (len(rel) > 250 or not re.fullmatch(r"[A-Za-z0-9_-][A-Za-z0-9._-]*(?:/[A-Za-z0-9_-][A-Za-z0-9._-]*)*", rel)
+                    or not isinstance(digest, str) or not re.fullmatch(r"[0-9a-f]{64}", digest)):
+                raise ValueError()
+        return files
+    except (KeyError, TypeError, ValueError, AttributeError):
+        raise Rejected("Invalid Pages release manifest.") from None
+
+
 def verify_pages_release(config, cfg):
     repo = "/repos/" + cfg["docs_repo"]
     site = pages_configuration(cfg, github_get(config, repo + "/pages"))
@@ -77,14 +92,7 @@ def verify_pages_release(config, cfg):
         if obj.get("type") != "file" or obj.get("encoding") != "base64" or len(obj["content"]) > 32768:
             raise ValueError()
         raw = base64.b64decode(obj["content"].replace("\n", ""), validate=True)
-        manifest = json.loads(raw)
-        files = manifest["files"]
-        if not isinstance(files, dict) or "index.html" not in files or len(files) > 32:
-            raise ValueError()
-        for rel, digest in files.items():
-            if (len(rel) > 250 or not re.fullmatch(r"[A-Za-z0-9_-][A-Za-z0-9._-]*(?:/[A-Za-z0-9_-][A-Za-z0-9._-]*)*", rel)
-                    or not isinstance(digest, str) or not re.fullmatch(r"[0-9a-f]{64}", digest)):
-                raise ValueError()
+        files = manifest_files(raw)
     except (KeyError, TypeError, ValueError, AttributeError):
         raise Rejected("The selected revision needs a valid release.json with public file digests.") from None
     try:
@@ -99,6 +107,16 @@ def verify_pages_release(config, cfg):
                 files_verified=True)
 
 
+def pages_reader(org, project, cfg):
+    config = binding(org, project)
+    app = config.get("pages_github_app")
+    if app:
+        if (app.get("repository"), app.get("branch")) != (cfg["docs_repo"], cfg["branch"]):
+            raise Rejected("The Pages installation differs from the saved repository or branch.")
+        config = app
+    return github_access(config, permissions={"contents":"read", "pages":"read"}, repository=cfg["docs_repo"].split("/")[-1])
+
+
 def router(pool, auth):
     r = APIRouter()
 
@@ -109,7 +127,7 @@ def router(pool, auth):
             cfg = setup(db, org, project)
         if not cfg["connected"]:
             raise Rejected("Connect the documentation repository first.")
-        config = binding(org, project)
+        config = pages_reader(org, project, cfg)
         site = github_get(config, "/repos/" + cfg["docs_repo"] + "/pages")
         return pages_configuration(cfg, site)
 
@@ -120,7 +138,7 @@ def router(pool, auth):
             cfg = setup(db, org, project)
         if not cfg["connected"]:
             raise Rejected("Connect the documentation repository first.")
-        return verify_pages_release(binding(org, project), cfg)
+        return verify_pages_release(pages_reader(org, project, cfg), cfg)
 
     @r.post(PREFIX + "/gitbook/check")
     def check(org: str, project: str, actor=Depends(auth)):
