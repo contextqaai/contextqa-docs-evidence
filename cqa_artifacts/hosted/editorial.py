@@ -21,6 +21,7 @@ from .captures import private_root
 from .github_intake import BoundConnection
 from .onboarding import PREFIX, binding, setup
 from .store import PostgresStore
+from .profiles import profile
 
 
 class Brief(BaseModel):
@@ -33,6 +34,7 @@ class Brief(BaseModel):
     recovery: str = Field(default="", max_length=1000)
     source: str = Field(default="", max_length=500)
     capture: UUID | None = None
+    profile_revision: int | None = Field(default=None, ge=1)
 
 
 class Submission(BaseModel):
@@ -101,7 +103,7 @@ def capture_for(db, org, project, ident, event):
     return root, evidence, receipt
 
 
-def compiled(brief, item, source, capture):
+def compiled(brief, item, source, capture, writing_profile=None):
     b = brief
     refs = [
         dict(
@@ -153,6 +155,8 @@ def compiled(brief, item, source, capture):
             )
             section.pop("steps")
             section.pop("expected")
+    if writing_profile and b.template != "Tutorial":
+        section["title"] = "Customer outcome" if writing_profile["voice"] == "Business outcome" else "Technical details"
     sections = [section]
     if b.recovery:
         sections.append(
@@ -180,9 +184,12 @@ def compiled(brief, item, source, capture):
         review=dict(editorial=False, independent_task_completion=False),
     )
     result = guides.compile_guide(spec, root)
+    byline = "For " + core.markdown_plain(b.audience) + "."
+    if writing_profile:
+        byline = core.markdown_plain(writing_profile["brand"]) + " · " + byline
     body = result["markdown"].replace(
         "> Editorial draft. See quality-report.json for evidence and review gaps.",
-        "For " + core.markdown_plain(b.audience) + ".",
+        byline,
         1,
     )
     if capture:
@@ -375,7 +382,13 @@ def router(pool, auth):
                 store.authorize(state, actor)
                 item = store.get_item(state, body.item_id)
                 b = body.brief
-                fields = b.model_dump(mode="json")
+                fields = b.model_dump(mode="json", exclude_none=True)
+                fields["capture"] = str(b.capture) if b.capture else None
+                writing_profile = None
+                if b.profile_revision is not None:
+                    writing_profile = profile(db, org, project, b.profile_revision)
+                    if writing_profile is None:
+                        raise core.Rejected("Choose a writing profile revision from this workspace.")
                 signature = fingerprint([actor, body.model_dump(mode="json")])
                 old = item.get("writing", {})
                 if (
@@ -454,6 +467,7 @@ def router(pool, auth):
                             .isoformat()
                         },
                         cap,
+                        writing_profile,
                     )
                     changed = propose(item, state["articles"], b.path, content, b.goal)
                     if (

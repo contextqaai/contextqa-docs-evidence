@@ -1,8 +1,8 @@
-"""Verify a GitBook Git Sync repository's configured content root at a pinned commit."""
+"""Inspect the configured documentation destination using the workspace installation."""
 
 import base64
 import re
-from urllib.parse import quote
+from urllib.parse import quote, urlsplit
 from fastapi import APIRouter, Depends
 from ..core import Rejected
 from .onboarding import PREFIX, setup, binding, admin
@@ -32,8 +32,39 @@ def configured_root(raw):
     return value
 
 
+def pages_configuration(cfg, site):
+    address = site.get("html_url", "")
+    parsed = urlsplit(address)
+    if parsed.scheme != "https" or not parsed.hostname or parsed.username or parsed.password or parsed.query or parsed.fragment:
+        raise Rejected("GitHub returned an invalid Pages site address.")
+    source = site.get("source") or {}
+    if site.get("build_type") == "workflow":
+        raise Rejected("This check supports branch publishing. The Pages site uses GitHub Actions.")
+    if site.get("build_type") != "legacy" or not isinstance(source, dict):
+        raise Rejected("GitHub did not identify a branch publishing source.")
+    path = source.get("path")
+    if (source.get("branch") != cfg["branch"] or path not in ("/", "/docs")
+            or path.strip("/") != cfg["docs_root"].strip("/")):
+        raise Rejected("The Pages publishing branch or folder differs from the saved documentation scope.")
+    if site.get("public") is not True:
+        raise Rejected("GitHub has not confirmed this destination is public.")
+    return dict(repository=cfg["docs_repo"], branch=cfg["branch"], root=path,
+                url=address, status="configuration_verified", public_site_verified=False)
+
+
 def router(pool, auth):
     r = APIRouter()
+
+    @r.post(PREFIX + "/pages/check")
+    def check_pages(org: str, project: str, actor=Depends(auth)):
+        with pool.connection() as db:
+            admin(db, org, actor)
+            cfg = setup(db, org, project)
+        if not cfg["connected"]:
+            raise Rejected("Connect the documentation repository first.")
+        config = binding(org, project)
+        site = github_get(config, "/repos/" + cfg["docs_repo"] + "/pages")
+        return pages_configuration(cfg, site)
 
     @r.post(PREFIX + "/gitbook/check")
     def check(org: str, project: str, actor=Depends(auth)):

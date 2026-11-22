@@ -1,7 +1,9 @@
 import { useEffect, useState } from "react";
 import { request } from "./api";
 import type { Item, State } from "./types";
+import type { Profile } from "./WritingProfile";
 export type Brief = {
+  profile_revision?: number;
   path: string;
   template: string;
   audience: string;
@@ -182,6 +184,17 @@ export function Writing({
             ))}
           </select>
         </label>
+        {prefix && <div>
+          <button type="button" onClick={async () => {
+            try {
+              const p: Profile = await request(prefix + "/writing-profile");
+              if (!p.revision || !p.audience) { setProblem("Ask a workspace administrator to save a writing profile."); return; }
+              setForm(f => ({ ...f, profile_revision: p.revision, audience: p.audience! }));
+              setProblem(""); setDirty(true);
+            } catch (e) { setProblem((e as Error).message); }
+          }}>Apply workspace writing profile</button>
+          {form.profile_revision && <p>Writing profile revision {form.profile_revision}</p>}
+        </div>}
         <label>
           Intended reader
           <input

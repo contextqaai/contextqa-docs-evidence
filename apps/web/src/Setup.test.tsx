@@ -57,3 +57,15 @@ it('loads authorized GitHub choices and submits the selected destination separat
   expect(await screen.findByRole('heading', { name: 'Organization members' })).toBeTruthy();
   expect(screen.queryByText('GitHub scope saved.')).toBeNull();
 });
+it('checks the saved Pages destination and distinguishes reader verification', async () => {
+  const connected = { ...saved, connected: true };
+  vi.mocked(request).mockResolvedValueOnce(connected)
+    .mockResolvedValueOnce({ branch: 'staging-publish', root: '/docs', url: 'https://sample.github.io/docs/' })
+    .mockResolvedValueOnce(connected);
+  render(<WorkspaceSetup prefix="orgs/team/projects/docs" org="team" openItem={() => {}} />);
+  await screen.findByDisplayValue(saved.description);
+  await userEvent.click(screen.getByRole('button', { name: 'GitHub' }));
+  await userEvent.click(screen.getByRole('button', { name: 'Check Pages configuration' }));
+  expect(request).toHaveBeenCalledWith('orgs/team/projects/docs/pages/check', {});
+  expect((await screen.findByRole('status')).textContent).toContain('Reader verification is a separate check');
+});

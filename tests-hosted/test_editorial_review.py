@@ -174,6 +174,24 @@ class HostedFixture(unittest.TestCase):
 
 
 class EditorialReviewTests(HostedFixture):
+    def test_profile_revision_is_owned_and_pinned_to_the_brief(self):
+        url = self.base + "writing-profile"
+        defaults = dict(brand="Kan", audience="Owners", voice="Business outcome", revision=0)
+        editor = self.client("editor")
+        self.assertEqual(editor.get(url).json(), {"revision": 0})
+        self.assertEqual(editor.post(url, json=defaults).status_code, 403)
+        self.assertEqual(self.api.post(url, json=defaults).json()["revision"], 1)
+        self.assertEqual(self.api.post(url, json=defaults).status_code, 409)
+        self.assertEqual(self.api.post(url, json=defaults | dict(revision=1, voice="Technical")).json()["revision"], 2)
+        ident = self.create()
+        self.write(ident, "generate", self.brief | dict(profile_revision=99), code=409)
+        self.write(ident, "generate", self.brief | dict(profile_revision=1), api=editor)
+        item = self.item(ident)
+        self.assertEqual(item["writing"]["brief"]["profile_revision"], 1)
+        self.assertIn("Customer outcome", item["changes"][0]["after"])
+        self.assertIn("Kan · For Owners", item["changes"][0]["after"])
+        self.assertIn(markdown_plain(self.brief["fact"]), item["changes"][0]["after"])
+
     def test_relative_screenshot_is_scoped_to_the_selected_revision_and_reviewer(self):
         ref = "../.gitbook/assets/invitation.jpg"
         ident = self.create(edits=[dict(path=self.path, before=self.original,
