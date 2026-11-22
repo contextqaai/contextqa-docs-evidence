@@ -23,6 +23,11 @@
 }
 .sidebar .mobile-close{display:none}
 .sidebar .identity{margin-top:auto}
+@media (min-width:721px) {
+  .sidebar{overflow-y:auto}
+  .sidebar > nav{min-height:0;overflow-y:auto}
+  .sidebar > .identity{flex-shrink:0}
+}
 @media (max-width:720px) {
   .sidebar .mobile-close{display:flex;align-self:flex-end;margin-bottom:4px;min-height:40px}
   .sidebar{overflow-y:auto}
