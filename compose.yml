@@ -21,6 +21,15 @@ services:
     depends_on:
       database:
         condition: service_healthy
+  worker:
+    build: .
+    command: ['python', '-m', 'cqa_artifacts.hosted.workflow_worker']
+    environment:
+      DATABASE_URL: postgresql://docs:${POSTGRES_PASSWORD}@database:5432/docs
+    restart: unless-stopped
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
   app:
     build: .
     environment:

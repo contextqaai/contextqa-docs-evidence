@@ -12,7 +12,7 @@ from starlette.middleware.trustedhost import TrustedHostMiddleware
 from psycopg_pool import ConnectionPool
 from .auth import Settings, Authenticator
 from .store import PostgresStore
-from . import onboarding, github_intake, discovery, inventory
+from . import onboarding, github_intake, discovery, inventory, workflows
 from ..core import Rejected
 from ..docs_loop import package_bundle
 
@@ -77,7 +77,7 @@ def create_app(settings=None, pool=None, web_root=None):
     @app.get('/healthz')
     def health():
         with pool.connection() as db:
-            ready=db.execute('SELECT version FROM docs_schema_versions WHERE version=3').fetchone()
+            ready=db.execute('SELECT version FROM docs_schema_versions WHERE version=4').fetchone()
         if not ready: raise HTTPException(503,'Database migration required')
         return {'status':'ok'}
     @app.get('/api/config')
@@ -94,7 +94,7 @@ def create_app(settings=None, pool=None, web_root=None):
         with pool.connection() as db:
             rows=db.execute("SELECT p.organization_id,p.id,p.state->'manifest'->>'name',o.name,m.role FROM docs_projects p JOIN docs_memberships m ON m.organization_id=p.organization_id JOIN docs_organizations o ON o.id=p.organization_id WHERE m.subject=%s ORDER BY o.name,p.id",(subject,)).fetchall()
         return {'subject':subject,'projects':[dict(organization_id=o,id=i,name=n,organization=org,role=role) for o,i,n,org,role in rows]}
-    for module in (onboarding, github_intake, discovery, inventory):
+    for module in (onboarding, github_intake, discovery, inventory, workflows):
         app.include_router(module.router(pool,auth))
     prefix='/api/orgs/{org}/projects/{project}'
     @app.get(prefix+'/state')

@@ -1,10 +1,11 @@
-import { Activity, BookOpen, House, Inbox, Link, Settings, ShieldCheck } from 'lucide-react';
+import { Activity, Workflow, BookOpen, House, Inbox, Link, Settings, ShieldCheck } from 'lucide-react';
 
 export const navigation = [
   ['home', 'Overview', House],
   ['inbox', 'Review inbox', Inbox],
   ['articles', 'Knowledge base', BookOpen],
   ['sources', 'Sources & evidence', Link],
+  ['workflows', 'Workflows', Workflow],
   ['health', 'Content health', ShieldCheck],
   ['activity', 'Activity log', Activity],
   ['settings', 'Workspace settings', Settings],

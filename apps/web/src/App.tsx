@@ -1,3 +1,4 @@
+import {Workflows} from './Workflows';
 import {Articles} from './Inventory';
 import { useEffect, useRef, useState } from 'react';
 import { Plus, RefreshCw, Menu } from 'lucide-react';
@@ -333,6 +334,8 @@ export default function App({ onSignOut }: { onSignOut: () => void }) {
             <InboxPage state={state} open={(id) => navigate('inbox', id)} />
           ) : route.view === 'articles' ? (
             <Articles key={prefix} prefix={prefix} refresh={refresh} state={state} create={() => setModal('article')} />
+          ) : route.view === 'workflows' ? (
+            <Workflows key={prefix} prefix={prefix} role={state.role}/>
           ) : route.view === 'sources' ? (
             <Sources state={state} />
           ) : route.view === 'health' ? (
