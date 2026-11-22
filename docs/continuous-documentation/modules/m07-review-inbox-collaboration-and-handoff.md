@@ -39,6 +39,14 @@ Each ticket must carry the specific acceptance criteria it satisfies, implementa
 - AC-4: Handoff persists edits and decisions, reassigns once, and removes former contributor access.
 - AC-5: Resolve/archive/accept never publishes; partial bulk failure reports affected items.
 
+## ContextQA journey and reader guide
+
+**Review a proposed change and hand it off.** As an assigned reviewer, inspect the change and evidence, save a decision, hand the item to its recipient and verify it appears in that recipient’s queue. Capture the decision scope and handoff confirmation.
+
+**Negative and recovery coverage.** Use the former contributor session to revisit the item and verify denial. A stale decision must preserve the newer reviewer’s revision.
+
+Apply the [feature verification and guide workflow](../feature-verification.md) to each shipped feature. Map additional cases to the remaining criteria in this module. Record the visual review, assertion results and guide disposition in the ticket receipt.
+
 ## Failure and verification requirements
 
 Validate domain/API behavior with deterministic fixtures and the relevant real PostgreSQL tests. Validate product journeys through saved ContextQA cases on the exact candidate build. Include at least one negative/permission case and one recovery case. A skipped or unavailable provider check stays pending; mocked adapter tests do not establish live integration. Capture the resulting UX at desktop and mobile sizes through the approved test workflow.

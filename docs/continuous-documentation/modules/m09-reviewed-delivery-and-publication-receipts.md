@@ -39,6 +39,14 @@ Each ticket must carry the specific acceptance criteria it satisfies, implementa
 - AC-4: PR creation/merge/build/live each have independent receipts; no premature Published badge.
 - AC-5: Media links are durable destination references, not expiring evidence URLs.
 
+## ContextQA journey and reader guide
+
+**Deliver approved documentation and verify publication.** As a publisher on a test destination, review the approved file manifest, create a draft PR, and follow its merge and site-build receipts. Capture the intended destination and verify the resulting reader page contains the approved figure.
+
+**Negative and recovery coverage.** Change the upstream revision before delivery and verify drift reopens review. A failed site build must show its failure and preserve the last confirmed live revision.
+
+Apply the [feature verification and guide workflow](../feature-verification.md) to each shipped feature. Map additional cases to the remaining criteria in this module. Record the visual review, assertion results and guide disposition in the ticket receipt.
+
 ## Failure and verification requirements
 
 Validate domain/API behavior with deterministic fixtures and the relevant real PostgreSQL tests. Validate product journeys through saved ContextQA cases on the exact candidate build. Include at least one negative/permission case and one recovery case. A skipped or unavailable provider check stays pending; mocked adapter tests do not establish live integration. Capture the resulting UX at desktop and mobile sizes through the approved test workflow.

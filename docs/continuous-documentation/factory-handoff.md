@@ -41,6 +41,10 @@ Inspect the existing implementation before choosing edits; preserve unrelated wo
 Convert the next ready ticket into a small spec with selected module AC IDs.
 Reuse current domain/evidence code and keep ContextQA as the product-journey provider.
 Implement actual API/data/UI behavior including failures and permissions.
+Read feature-verification.md and the module’s example journey. For each shipped feature,
+name the reader task and capture checkpoints. Map rules, negative/recovery, end-to-end,
+design and UX assertions to evidence. Compare the result to the approved guide.
+Record a create/update/retire/no-change/investigate decision and its review state.
 Run relevant local checks. Use ContextQA acceptance only with the required target,
 environment and bounded execution authorization. Never treat mocked providers as live proof.
 Record exact build, tests, screenshots/evidence receipts, skipped checks and remaining gaps.

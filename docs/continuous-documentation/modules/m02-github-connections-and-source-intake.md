@@ -39,6 +39,14 @@ Each ticket must carry the specific acceptance criteria it satisfies, implementa
 - AC-4: Default-branch merged event and deployed revision remain separate fields.
 - AC-5: Disconnect stops future intake and clearly reports what external app installation remains.
 
+## ContextQA journey and reader guide
+
+**Connect product and documentation repositories.** As an admin, choose separate product and docs scopes for a test installation. Submit a selected branch event and inspect its source revision and intake receipt. Capture the scope summary and the event detail.
+
+**Negative and recovery coverage.** Replay the delivery ID and verify a single logical event and eligible run. Send an event from an unselected test repository and confirm no run is created.
+
+Apply the [feature verification and guide workflow](../feature-verification.md) to each shipped feature. Map additional cases to the remaining criteria in this module. Record the visual review, assertion results and guide disposition in the ticket receipt.
+
 ## Failure and verification requirements
 
 Validate domain/API behavior with deterministic fixtures and the relevant real PostgreSQL tests. Validate product journeys through saved ContextQA cases on the exact candidate build. Include at least one negative/permission case and one recovery case. A skipped or unavailable provider check stays pending; mocked adapter tests do not establish live integration. Capture the resulting UX at desktop and mobile sizes through the approved test workflow.

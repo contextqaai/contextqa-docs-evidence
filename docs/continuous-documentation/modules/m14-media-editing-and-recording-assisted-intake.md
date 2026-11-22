@@ -39,6 +39,14 @@ Each ticket must carry the specific acceptance criteria it satisfies, implementa
 - AC-4: Upload/capture/placement/review/publication each has a distinct state.
 - AC-5: Missing image retains blocker; no generated product UI replaces it.
 
+## ContextQA journey and reader guide
+
+**Redact a captured screenshot and place it in a guide.** As a media editor, select a verified frame, redact a synthetic marker, place the derivative beside the matching instruction and preview it as the reader. Capture the placement and verify the exported pixels.
+
+**Negative and recovery coverage.** Select a wrong-role frame or remove the required asset. Verify the blocker, replace the frame and ensure the reader only receives the approved derivative.
+
+Apply the [feature verification and guide workflow](../feature-verification.md) to each shipped feature. Map additional cases to the remaining criteria in this module. Record the visual review, assertion results and guide disposition in the ticket receipt.
+
 ## Failure and verification requirements
 
 Validate domain/API behavior with deterministic fixtures and the relevant real PostgreSQL tests. Validate product journeys through saved ContextQA cases on the exact candidate build. Include at least one negative/permission case and one recovery case. A skipped or unavailable provider check stays pending; mocked adapter tests do not establish live integration. Capture the resulting UX at desktop and mobile sizes through the approved test workflow.

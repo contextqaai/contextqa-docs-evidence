@@ -39,6 +39,14 @@ Each ticket must carry the specific acceptance criteria it satisfies, implementa
 - AC-4: Keyboard users can navigate menus/dialogs; focus returns to the initiating control.
 - AC-5: Existing review/edit/save behavior and approval invalidation remain unchanged.
 
+## ContextQA journey and reader guide
+
+**Find a request and check its evidence.** As an editor, open the overview, select the seeded request, inspect source and execution evidence, and return to the queue. Capture the request summary and evidence tab. On a phone, capture the article selector with the selected path.
+
+**Negative and recovery coverage.** Reject an invalid sign-in and verify the request is hidden. Recover access and check the same request. The current receipt records additional gaps for switching workspaces, keyboard menus and writable saves.
+
+Apply the [feature verification and guide workflow](../feature-verification.md) to each shipped feature. Map additional cases to the remaining criteria in this module. Record the visual review, assertion results and guide disposition in the ticket receipt.
+
 ## Failure and verification requirements
 
 Validate domain/API behavior with deterministic fixtures and the relevant real PostgreSQL tests. Validate product journeys through saved ContextQA cases on the exact candidate build. Include at least one negative/permission case and one recovery case. A skipped or unavailable provider check stays pending; mocked adapter tests do not establish live integration. Capture the resulting UX at desktop and mobile sizes through the approved test workflow.

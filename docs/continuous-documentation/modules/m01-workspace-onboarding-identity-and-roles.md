@@ -39,6 +39,14 @@ Each ticket must carry the specific acceptance criteria it satisfies, implementa
 - AC-4: Membership revocation blocks new API/artifact requests even in an already-open browser.
 - AC-5: Expired invitation and expired session each have distinct recovery paths.
 
+## ContextQA journey and reader guide
+
+**Resume workspace setup and invite a teammate.** As an admin, save a partially configured workspace, sign back in, resume at the saved step, then invite a teammate. Capture the resumed checklist and confirmed membership after the teammate accepts a test invitation.
+
+**Negative and recovery coverage.** As an editor, try to grant Admin. Verify denial and unchanged membership after reload. Distinguish the recovery instructions for an expired invitation from an expired session.
+
+Apply the [feature verification and guide workflow](../feature-verification.md) to each shipped feature. Map additional cases to the remaining criteria in this module. Record the visual review, assertion results and guide disposition in the ticket receipt.
+
 ## Failure and verification requirements
 
 Validate domain/API behavior with deterministic fixtures and the relevant real PostgreSQL tests. Validate product journeys through saved ContextQA cases on the exact candidate build. Include at least one negative/permission case and one recovery case. A skipped or unavailable provider check stays pending; mocked adapter tests do not establish live integration. Capture the resulting UX at desktop and mobile sizes through the approved test workflow.

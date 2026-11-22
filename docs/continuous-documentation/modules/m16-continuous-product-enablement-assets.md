@@ -39,6 +39,14 @@ Each ticket must carry the specific acceptance criteria it satisfies, implementa
 - AC-4: Regenerated asset preserves its audience and deliberate editorial overrides.
 - AC-5: Distribution receipt is separate from draft generation and owner approval.
 
+## ContextQA journey and reader guide
+
+**Refresh a training lesson from an approved guide.** As an enablement owner, open an affected lesson, compare the changed claim against the approved guide, preserve the audience-specific edits and review the refreshed preview. Capture the dependency and before/after lesson.
+
+**Negative and recovery coverage.** Change an internal-only claim and verify it is absent from the customer export. A failed export must preserve the prior distributed version and show its recovery action.
+
+Apply the [feature verification and guide workflow](../feature-verification.md) to each shipped feature. Map additional cases to the remaining criteria in this module. Record the visual review, assertion results and guide disposition in the ticket receipt.
+
 ## Failure and verification requirements
 
 Validate domain/API behavior with deterministic fixtures and the relevant real PostgreSQL tests. Validate product journeys through saved ContextQA cases on the exact candidate build. Include at least one negative/permission case and one recovery case. A skipped or unavailable provider check stays pending; mocked adapter tests do not establish live integration. Capture the resulting UX at desktop and mobile sizes through the approved test workflow.

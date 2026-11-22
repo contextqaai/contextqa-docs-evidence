@@ -1,6 +1,6 @@
 # Acceptance and release gates
 
-No checks in this file have been executed by this documentation task. Existing results are dated historical receipts in baseline-audit.md.
+Use the [feature verification workflow](feature-verification.md) for each ticket. These system scenarios define required release evidence. The [M00 results](m00-acceptance-results.md) record the narrower checks already executed.
 
 ## Benchmark guide quality
 
@@ -27,6 +27,8 @@ Hard fail: invented product behavior, wrong environment/role screenshot, secret 
 | E2E-13 | Workflow pause/edit/test/backlog | Inflight pinned version retained; test leaves live cursor unchanged |
 | E2E-14 | Missing screenshot, invalid artifact hash or expired reference | No false success; fetch/review failure recoverable without losing approved copy |
 | E2E-15 | Backup restore and queued-job recovery | Content, lineage, approvals and jobs restored within adopted targets |
+| E2E-16 | Confirm a supported task is retired for one product version, then approve its guide removal on a test destination | Preview lists inbound links, navigation, redirect or archive, and shared figures. After approved delivery, verify reader routing, retained versions and shared assets. |
+| E2E-17 | Control disappears for one role or during partial sync | Flag uncertainty, retain the approved guide, and verify it remains readable to the authorized role. |
 
 ## Production gate
 

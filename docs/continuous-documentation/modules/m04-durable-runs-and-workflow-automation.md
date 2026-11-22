@@ -40,6 +40,14 @@ Each ticket must carry the specific acceptance criteria it satisfies, implementa
 - AC-5: Missing source/invalid schedule/budget stop identifies the precise remediation.
 - AC-6: DST tests cover repeated and skipped local times with one documented dispatch policy.
 
+## ContextQA journey and reader guide
+
+**Test a workflow before activating it.** As a workflow owner, configure a test trigger, run it, inspect its version and stage timeline, then return to the workflow. Capture the test configuration and completed sample run.
+
+**Negative and recovery coverage.** Check that the test leaves the live cursor unchanged. In a disposable job, restart the worker and verify it resumes at the persisted stage without a duplicate external write.
+
+Apply the [feature verification and guide workflow](../feature-verification.md) to each shipped feature. Map additional cases to the remaining criteria in this module. Record the visual review, assertion results and guide disposition in the ticket receipt.
+
 ## Failure and verification requirements
 
 Validate domain/API behavior with deterministic fixtures and the relevant real PostgreSQL tests. Validate product journeys through saved ContextQA cases on the exact candidate build. Include at least one negative/permission case and one recovery case. A skipped or unavailable provider check stays pending; mocked adapter tests do not establish live integration. Capture the resulting UX at desktop and mobile sizes through the approved test workflow.

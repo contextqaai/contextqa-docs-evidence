@@ -24,6 +24,10 @@ All five executions passed. Each result covers one provider-scored scenario cont
 | AC-4 · Keyboard navigation and focus | **Partial.** Enter opened the form. Escape closed it and focus returned to its opener at desktop width. | Verify keyboard-only menu opening, traversal, dismissal and focus return in compact navigation. |
 | AC-5 · Review, save and approval invalidation | **Passed locally, partial live.** Local tests covered exact saves, rejected-save retry, stale revisions and invalidated approval. Ship 5 verified review navigation and preservation of article selection. | Capture a writable staging journey that saves an edit, exercises a conflict, and rejects delivery against an invalidated approval. |
 
+## Visual and reader review
+
+The [worked M00 decision](feature-verification.md#worked-decision-for-m00) records which layout and status details are visible in the captured desktop and mobile views. Rendered contrast, token measurements and independent learner completion remain open. The guide disposition for the entry-point change was **update**.
+
 ## Credits
 
 The approved ceiling was 1,000 credits. The observed Ship 5 balance changed from 14,773 to 14,768. The usage ledger showed five one-credit web-test charges during this window. Its entries omit result IDs, so the balance comparison is tenant-level.

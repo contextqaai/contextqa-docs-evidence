@@ -38,6 +38,15 @@ Each ticket must carry the specific acceptance criteria it satisfies, implementa
 - AC-3: Failed capture leaves latest approved pointer unchanged and shows stale-warning reason.
 - AC-4: Concurrent finalization cannot regress latest version.
 - AC-5: A timestamp-only change does not imply a reader-visible change.
+- AC-6: Confirmed task removal proposes a version-scoped retirement with link and media impact. A missing control, restricted role or incomplete listing preserves the approved guide and records an investigation.
+
+## ContextQA journey and reader guide
+
+**Refresh a guide after a product change.** As an editor, follow a deployed label change to its affected journey, compare the old and new step and figure, and approve the targeted proposal. Capture the comparison and inspect the resulting reader guide.
+
+**Negative and recovery coverage.** Replay identical input and verify a no-op. Exercise a failed capture and a confirmed retirement separately. Check that a transient failure preserves the guide and that a retirement accounts for links and shared media.
+
+Apply the [feature verification and guide workflow](../feature-verification.md) to each shipped feature. Map additional cases to the remaining criteria in this module. Record the visual review, assertion results and guide disposition in the ticket receipt.
 
 ## Failure and verification requirements
 

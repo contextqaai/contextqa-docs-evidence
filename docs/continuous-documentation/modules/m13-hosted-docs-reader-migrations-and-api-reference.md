@@ -39,6 +39,14 @@ Each ticket must carry the specific acceptance criteria it satisfies, implementa
 - AC-4: Migration reports skipped/failed content and preserves unrelated files.
 - AC-5: Generated API pages derive from spec; direct editing cannot silently diverge.
 
+## ContextQA journey and reader guide
+
+**Preview a documentation version and follow its redirect.** As a site editor, preview a version-bound guide and verify its navigation and figure. As the intended reader, open the old path on the test site and follow it to the current guide. Capture preview identity and the reader destination.
+
+**Negative and recovery coverage.** Try an unauthorized reader on a private site and verify access policy for both page and asset. Reject a redirect cycle before it reaches readers.
+
+Apply the [feature verification and guide workflow](../feature-verification.md) to each shipped feature. Map additional cases to the remaining criteria in this module. Record the visual review, assertion results and guide disposition in the ticket receipt.
+
 ## Failure and verification requirements
 
 Validate domain/API behavior with deterministic fixtures and the relevant real PostgreSQL tests. Validate product journeys through saved ContextQA cases on the exact candidate build. Include at least one negative/permission case and one recovery case. A skipped or unavailable provider check stays pending; mocked adapter tests do not establish live integration. Capture the resulting UX at desktop and mobile sizes through the approved test workflow.

@@ -21,7 +21,7 @@ The user's screenshot motivates a later extension: approved product knowledge sh
 5. [Architecture, state and API contracts](architecture.md)
 6. [Ordered module plan](roadmap.md) and [module specifications](modules/)
 7. [Factory execution contract and first tickets](factory-handoff.md)
-8. [Acceptance and production release gates](acceptance.md)
+8. [Feature verification and guide maintenance](feature-verification.md) and [production release gates](acceptance.md)
 9. [Unknowns and reference validation](research-gaps.md)
 
 ## Scope and truth labels

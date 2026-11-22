@@ -39,6 +39,14 @@ Each ticket must carry the specific acceptance criteria it satisfies, implementa
 - AC-4: Content/media/metadata changes invalidate approval and old preview.
 - AC-5: Editing then refresh/failed save/conflict never silently loses text.
 
+## ContextQA journey and reader guide
+
+**Edit an article and preview its approved changes.** As an editor, change a paragraph and its figure, save, reload, and inspect the accepted-result preview. Capture the diff and the matching rendered section.
+
+**Negative and recovery coverage.** Make an overlapping edit from a second revision. Verify the conflict preserves both inputs, resolve it, and confirm the earlier approval is invalidated.
+
+Apply the [feature verification and guide workflow](../feature-verification.md) to each shipped feature. Map additional cases to the remaining criteria in this module. Record the visual review, assertion results and guide disposition in the ticket receipt.
+
 ## Failure and verification requirements
 
 Validate domain/API behavior with deterministic fixtures and the relevant real PostgreSQL tests. Validate product journeys through saved ContextQA cases on the exact candidate build. Include at least one negative/permission case and one recovery case. A skipped or unavailable provider check stays pending; mocked adapter tests do not establish live integration. Capture the resulting UX at desktop and mobile sizes through the approved test workflow.

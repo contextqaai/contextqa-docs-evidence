@@ -40,6 +40,14 @@ Each ticket must carry the specific acceptance criteria it satisfies, implementa
 - AC-5: Every figure resolves to actual run/case/step or verified recording frame and checksum.
 - AC-6: A missing balance/permission prerequisite appears as not covered, even if the exploration step passed.
 
+## ContextQA journey and reader guide
+
+**Record and replay a documentation journey.** As a capture owner, select the environment, bind the intended build, save the journey and replay it. Capture the coverage report and one approved figure with its source step. Verify the independent replay result.
+
+**Negative and recovery coverage.** Use a controlled target revision mismatch or omit a prerequisite. Verify the exact coverage gap and that the previous approved guide remains current.
+
+Apply the [feature verification and guide workflow](../feature-verification.md) to each shipped feature. Map additional cases to the remaining criteria in this module. Record the visual review, assertion results and guide disposition in the ticket receipt.
+
 ## Failure and verification requirements
 
 Validate domain/API behavior with deterministic fixtures and the relevant real PostgreSQL tests. Validate product journeys through saved ContextQA cases on the exact candidate build. Include at least one negative/permission case and one recovery case. A skipped or unavailable provider check stays pending; mocked adapter tests do not establish live integration. Capture the resulting UX at desktop and mobile sizes through the approved test workflow.
