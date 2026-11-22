@@ -1,8 +1,9 @@
 {
-  "edition": "kan-review-1",
+  "edition": "kan-review-2",
   "files": {
-    "guides/review.html": "90652aaa406f77201ea512c1d42d97eab3aa0ec2880df90a52c22f27c0dc3e80",
+    "guides/review.html": "001625310b1b86214be8f48d89eeb23ff26b20b9677fc75a67c4fe7c8b453ff8",
     "index.html": "c69d274ee14502b5c165474804b68babf5dc71a0827a68bfabfebef1247751c3",
+    "media/review-walkthrough.mp4": "67fa1bf584fdc02743c34acd5a507f5718a9375a68c48079da50bd53b27016f1",
     "media/workspace-overview.jpg": "70dc87e251dd8b2d171c009af6d558032871017d2842dd97c8075e3a698cdf7e"
   }
 }
