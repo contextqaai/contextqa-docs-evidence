@@ -30,3 +30,11 @@ A deployer writes an attributable receipt to `<run_id>.json` after identifying t
 | AC-6 · Coverage gaps | The worker withholds review until the deployment is verified and the configured prerequisite list is clear. An operator still needs to supply meaningful coverage requirements for each client. |
 
 The hosted suite passed 34 tests against isolated PostgreSQL, the core suite passed 193 tests, the React suite passed 14 checks, and the production frontend build succeeded. The local provider regression uses a synthetic transport. The private client pilot used the real Ship 5 connector. The code-to-documentation pipeline still needs a worker-side connection, independently supplied deployed commit and verified review/delivery/refresh modules before production release.
+
+## New workspace on mobile
+
+Ship 5 case 213, result 480, completed with SUCCESS. Its one exploration step checked the new workspace at 390 × 844 on frontend bundle `index-MN8WapMW.js`. Open **Capture journeys**. With an empty configuration, **Discovery** identifies the missing crawl, **Saved journeys** explains who can connect a plan, and **Replay history** is empty. This run covers the visible setup state. The operator and worker checks above cover the separate metering and registration controls.
+
+![Capture journeys in a workspace awaiting its first saved plan](m06-evidence/missing-plan.jpg)
+
+[Watch the new workspace view](m06-evidence/missing-plan.mp4) · [Media provenance](m06-evidence/missing-plan-provenance.json)

@@ -1,0 +1,28 @@
+{
+  "case_id": 213,
+  "result_id": 480,
+  "step_result_id": 869,
+  "viewport": [
+    390,
+    844
+  ],
+  "frontend": {
+    "path": "/assets/index-MN8WapMW.js",
+    "http_status": 200
+  },
+  "source_trace_sha256": "959b8bc4f9e2573bbcf1efbec579faef7c239eaa6064c1ecf37d73ba1b54d5fb",
+  "assets": [
+    {
+      "file": "missing-plan.jpg",
+      "sha256": "79ac0e30c120b7e7b915e96a7cc02afe2338f74e00176031c01d83cdd8cfbe15",
+      "source": "step-result screenshot"
+    },
+    {
+      "file": "missing-plan.mp4",
+      "sha256": "d435e61c7983c8eaa74a935bf7fcd0efa43e9c93df05baf920e8210f9748d46f",
+      "source_recording_sha256": "283cf0994753b900dcc60e5793541b1b72512f8c26dc5d83efe14c2cbbf79ac8",
+      "start_seconds": 33,
+      "end_seconds": 45
+    }
+  ]
+}
