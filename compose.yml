@@ -30,17 +30,34 @@ services:
     depends_on:
       migrate:
         condition: service_completed_successfully
+  capture-worker:
+    profiles: ['capture']
+    build: .
+    command: ['python', '-m', 'cqa_artifacts.hosted.capture_worker']
+    environment:
+      DATABASE_URL: postgresql://docs:${POSTGRES_PASSWORD}@database:5432/docs
+      DOCS_CONNECTIONS_FILE: /run/docs-connections/connections.json
+      DOCS_CAPTURE_ROOT: /data/captures
+    volumes: &capture_mounts
+      - evidence:/data
+      - ${DOCS_CONNECTIONS_DIR:-./build/connections}:/run/docs-connections:ro
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    restart: unless-stopped
   app:
     build: .
     environment:
       DATABASE_URL: postgresql://docs:${POSTGRES_PASSWORD}@database:5432/docs
       APP_ORIGIN: http://127.0.0.1:8080
+      DOCS_CONNECTIONS_FILE: ${DOCS_CONNECTIONS_FILE:-}
+      DOCS_CAPTURE_ROOT: /data/captures
       APP_ENV: development
       AUTH_MODE: development
       DEV_ACCESS_TOKEN: ${DEV_ACCESS_TOKEN:?Set a random development token of at least 32 characters}
       DEV_SUBJECT: ${DEV_SUBJECT:-local-operator}
     ports: ['127.0.0.1:8080:8080']
-    volumes: ['evidence:/data']
+    volumes: *capture_mounts
     restart: unless-stopped
     depends_on:
       migrate:
