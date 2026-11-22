@@ -36,3 +36,5 @@ In the recovery example, the new preview identifies an interactive MDX document 
 Preview the repository again after a source edit, then import the reviewed pages. In this example the receipt reports **1 updated · 1 unchanged**. Open the modified administrator article and inspect **Source version** and its new paragraph. The other article remains at version 1. [Before the edit](m03-evidence/before-version.jpg) · [After the edit](m03-evidence/after-version.jpg) · [Watch the changed baseline](m03-evidence/changed-baseline.mp4)
 
 Ship 5 case 207, result 474, step result 857, verified the updated and unchanged articles on the same M03 bundle. [Source case](https://ship-5.contextqa.com/td/cases/207/steps) · [Media provenance](m03-evidence/changed-baseline-provenance.json)
+
+For a GitBook repository, choose the directory specified by its GitBook configuration when connecting the repository. Preview treats `SUMMARY.md` as navigation. Local raster references under `.gitbook/assets/` are eligible for the article preview.

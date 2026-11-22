@@ -182,6 +182,37 @@ class InventoryTests(unittest.TestCase):
         )
         self.assertEqual(self.post(job["id"] + "/apply")["summary"]["created"], 3)
 
+    def test_gitbook_summary_and_html_figure(self):
+        image = self.repo.files.pop("images/invitation.png")
+        self.repo.files[".gitbook/assets/mock figure.png"] = image
+        self.repo.files["README.md"] = b"# Home"
+        self.repo.files["teams/setup.mdx"] = (
+            b'# Teams\n<figure><img alt="Team diagram" src="../.gitbook/assets/mock%20figure.png"></figure>'
+        )
+        self.repo.files["SUMMARY.md"] = (
+            b"# Table of contents\n## Workspace\n* [Home](README.md)\n  * [Team setup](teams/setup.mdx)"
+        )
+        self.repo.files.pop("docs.json")
+        self.apply()
+        articles = self.articles()
+        self.assertNotIn("SUMMARY.md", articles)
+        source = articles["teams/setup.mdx"]["imported"]
+        self.assertEqual(source["navigation"], ["Workspace", "Home"])
+        self.assertEqual(articles["README.md"]["imported"]["reader_path"], "/")
+        self.assertEqual(source["images"][0]["path"], ".gitbook/assets/mock figure.png")
+        self.assertIsNotNone(source["images"][0]["sha"])
+
+    def test_raster_content_type_uses_the_verified_bytes(self):
+        from cqa_artifacts.hosted.repository_docs import decode
+
+        self.assertTrue(
+            decode("legacy.png", "image", b"\xff\xd8\xffimage")["src"].startswith(
+                "data:image/jpeg;"
+            )
+        )
+        with self.assertRaises(ValueError):
+            decode("legacy.png", "image", b'<svg onload="alert(1)"/>')
+
     def test_import_and_artifact_access_require_current_role(self):
         job = self.apply()["id"]
         with self.pool.connection() as db:

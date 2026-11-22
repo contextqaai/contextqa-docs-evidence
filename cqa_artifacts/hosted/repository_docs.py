@@ -5,6 +5,7 @@ import hashlib
 import json
 import posixpath
 import re
+from html.parser import HTMLParser
 from pathlib import PurePosixPath
 from urllib.parse import quote, unquote, urlsplit
 
@@ -19,7 +20,7 @@ RASTER = {
     ".jpeg": "image/jpeg",
     ".webp": "image/webp",
 }
-CONFIG = {"docs.json", "mint.json"}
+CONFIG = {"docs.json", "mint.json", "SUMMARY.md"}
 UNSUPPORTED = {
     "mkdocs.yml",
     "mkdocs.yaml",
@@ -75,7 +76,15 @@ def inventory(config, scope):
             not parts
             or path.startswith("/")
             or ".." in parts
-            or any(p.startswith(".") for p in parts)
+            or any(
+                p.startswith(".")
+                for p in (
+                    parts[2:]
+                    if parts[:2] == (".gitbook", "assets")
+                    and PurePosixPath(path).suffix.lower() in RASTER
+                    else parts
+                )
+            )
         ):
             continue
         if entry.get("mode") not in ("100644", "100755") or entry["type"] != "blob":
@@ -190,20 +199,65 @@ def navigation(raw):
     return mapping
 
 
+def gitbook_navigation(body):
+    mapping, parents = {}, []
+    section = []
+    for line in body.splitlines():
+        heading = re.fullmatch(r"#{2,6}\s+(.+)", line)
+        if heading:
+            section = [heading[1].strip()]
+            parents = []
+            continue
+        link = re.match(r"^(\s*)[-*+]\s+\[([^\]]+)\]\(([^)]+)\)", line)
+        if not link:
+            continue
+        dest = urlsplit(link[3].strip("<>"))
+        if dest.scheme or dest.netloc:
+            continue
+        path = posixpath.normpath(unquote(dest.path))
+        if path.startswith(("../", "/")):
+            continue
+        depth = len(link[1].expandtabs(4))
+        while parents and parents[-1][0] >= depth:
+            parents.pop()
+        mapping[path] = section + [name for _, name in parents]
+        parents.append((depth, link[2]))
+    if not mapping:
+        raise ValueError("GitBook summary contains no local article links.")
+    return mapping
+
+
+class LocalFigures(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.images = []
+
+    def handle_starttag(self, tag, attrs):
+        attributes = dict(attrs)
+        if tag == "img" and attributes.get("src"):
+            self.images.append((attributes.get("alt") or "", attributes["src"]))
+
+
 def decode(path, kind, raw):
     if kind == "image":
-        mime = RASTER[PurePosixPath(path).suffix.lower()]
-        valid = {
-            "image/png": raw.startswith(b"\x89PNG\r\n\x1a\n"),
-            "image/jpeg": raw.startswith(b"\xff\xd8\xff"),
-            "image/webp": raw.startswith(b"RIFF") and raw[8:12] == b"WEBP",
-        }
-        if not valid[mime]:
-            raise ValueError("The file does not match its image format.")
+        # Some GitBook exports retain a PNG filename for a JPEG payload.
+        # Serve the verified raster MIME. Never infer an active format from an extension.
+        if raw.startswith(b"\x89PNG\r\n\x1a\n"):
+            mime = "image/png"
+        elif raw.startswith(b"\xff\xd8\xff"):
+            mime = "image/jpeg"
+        elif raw.startswith(b"RIFF") and raw[8:12] == b"WEBP":
+            mime = "image/webp"
+        else:
+            raise ValueError("Unsupported raster image data.")
         return {"src": "data:" + mime + ";base64," + base64.b64encode(raw).decode()}
     body = raw.decode("utf-8-sig")
     if kind == "navigation":
-        return navigation(body)
+        return (
+            gitbook_navigation(text(body, "navigation"))
+            if path == "SUMMARY.md"
+            else navigation(body)
+        )
     path_name(path)
     text(body, "article")
     lines = body.splitlines()
@@ -229,10 +283,17 @@ def decode(path, kind, raw):
     route = (
         fields.get("permalink")
         or fields.get("slug")
-        or "/" + str(PurePosixPath(path).with_suffix(""))
+        or (
+            "/" + posixpath.dirname(path)
+            if PurePosixPath(path).name.lower() == "readme.md"
+            else "/" + str(PurePosixPath(path).with_suffix(""))
+        )
     )
     images = []
-    for alt, dest in re.findall(r"!\[([^\]]*)\]\(([^ )]+)(?:\s+[^)]*)?\)", visible):
+    html = LocalFigures()
+    html.feed(visible)
+    links = re.findall(r"!\[([^\]]*)\]\((<[^>]+>|[^ )]+)(?:\s+[^)]*)?\)", visible)
+    for alt, dest in links + html.images:
         dest = urlsplit(dest.strip("<>"))
         if dest.scheme or dest.netloc:
             continue
