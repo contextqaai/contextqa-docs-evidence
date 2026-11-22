@@ -9,6 +9,7 @@ import { useWorkspaceState } from './useWorkspaceState';
 import { WorkspaceSidebar } from './WorkspaceSidebar';
 import { Home } from './Home';
 import { navigation, readRoute } from './navigation';
+import { WorkspaceSetup, WorkspaceEntry } from './Setup';
 export default function App({ onSignOut }: { onSignOut: () => void }) {
   const [projects, setProjects] = useState<Project[]>([]),
     [project, setProject] = useState(''),
@@ -294,11 +295,11 @@ export default function App({ onSignOut }: { onSignOut: () => void }) {
               <p role="status">Loading your workspace…</p>
             </>
           ) : !state ? (
-            <Empty title={error ? 'Workspace unavailable' : 'No workspace assigned'}>
+            <><Empty title={error ? 'Workspace unavailable' : 'No workspace assigned'}>
               {error
                 ? 'Retry after checking your connection.'
-                : 'An organization administrator must provision your account and workspace.'}
-            </Empty>
+                : 'Create a workspace or use an invitation from your administrator.'}
+            </Empty>{!error && <WorkspaceEntry />}</>
           ) : route.item ? (
             <>
               {item ? (
@@ -363,9 +364,13 @@ export default function App({ onSignOut }: { onSignOut: () => void }) {
                 ))}
               </div>
             </>
+          ) : state.role === 'admin' ? (
+            <><WorkspaceSetup key={prefix} prefix={prefix} org={project.split('/')[0]} openItem={id=>navigate('inbox',id)}/>
+              <details><summary>Join or create another workspace</summary><WorkspaceEntry /></details></>
           ) : (
             <>
               <Heading title="Workspace settings" description="Product context, access and review policy." />
+              <details><summary>Join or create another workspace</summary><WorkspaceEntry /></details>
               <div className="grid-two">
                 <div className="panel">
                   <h2>{state.manifest.name}</h2>

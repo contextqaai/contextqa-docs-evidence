@@ -1,15 +1,18 @@
 """Same-origin authenticated API, serving the compiled React application."""
 import asyncio
 import logging
+import re
 from contextlib import asynccontextmanager
 from pathlib import Path
 from urllib.parse import urlsplit
 from fastapi import FastAPI, Depends, Request, HTTPException
+from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse, Response, FileResponse
 from starlette.middleware.trustedhost import TrustedHostMiddleware
 from psycopg_pool import ConnectionPool
 from .auth import Settings, Authenticator
 from .store import PostgresStore
+from . import onboarding, github_intake, discovery
 from ..core import Rejected
 from ..docs_loop import package_bundle
 
@@ -60,6 +63,10 @@ def create_app(settings=None, pool=None, web_root=None):
         response.headers['Content-Security-Policy']="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'self' "+((urlsplit(settings.issuer).scheme+'://'+urlsplit(settings.issuer).netloc) if settings.auth_mode=='oidc' else '')+"; frame-ancestors 'none'; base-uri 'none'; object-src 'none'"
         if settings.mode=='production': response.headers['Strict-Transport-Security']='max-age=31536000'
         return response
+    @app.exception_handler(RequestValidationError)
+    async def invalid(request, exc):
+        # A validation error may contain a submitted test password.
+        return JSONResponse({"detail":"Invalid request. Check the required fields."},status_code=422)
     @app.exception_handler(Rejected)
     async def rejection(request, exc):
         return JSONResponse({'detail':str(exc)},status_code=409)
@@ -70,7 +77,7 @@ def create_app(settings=None, pool=None, web_root=None):
     @app.get('/healthz')
     def health():
         with pool.connection() as db:
-            ready=db.execute('SELECT version FROM docs_schema_versions WHERE version=1').fetchone()
+            ready=db.execute('SELECT version FROM docs_schema_versions WHERE version=2').fetchone()
         if not ready: raise HTTPException(503,'Database migration required')
         return {'status':'ok'}
     @app.get('/api/config')
@@ -87,6 +94,8 @@ def create_app(settings=None, pool=None, web_root=None):
         with pool.connection() as db:
             rows=db.execute("SELECT p.organization_id,p.id,p.state->'manifest'->>'name',o.name,m.role FROM docs_projects p JOIN docs_memberships m ON m.organization_id=p.organization_id JOIN docs_organizations o ON o.id=p.organization_id WHERE m.subject=%s ORDER BY o.name,p.id",(subject,)).fetchall()
         return {'subject':subject,'projects':[dict(organization_id=o,id=i,name=n,organization=org,role=role) for o,i,n,org,role in rows]}
+    for module in (onboarding, github_intake, discovery):
+        app.include_router(module.router(pool,auth))
     prefix='/api/orgs/{org}/projects/{project}'
     @app.get(prefix+'/state')
     def state(org:str,project:str,subject=Depends(auth)):
@@ -101,7 +110,12 @@ def create_app(settings=None, pool=None, web_root=None):
         membership(org,subject)
         store=PostgresStore(pool,org); common=(project,subject)
         try:
-            if action=='events':return store.ingest(*common,data)
+            if action=='events':
+                ident=data.get('id','')
+                reserved=isinstance(ident,str) and (ident.startswith('guide:') or re.fullmatch(r'github:.+@[0-9a-f]{40,64}',ident))
+                if reserved or {'documentation_destination','discovery_id','source_item_id'} & data.keys():
+                    raise HTTPException(400,'Use the verified source or reviewed guide intake for this event.')
+                return store.ingest(*common,data)
             if action=='articles':return store.article(*common,data['path'],data['title'],data['body'],data.get('expected'))
             if action=='review':
                 if data.get('action') not in ('accept','ignore','undo','edit','comment','answer','assign','ready'):

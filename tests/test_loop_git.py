@@ -62,6 +62,15 @@ class GitDeliveryTests(unittest.TestCase):
             return original(args,cwd)
         self.command=command
         self.assertEqual(self.deliver(approved=True)['stage'],'draft_pr_created')
+    def test_hosted_guides_bind_repo_branch_and_root(self):
+        destination=dict(docs_repo='org/repo',branch='main',docs_root='manual')
+        self.bundle['source']={'documentation_destination':destination}
+        with self.assertRaisesRegex(Rejected,'destination'):
+            self.deliver(approved=True,current_destination={**destination,'docs_root':'elsewhere'})
+        self.assertFalse(self.calls)
+        self.assertEqual(self.deliver(approved=True,current_destination=destination)['stage'],'draft_pr_created')
+        self.assertIn(['git','add','--','manual/guide.md'],self.calls)
+
     def test_remote_drift_blocks_delivery(self):
         original=self.command
         self.command=lambda args,cwd: ('b'*40+'\trefs/heads/main') if args[:2]==['git','ls-remote'] else original(args,cwd)

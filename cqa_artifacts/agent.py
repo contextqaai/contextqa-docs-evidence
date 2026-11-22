@@ -82,7 +82,7 @@ def validate_proposal(planned,proposal):
 class NoRedirect(HTTPRedirectHandler):
     def redirect_request(self,*args,**kwargs):return None
 
-def submit(event,url,organization,project,token):
+def _post_source(url,organization,project,endpoint,payload,headers):
     parsed=urlsplit(url)
     if parsed.username or parsed.password or parsed.query or parsed.fragment or parsed.path not in ('','/'):
         raise Rejected('Use an application origin without credentials, path, query or fragment')
@@ -90,17 +90,29 @@ def submit(event,url,organization,project,token):
         raise Rejected('Submission requires HTTPS (loopback development excepted)')
     for key in (organization,project):
         if not re.fullmatch(r'[A-Za-z0-9_-]{1,80}',key):raise Rejected('Invalid organization/project identifier')
-    if not token or '\n' in token or '\r' in token:raise Rejected('DOCS_AGENT_TOKEN is required')
-    payload=encoded(event).encode()
     if len(payload)>2*1024*1024:raise Rejected('Event exceeds API limit')
-    req=Request(url.rstrip('/')+'/api/orgs/'+organization+'/projects/'+project+'/events',data=payload,
-                headers={'Authorization':'Bearer '+token,'Content-Type':'application/json'})
+    req=Request(url.rstrip('/')+'/api/orgs/'+organization+'/projects/'+project+'/'+endpoint,data=payload,
+                headers={'Content-Type':'application/json',**headers})
     try:
         with build_opener(NoRedirect).open(req,timeout=30) as response:
             body=response.read(100000)
             return json.loads(body)
     except Exception:
         raise Rejected('Submission failed; inspect the inbox before retrying. The event ID makes identical replay idempotent.') from None
+
+def submit(event,url,organization,project,token):
+    if not token or '\n' in token or '\r' in token:raise Rejected('DOCS_AGENT_TOKEN is required')
+    return _post_source(url,organization,project,'events',encoded(event).encode(),{'Authorization':'Bearer '+token})
+
+
+def intake(payload,url,organization,project,kind,delivery,secret):
+    import hmac
+    if not secret or len(secret)<24:raise Rejected('DOCS_WEBHOOK_SECRET must be configured')
+    if not re.fullmatch(r'[a-zA-Z0-9_-]{1,120}',delivery):raise Rejected('Invalid delivery identifier')
+    signature='sha256='+hmac.digest(secret.encode(),payload,'sha256').hex()
+    return _post_source(url,organization,project,'github/webhook',payload,{'X-GitHub-Event':kind,
+        'X-GitHub-Delivery':delivery,'X-Hub-Signature-256':signature})
+
 
 def write_new(path,value):
     path=Path(path);path.parent.mkdir(parents=True,exist_ok=True)
@@ -162,6 +174,10 @@ def main():
     c=sub.add_parser('validate');c.add_argument('--plan',type=Path,required=True);c.add_argument('--proposal',type=Path,required=True);c.add_argument('--out',type=Path,required=True)
     c=sub.add_parser('prepare');c.add_argument('--plan',type=Path,required=True);c.add_argument('--proposal',type=Path,required=True);c.add_argument('--out',type=Path,required=True)
     c=sub.add_parser('submit');c.add_argument('--event',type=Path,required=True);c.add_argument('--url',required=True);c.add_argument('--organization',required=True);c.add_argument('--project',required=True)
+    c=sub.add_parser('intake',help='Forward a push or merged-PR payload through the signed GitHub intake path')
+    c.add_argument('--payload',type=Path,required=True);c.add_argument('--url',required=True)
+    c.add_argument('--organization',required=True);c.add_argument('--project',required=True)
+    c.add_argument('--kind',choices=['push','pull_request'],required=True);c.add_argument('--delivery',required=True)
     args=p.parse_args()
     if args.command=='plan':
         result=plan(args.repo,json.loads(args.config.read_text()),args.base,args.head,args.source_url);write_new(args.out,result)
@@ -171,6 +187,9 @@ def main():
     elif args.command=='validate':
         result=validate_proposal(json.loads(args.plan.read_text()),json.loads(args.proposal.read_text()));write_new(args.out,result)
         print(json.dumps({'event':str(args.out),'edits':len(result['edits']),'review_required':True}))
+    elif args.command=='intake':
+        with args.payload.open('rb') as f:payload=f.read(2*1024*1024+1)
+        print(json.dumps(intake(payload,args.url,args.organization,args.project,args.kind,args.delivery,os.getenv('DOCS_WEBHOOK_SECRET'))))
     else:print(json.dumps(submit(json.loads(args.event.read_text()),args.url,args.organization,args.project,os.environ.get('DOCS_AGENT_TOKEN',''))))
 
 def cli():

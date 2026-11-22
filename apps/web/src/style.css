@@ -43,3 +43,17 @@
   .review-layout,.diff-columns{grid-template-columns:minmax(0,1fr)}
   .review-tabs{flex-wrap:wrap}
 }
+
+.setup-tabs, .member-row { display:flex; align-items:center; flex-wrap:wrap; gap:.65rem; margin-block:1rem; }
+.setup-tabs button { display:inline-flex; align-items:center; gap:.5rem; }
+.setup-tabs button[aria-pressed=true] { background:var(--brand,#594bc6); color:white; }
+.setup-fields, .setup-card fieldset { border:0; padding:0; margin:0; min-width:0; }
+.setup-card { max-width:56rem; margin-block:1rem; }
+.setup-card form, .setup-card fieldset { display:grid; gap:.85rem; }
+.setup-card label { display:grid; gap:.3rem; }
+.setup-card :is(input,textarea,select) { width:100%; min-width:0; }
+.setup-card form button { justify-self:start; }
+.setup-card .setup-check { display:flex; align-items:center; gap:.5rem; }
+.setup-card input[type=checkbox] { width:auto; }
+.setup-card .member-row { display:flex; overflow-wrap:anywhere; }
+.setup-card .member-row label { flex:1; min-width:10rem; }
