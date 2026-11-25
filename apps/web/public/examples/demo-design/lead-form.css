@@ -1,0 +1,41 @@
+body{margin:0}
+a{color:#5457C9}a:hover{color:#2A2E58}
+input:focus-visible,select:focus-visible,button:focus-visible,a:focus-visible{outline:2px solid #7478F0;outline-offset:2px}
+
+.ref-1 {width: 1440px; height: 900px; position: relative; overflow: hidden; background: #FAFAFC; font-family: Inter, system-ui, sans-serif; color: #1B1D33}
+.ref-2 {position: absolute; left: 0; top: 0; width: 1440px; height: 64px; background: #FFFFFF; border-bottom: 1px solid #E4E5F2}
+.ref-3 {position: absolute; left: 0; top: 64px; width: 1440px; height: 3px; background: #EEEFFB}
+.ref-4 {width: 25%; height: 3px; background: #5457C9}
+.ref-5 {position: absolute; left: 160px; top: 99px; width: 1120px; height: 700px; background: #FFFFFF; border: 1px solid #E4E5F2; border-radius: 12px; display: flex; flex-direction: column}
+.ref-6 {height: 36px; background: #F3F3FA; border-bottom: 1px solid #E4E5F2}
+.ref-7 {flex: 1; display: flex}
+.ref-8 {width: 220px; border-right: 1px solid #EEEFF6}
+.ref-9 {flex: 1; padding: 32px; display: flex; flex-direction: column; gap: 12px}
+.ref-10 {height: 14px; width: 220px; background: #DCDDF3; border-radius: 4px}
+.ref-11 {height: 48px; border: 1px solid #EEEFF6; border-radius: 8px}
+.ref-12 {position: absolute; left: 160px; top: 820px; width: 1120px; height: 56px; background: #FFFFFF; border: 1px solid #E4E5F2; border-radius: 12px}
+.ref-13 {position: absolute; left: 0; top: 0; width: 1440px; height: 900px; background: rgba(42,46,88,0.55); display: flex; align-items: center; justify-content: center}
+.ref-14 {width: 560px; background: #FFFFFF; border-radius: 16px; box-shadow: 0 8px 24px rgba(42,46,88,0.16); padding: 40px; box-sizing: border-box; display: flex; flex-direction: column; gap: 20px}
+.ref-15 {display: flex; flex-direction: column; gap: 10px}
+.ref-16 {font-size: 12px; font-weight: 600; letter-spacing: 0.08em; color: #5457C9}
+.ref-17 {margin: 0; font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: 36px; line-height: 1.1; color: #2A2E58}
+.ref-18 {color: #6B6ED6}
+.ref-19 {margin: 0; font-size: 14px; line-height: 1.6; color: #444746}
+.ref-20 {display: flex; flex-direction: column; gap: 6px}
+.ref-21 {font-size: 13px; font-weight: 600; color: #2A2E58}
+.ref-22 {color: #5457C9}
+.ref-23 {font-family: inherit; font-size: 15px; height: 44px; border: 1px solid #C9CBE0; border-radius: 6px; padding: 0 14px; color: #1B1D33}
+.ref-24 {display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px}
+.ref-25 {font-family: inherit; font-size: 15px; height: 44px; border: 1px solid #C9CBE0; border-radius: 6px; padding: 0 12px; color: #1B1D33; background: #FFFFFF}
+.ref-26 {display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 4px}
+.ref-27 {font-family: inherit; font-size: 15px; font-weight: 600; min-height: 44px; padding: 0 22px; border-radius: 6px; border: 0; background: #5457C9; color: #FFFFFF; cursor: pointer}
+.ref-28 {font-size: 14px; font-weight: 600; color: #30355F; min-height: 44px; display: inline-flex; align-items: center; padding: 0 8px}
+.ref-29 {margin: 0; font-size: 12px; line-height: 1.5; color: #444746}
+
+@media (max-width: 900px) {
+  .lead-preview { width: 100%; height: auto; min-height: 100dvh; }
+  .lead-preview > [aria-hidden] { display: none; }
+  .lead-preview .lead-overlay { position: static; width: 100%; height: auto; min-height: 100dvh; padding: 16px; box-sizing: border-box; }
+  .lead-preview form { width: min(560px, 100%); padding: 24px; }
+  .lead-preview input, .lead-preview select { min-width: 0; max-width: 100%; box-sizing: border-box; }
+}

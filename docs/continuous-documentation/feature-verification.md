@@ -16,6 +16,8 @@ Give each feature a stable journey ID, a reader role and a task expressed as an 
 
 For a backend-only ticket, name the downstream user journey it can affect. Verify the invariant at its authoritative interface and replay that journey when its behavior changes. Record a reason for each inapplicable dimension. Test data, dates and animations may be normalized in visual comparisons. Never mask the control or content under review.
 
+For each public demo link included in a guide, record its exact entry URL, build and intended reader action. Run the installed portal with its normal response headers. In ContextQA, open the link, assert the first visible instruction, act on the primary control and verify the resulting scene or destination. Exercise the form's required-field, successful submission and skip paths. Set the mobile viewport on the case and record the resulting page. A health check covers availability only. Keep separate receipts for the static export, design preview, published player and any downstream lead delivery.
+
 ## Record the result
 
 Keep one row per assertion. A ContextQA scenario can supply several rows. Copy this receipt into the ticket or its linked results document.
@@ -59,3 +61,20 @@ Record a missing private route or login as pending. An HTTP step that queries fi
 For each failed or unexpectedly passing case, preserve the first receipt, expected behavior and spec revision. Verify the preview SHA, prerequisite, fixture and signed-in role. Compare the same journey on the base and candidate where attribution is unclear. Fix the product when it violates the contract. Fix the test when it selects the wrong control or starts on the wrong screen. Fix the environment when its identity, data or provider binding prevents the assertion. Keep positive and negative integration scenarios distinct.
 
 Replay the original assertion after a product or fixture repair. For a test repair, record the before/after steps and the observable business outcome they still enforce. On every new commit run impacted cases again against the matching preview, including neighboring paths. Report each terminal case ID, actual outcome and unresolved dependency. A blocked provider write needs its own live receipt before release.
+
+## Continuous verification for each feature
+
+The factory owns the next action after the owner approves a feature. On a new specification, changed PR head, deployed preview, configuration change, failed run or merge, resume the feature's verification record. The hourly worker reconciles missed events. A quiet hour with current evidence starts zero runs.
+
+| Stage | Trigger and action | Exit condition |
+|---|---|---|
+| Requirements | Submit the owner-approved spec to ContextQA. Record its revision, dependencies, role, fixture, expected positive and negative outcomes and design reference. Crawl where entry points are unknown. | Every acceptance criterion has a check or an explicit owner decision pending. |
+| Small checks | Run one deterministic assertion at a time for each changed rule. Include an invalid input, boundary value or wrong role wherever relevant. | Observable state, response or record matches each expectation. |
+| Contracts | Run affected API and read-only database checks, including failure and recovery. | Server response and persisted state agree. |
+| Journeys | Exercise the normal user entry point, primary action, persistence or destination, return path and recovery. Record desktop, keyboard and actual mobile viewport where applicable. | The user reaches the specified outcome in each supported context. |
+| Specialist coverage | Evaluate all eleven phases. Run applicable compatibility, performance, security control, accessibility, integration and application security checks. Record rationale for each inapplicable phase. | Every required row has a current result and evidence. |
+| Change impact | On a new PR head, revised requirement, fixture, browser target or deployment, recalculate affected tests and reconcile capped selections. Execute approved additions and updated tests. Record the disposition of retired cases. | The tested revision, selected cases and results reconcile. |
+| Repair | Classify failures using result, trace, expected behavior and actual role or viewport. Correct the product, test, fixture or infrastructure at its source. Preserve the original failed result. Replay the smallest failing check, its affected journeys and impact cases. | The original requirement passes on the repaired build. Unknown outcomes stay open. |
+| Release and guide | After an authorized merge, recheck the deployed revision and reader path. Use the successful ContextQA evidence for the guide. | All required rows pass for the stated release scope, or the report records NO-GO and the outstanding rows. |
+
+Keep the verification record outside the source revision it describes. Record the feature, spec revision, deployment identity, dependency versions, expected cases, environment, browser and measured viewport. Journal a run intent before launch and attach the returned execution ID. After interruption, reconcile Ship 5 history before launching again. Only one worker owns a feature's active execution. Reuse a passing receipt when its tested inputs and dependency revisions are still valid. Repeated identical failures require diagnosis or an owner decision, while independent checks continue.

@@ -201,6 +201,8 @@ export function GuideLibrary({
       {tab === "Guides" && <p>
         <a href="/walkthrough-example.html">Try the three-step exported walkthrough</a>
         {" · "}
+        <a href="/demo-player.html">Open interactive demo</a>
+        {" · "}
         <a href="/product-guide.html">Read the illustrated product guide</a>
       </p>}
       {error && <p role="alert">{error}</p>}
