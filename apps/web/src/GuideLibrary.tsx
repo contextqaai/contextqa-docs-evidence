@@ -190,6 +190,7 @@ export function GuideLibrary({
         title="Guide library"
         description="Read approved versions, inspect their evidence, and prepare release materials."
       />
+      {tab === "Guides" && <p><a href="/walkthrough-example.html">Try the three-step exported walkthrough</a></p>}
       <div className="filters">
         {["Guides", "Evidence media", "Enablement"].map((t) => (
           <button key={t} aria-pressed={tab === t} onClick={() => pick(t)}>

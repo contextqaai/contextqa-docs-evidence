@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en"><meta charset="utf-8"><title>Exported walkthrough contract</title>
+<h1>Exported walkthrough contract</h1><p id="outcome" role="status">Checking</p><ol id="results"></ol>
+<script type="module">
+const outcomes = [];
+function check(name, passed) {
+  const item = document.createElement("li");
+  item.textContent = (passed ? "PASS " : "FAIL ") + name;
+  document.querySelector("#results").append(item);
+  outcomes.push(Boolean(passed));
+}
+async function inspect(size, count) {
+  const frame = document.createElement("iframe");
+  frame.width = "320";
+  frame.height = "480";
+  frame.title = size + " fixture at 320 CSS pixels";
+  const ready = new Promise((resolve, reject) => {
+    frame.onload = resolve;
+    frame.onerror = reject;
+  });
+  frame.src = "./" + size + "/index.html";
+  document.body.append(frame);
+  await ready;
+  const doc = frame.contentDocument;
+  const sections = [...doc.querySelectorAll("section")];
+  check(size + " fixture identity", doc.title === "SoFa Docs navigation pilot" && sections.length === count);
+  check(size + " fits 320px", doc.documentElement.scrollWidth <= doc.documentElement.clientWidth);
+  const policy = doc.querySelector('meta[http-equiv="Content-Security-Policy"]')?.content || "";
+  check(size + " script-free restricted export", !doc.querySelector("script, form") && policy.includes("default-src 'none'") && policy.includes("form-action 'none'"));
+  for (const [index, section] of sections.entries()) {
+    const position = "Step " + (index + 1) + " of " + count;
+    const nav = section.querySelector("nav");
+    check(size + " position " + position, section.innerText.includes(position) && nav?.getAttribute("aria-label") === position);
+    const links = [...section.querySelectorAll("nav a")];
+    const expected = [index > 0 && ["Previous", "#step-" + index], index + 1 < count && ["Next", "#step-" + (index + 2)], ["Restart", "#step-1"]].filter(Boolean);
+    check(size + " exact adjacent and restart targets " + position, links.length === expected.length && expected.every(([label, target]) => links.some(a => a.textContent.trim() === label && a.getAttribute("href") === target && doc.querySelector(target))));
+    check(size + " touch targets " + position, links.length > 0 && links.every(a => a.getBoundingClientRect().width >= 44 && a.getBoundingClientRect().height >= 44));
+  }
+  const restart = sections.at(-1)?.querySelector('nav a[href="#step-1"]:last-child');
+  if (restart) {
+    restart.focus();
+    restart.click();
+    await new Promise(resolve => setTimeout(resolve, 150));
+  }
+  check(size + " returns focus to first step", Boolean(restart) && frame.contentDocument === doc && doc.location.hash === "#step-1" && doc.activeElement?.id === "step-1");
+}
+try {
+  await inspect("three", 3);
+  await inspect("one", 1);
+} catch (error) {
+  check("fixture error " + error.message, false);
+}
+document.querySelector("#outcome").textContent = outcomes.length && outcomes.every(Boolean) ? "ALL EXPORT CHECKS PASSED" : "EXPORT CHECKS FAILED";
+</script></html>
