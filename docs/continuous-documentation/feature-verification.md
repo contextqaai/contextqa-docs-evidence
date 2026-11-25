@@ -53,3 +53,9 @@ The candidate overview frame shows an active Overview navigation item and a text
 For a change to validation, authorization, idempotency or stored state, select the optional checks that expose the rule. Record their target workspace, deployed revision, expected outcome and run/step result. A case can use a positive read and a rejected write against the same fixture. For export, run the browser action, then check the approved guide head, media references, owner approval and export timestamp with a read-only database login. Use the client staging database and a scoped verification view.
 
 Record a missing private route or login as pending. An HTTP step that queries fixed SQL establishes the returned assertions. A native Database step additionally tests the runner's database connection. Only the browser capture supplies the product screenshots and videos used in the guide. [See the documentation app's test results](platform-acceptance.md).
+
+## Close a failed PR check
+
+For each failed or unexpectedly passing case, preserve the first receipt, expected behavior and spec revision. Verify the preview SHA, prerequisite, fixture and signed-in role. Compare the same journey on the base and candidate where attribution is unclear. Fix the product when it violates the contract. Fix the test when it selects the wrong control or starts on the wrong screen. Fix the environment when its identity, data or provider binding prevents the assertion. Keep positive and negative integration scenarios distinct.
+
+Replay the original assertion after a product or fixture repair. For a test repair, record the before/after steps and the observable business outcome they still enforce. On every new commit run impacted cases again against the matching preview, including neighboring paths. Report each terminal case ID, actual outcome and unresolved dependency. A blocked provider write needs its own live receipt before release.

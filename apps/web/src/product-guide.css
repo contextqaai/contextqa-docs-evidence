@@ -1,0 +1,17 @@
+* { box-sizing: border-box; }
+body { margin: 0; background: #f9fafc; color: #172438; font: 1.05rem/1.6 system-ui, sans-serif; }
+header, main { max-width: 56rem; margin: auto; padding: 1rem clamp(1rem, 4vw, 2.5rem); }
+header { border-bottom: 1px solid #cdd5df; }
+h1, h2 { line-height: 1.2; text-wrap: balance; }
+h1 { font-size: clamp(2rem, 5vw, 3.5rem); }
+h2 { font-size: 1.65rem; }
+a { color: #164c97; text-underline-offset: .18em; }
+li { margin: .45rem 0; }
+section { border-top: 1px solid #cdd5df; margin: 2.25rem 0; padding-top: .75rem; }
+figure { margin: 1.25rem 0; }
+img, video { display: block; max-width: 100%; height: auto; }
+img { border: 1px solid #cdd5df; }
+figcaption { font-size: .92rem; margin-top: .5rem; }
+summary { cursor: pointer; color: #164c97; font-weight: 600; padding: .5rem 0; }
+video { max-height: 75vh; margin: .5rem auto; }
+:focus-visible { outline: 3px solid #165cb3; outline-offset: 3px; }

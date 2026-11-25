@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { accessToken, request } from "./api";
 import { Heading, Empty, SourceLink } from "./components";
+import { Walkthrough } from "./Walkthrough";
 import { PagesHandoff } from "./PagesHandoff";
 import { ReviewedArticle } from "./ReviewedArticle";
 import type { State } from "./types";
@@ -190,14 +191,18 @@ export function GuideLibrary({
         title="Guide library"
         description="Read approved versions, inspect their evidence, and prepare release materials."
       />
-      {tab === "Guides" && <p><a href="/walkthrough-example.html">Try the three-step exported walkthrough</a></p>}
       <div className="filters">
-        {["Guides", "Evidence media", "Enablement"].map((t) => (
+        {["Guides", "Walkthrough", "Evidence media", "Enablement"].map((t) => (
           <button key={t} aria-pressed={tab === t} onClick={() => pick(t)}>
             {t}
           </button>
         ))}
       </div>
+      {tab === "Guides" && <p>
+        <a href="/walkthrough-example.html">Try the three-step exported walkthrough</a>
+        {" · "}
+        <a href="/product-guide.html">Read the illustrated product guide</a>
+      </p>}
       {error && <p role="alert">{error}</p>}
       {message && <p role="status">{message}</p>}
       {tab === "Guides" && (
@@ -250,6 +255,9 @@ export function GuideLibrary({
                 ))}
             </select>
           </label>
+          {selected && tab === "Walkthrough" && (
+            <Walkthrough key={prefix + key} prefix={prefix} path={selected.path} version={selected.digest} current={selected.current} />
+          )}
           {detail && selected && tab === "Guides" && (
             <>
               {detail.source.fixture && <p>Workshop example using a recorded Ship 5 screenshot.</p>}
