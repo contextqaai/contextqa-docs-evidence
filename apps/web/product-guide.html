@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Product walkthrough · SoFa Docs</title>
+  <link rel="stylesheet" href="./src/product-guide.css">
+</head>
+<body>
+  <header><a href="/">Open SoFa Docs</a></header>
+  <main>
+    <h1>SoFa Docs product walkthrough</h1>
+    <p><a href="/demo-player.html">Open interactive demo</a></p>
+    <p>Follow a documentation change from an existing article through review, then turn an approved guide into a lesson or an interactive demo. Each chapter uses screenshots and video from a recorded Ship 5 example in an isolated workspace.</p>
+    <nav aria-label="Chapters"><ol>
+      <li><a href="#import">Import existing guides</a></li>
+      <li><a href="#write">Write a change</a></li>
+      <li><a href="#review">Review and hand off</a></li>
+      <li><a href="#read">Read a guide and export a lesson</a></li>
+      <li><a href="#demo">Create a demo</a></li>
+    </ol></nav>
+    <section id="import">
+      <h2>Import existing guides</h2>
+      <p>An administrator connects the documentation repository, branch and directory in Workspace settings → GitHub. An editor then opens Knowledge base.</p>
+      <ol>
+        <li>Select <strong>Preview repository</strong>. Check the branch, directory and commit, then expand <strong>Review files</strong>. Two pages can share a title. Use the file path to identify the right one.</li>
+        <li>Select <strong>Import reviewed pages</strong>. Read the counts on the import receipt. Open a page in <strong>Article inventory</strong> to inspect its source version.</li>
+      </ol>
+      <figure>
+        <img loading="lazy" src="../../docs/continuous-documentation/m03-evidence/repository-preview.jpg" alt="Repository preview with two Getting started pages in different folders.">
+        <figcaption>Repository preview with two Getting started pages in different folders. <a href="https://ship-5.contextqa.com/run-result-view?testCaseId=204&amp;runResultId=473">Screenshot source</a></figcaption>
+      </figure>
+      <details>
+        <summary>Watch the recording · Import existing guides</summary>
+        <video controls playsinline preload="none" src="../../docs/continuous-documentation/m03-evidence/import-articles.mp4" aria-label="Import existing guides recorded in Ship 5"></video>
+        <p><a href="https://ship-5.contextqa.com/run-result-view?testCaseId=204&amp;runResultId=473">Full recording and steps in Ship 5 · run 473</a></p>
+      </details>
+    </section>
+    <section id="write">
+      <h2>Write a change</h2>
+      <p>Use an invitation policy as the example. Start with an open request in Review inbox.</p>
+      <ol>
+        <li>Open <strong>Writing</strong>, check the proposed article path, then choose <strong>Reference</strong>. Enter the reader, goal, prerequisite, source and supported fact. Here the fact is “Invitations stay pending until accepted.”</li>
+        <li>Select <strong>Save partial answers</strong> and <strong>Generate draft</strong>. Read the proposed <strong>Article</strong> and open <strong>Changes</strong> to see which words the reader would gain or lose.</li>
+      </ol>
+      <figure>
+        <img loading="lazy" src="../../docs/continuous-documentation/m05-evidence/article-draft.jpg" alt="Draft invitation article showing the existing policy alongside newly proposed information.">
+        <figcaption>Draft invitation article showing the existing policy alongside newly proposed information. <a href="https://ship-5.contextqa.com/run-result-view?testCaseId=215&amp;runResultId=483">Screenshot source</a></figcaption>
+      </figure>
+      <details>
+        <summary>Watch the recording · Write a change</summary>
+        <video controls playsinline preload="none" src="../../docs/continuous-documentation/m05-evidence/writing-desktop.mp4" aria-label="Write a change recorded in Ship 5"></video>
+        <p><a href="https://ship-5.contextqa.com/run-result-view?testCaseId=215&amp;runResultId=483">Full recording and steps in Ship 5 · run 483</a></p>
+      </details>
+    </section>
+    <section id="review">
+      <h2>Review and hand off</h2>
+      <p>As the reviewer, open the request and compare Changes with Evidence.</p>
+      <ol>
+        <li>Choose <strong>Accept article</strong> for one article or <strong>Accept all in request</strong> for the pending set. Read the count before selecting <strong>Confirm</strong>.</li>
+        <li>Open <strong>Review actions → Hand off review</strong>, choose an editor, add a note and select <strong>Send to inbox</strong>. Look for <strong>Ready for approval</strong>. If the handoff is blocked, resolve the outstanding article decisions and retry.</li>
+      </ol>
+      <figure>
+        <img loading="lazy" src="../../docs/continuous-documentation/m07-evidence/accept-request.jpg" alt="Request confirmation identifying the articles affected by the reviewer’s decision.">
+        <figcaption>Request confirmation identifying the articles affected by the reviewer’s decision. <a href="https://ship-5.contextqa.com/run-result-view?testCaseId=216&amp;runResultId=484">Screenshot source</a></figcaption>
+      </figure>
+      <details>
+        <summary>Watch the recording · Review and hand off</summary>
+        <video controls playsinline preload="none" src="../../docs/continuous-documentation/m07-evidence/review-desktop.mp4" aria-label="Review and hand off recorded in Ship 5"></video>
+        <p><a href="https://ship-5.contextqa.com/run-result-view?testCaseId=216&amp;runResultId=484">Full recording and steps in Ship 5 · run 484</a></p>
+      </details>
+    </section>
+    <section id="read">
+      <h2>Read a guide and export a lesson</h2>
+      <p>Start with an approved edition. The invitation guide in the recording was seeded with a screenshot from the writing run.</p>
+      <ol>
+        <li>Open <strong>Guide library</strong>, choose the <strong>Current</strong> version and read the illustration beside the step. Open <strong>Evidence media</strong> to find the source journey, run and step.</li>
+        <li>In <strong>Enablement</strong>, choose the audience and <strong>Training lesson → Generate material</strong>. Review and approve the lesson, select <strong>Export material</strong> and open the Markdown and its image in the downloaded archive.</li>
+      </ol>
+      <figure>
+        <img loading="lazy" src="../../docs/continuous-documentation/studio-evidence/guide-reader.jpg" alt="Invitation guide with the approved illustration embedded in the article.">
+        <figcaption>Invitation guide with the approved illustration embedded in the article. <a href="https://ship-5.contextqa.com/run-result-view?testCaseId=220&amp;runResultId=491">Screenshot source</a></figcaption>
+      </figure>
+      <details>
+        <summary>Watch the recording · Read a guide and export a lesson</summary>
+        <video controls playsinline preload="none" src="../../docs/continuous-documentation/studio-evidence/training-export.mp4" aria-label="Read a guide and export a lesson recorded in Ship 5"></video>
+        <p><a href="https://ship-5.contextqa.com/run-result-view?testCaseId=220&amp;runResultId=491">Full recording and steps in Ship 5 · run 491</a></p>
+      </details>
+    </section>
+    <section id="demo">
+      <h2>Create a demo</h2>
+      <p>Start with a guide edition that contains screenshots for the scenes you want to show.</p>
+      <ol>
+        <li>In the demo editor, choose the edition, enter a title and select <strong>Create demo</strong>. Choose <strong>Add hotspot</strong>, give the action a label and place it on its target. Use percentages for precise placement.</li>
+        <li>Choose <strong>Move earlier</strong> or <strong>Move later</strong>, select <strong>Save demo</strong>, then <strong>Back to demos</strong>. Reopen the title and select <strong>Preview demo</strong>. Follow the hotspots to <strong>Demo complete</strong>.</li>
+      </ol>
+      <figure>
+        <img loading="lazy" src="../../docs/continuous-documentation/demo-evidence/editor-complete.jpg" alt="Demo complete after the reopened two-scene desktop walkthrough.">
+        <figcaption>Demo complete after the reopened two-scene desktop walkthrough. <a href="https://ship-5.contextqa.com/run-result-view?testCaseId=267&amp;runResultId=796">Screenshot source</a></figcaption>
+      </figure>
+      <details>
+        <summary>Watch the recording · Create a demo</summary>
+        <video controls playsinline preload="none" src="../../docs/continuous-documentation/demo-evidence/editor-reader-mobile.mp4" aria-label="Create a demo recorded in Ship 5"></video>
+        <p><a href="https://ship-5.contextqa.com/run-result-view?testCaseId=268&amp;runResultId=794">Full recording and steps in Ship 5 · run 794</a></p>
+      </details>
+    </section>
+    <section id="capture">
+      <h2>Where are my workspace’s screenshots?</h2>
+      <p>In <strong>Guide library</strong>, select the article path and edition, then open <strong>Evidence media</strong>. Check that the journey, run and step match the illustrated action.</p>
+      <p>If the library only contains a sample guide, open <strong>Capture journeys</strong> and check that a plan is available for your app and environment. A new edition needs a completed capture, reviewed media and an approved guide. A GitHub code analysis result alone supplies no reader screenshots.</p>
+      <a href="/?view=library">Open Guide library</a>
+    </section>
+  </main>
+</body>
+</html>

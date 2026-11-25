@@ -14,6 +14,7 @@ from ..loop import fingerprint, path_name
 from .github_intake import BoundConnection
 from .onboarding import PREFIX
 from .store import PostgresStore
+from .walkthrough import walkthrough_scenes
 
 
 class Release(BaseModel):
@@ -283,6 +284,13 @@ def router(pool, auth):
             )
             value["previous_media"] = old["media"]
             return value
+
+    @routes.get(base + "/walkthrough")
+    def walkthrough(org: str, project: str, path: str, digest: str, actor=Depends(auth)):
+        with pool.connection() as db:
+            scope(db, org, project, actor)
+            value = edition(db, org, project, path, digest)
+        return {"scenes": walkthrough_scenes(path, value["body"], value["media"])}
 
     @routes.get(base + "/media/{media}")
     def get_media(

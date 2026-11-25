@@ -2,7 +2,7 @@ import { Fragment, useEffect, useState } from "react";
 import { accessToken } from "./api";
 import { Markdown } from "./components";
 
-function Figure({
+export function Figure({
   path,
   caption,
   video,

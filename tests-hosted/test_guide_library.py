@@ -120,6 +120,34 @@ class GuideLibraryTests(HostedFixture):
         self.assertEqual(detail["body"], article)
         self.assertEqual((detail["media"][0]["run"], detail["media"][0]["step"]), (40, 401))
 
+    def test_walkthrough_uses_scoped_saved_edition(self):
+        _, digest, media_id = self.library_save()
+        endpoint = self.base + "library/walkthrough"
+        params = dict(path=self.path, digest=digest)
+        response = self.api.get(endpoint, params=params)
+        self.assertEqual(response.status_code, 200)
+        first, = response.json()["scenes"]
+        self.assertEqual((first["digest"], first["run"], first["step"]), (media_id, 40, 401))
+        self.assertEqual(self.api.get(endpoint, params={**params, "digest": "old"}).status_code, 404)
+        self.assertEqual(self.client("writer").get(endpoint, params=params).status_code, 403)
+
+    def test_walkthrough_shows_only_visible_traceable_scenes_in_article_order(self):
+        from cqa_artifacts.hosted.walkthrough import walkthrough_scenes
+        folder = "evidence/" + "a" * 64 + "/assets/"
+        photo = folder + "b" * 64 + ".png"
+        clip = folder + "c" * 64 + ".webm"
+        media = [
+            dict(path=ref, digest=digest * 64, kind=kind, run=1, step=2, journey="review", revision="build")
+            for ref, digest, kind in [(photo, "b", "screenshot"), (clip, "c", "video")]
+        ]
+        image = f"![Open **inbox**](../{photo})"
+        video = f"[Watch](../{clip})"
+        body = f"{video}\n\n{image}\n\n<!-- {image} -->\n\n~~~md\n{image}\n~~~\n\n[External](https://example.org/{photo})"
+        result = walkthrough_scenes("guides/review.md", body, media)
+        self.assertEqual([s["caption"] for s in result], ["Watch", "Open inbox"])
+        for key in ("digest", "run", "step", "revision", "journey", "kind"):
+            self.assertEqual(walkthrough_scenes("guides/review.md", image, [{**media[0], key: ""}]), [])
+
     def test_hidden_evidence_links_do_not_illustrate_a_guide(self):
         from cqa_artifacts.editions import media_dependencies
 

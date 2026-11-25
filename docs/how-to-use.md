@@ -138,6 +138,8 @@ approve evidence, or apply generated changes automatically.
 
 ## 5. Review and export
 
+In **Guide library**, choose **Try the three-step exported walkthrough** to see what readers receive. Each section displays its position. Choose **Next** or **Previous** to move one step, or **Restart** to return focus to the first step. On a keyboard, Tab to the link and press Enter. In a one-step guide, Restart is the only navigation link. Re-export older guides to include these controls. [Export navigation verification](../examples/walkthrough-verification/README.md).
+
 In the SoFa Docs review inbox, open the request and choose **Article** to read the proposed guide with its screenshots. Choose **Changes** to compare the previous and proposed versions side by side. In the guide library, open a saved version to see its reviewed figures alongside the instructions.
 
 ![Invitation screenshot displayed inline in the Article tab](continuous-documentation/studio-evidence/article-review-with-screenshot.jpg)

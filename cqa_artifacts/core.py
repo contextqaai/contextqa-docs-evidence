@@ -440,8 +440,20 @@ def _render(data: dict) -> str:
                 content.append(f'<figure><div class="frame"><img src="{src}" alt="Reviewed screenshot for step {number}" loading="lazy">{"".join(boxes)}</div>' + ('<figcaption><ol>' + ''.join(labels) + '</ol></figcaption>' if labels else '') + '</figure>')
             else:
                 content.append(f'<video controls preload="metadata" src="{src}"></video>')
-        sections.append(f'<section id="step-{number}"><h2>{number}. {e(step["title"])}</h2><p>{e(step["instruction"])}</p>{"".join(content)}<nav>' + (f'<a href="#step-{number-1}">Previous</a> ' if number > 1 else '') + (f'<a href="#step-{number+1}">Next</a>' if number < len(data["steps"]) else '<a href="#top">Start again</a>') + '</nav></section>')
-    return '<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src &#39;none&#39;; img-src &#39;self&#39;; media-src &#39;self&#39;; style-src &#39;unsafe-inline&#39;; base-uri &#39;none&#39;; form-action &#39;none&#39;; frame-src &#39;none&#39;"><title>' + e(data["title"]) + '</title><style>body{font:18px/1.6 system-ui;max-width:960px;margin:40px auto;padding:20px;color:#162035}section{padding:24px 0;border-bottom:1px solid #ddd}img,video{max-width:100%;height:auto}a{color:#1559a8;margin-right:24px}nav{margin:20px 0}</style><main id="top"><h1>' + e(data["title"]) + '</h1><p>Reviewed static walkthrough. This does not control a live customer browser.</p>' + ''.join(sections) + '</main></html>'
+        position = f"Step {number} of {len(data['steps'])}"
+        links = []
+        if number > 1:
+            links.append(f'<a href="#step-{number - 1}">Previous</a>')
+        if number < len(data["steps"]):
+            links.append(f'<a href="#step-{number + 1}">Next</a>')
+        links.append('<a href="#step-1">Restart</a>')
+        sections.append(
+            f'<section id="step-{number}" tabindex="-1" aria-labelledby="title-{number}">'
+            f'<p class="position">{position}</p><h2 id="title-{number}">{number}. {e(step["title"])}</h2>'
+            f'<p>{e(step["instruction"])}</p>{"".join(content)}'
+            f'<nav aria-label="{position}">{" ".join(links)}</nav></section>'
+        )
+    return '<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src &#39;none&#39;; img-src &#39;self&#39;; media-src &#39;self&#39;; style-src &#39;unsafe-inline&#39;; base-uri &#39;none&#39;; form-action &#39;none&#39;; frame-src &#39;none&#39;"><title>' + e(data["title"]) + '</title><style>body{font:18px/1.6 system-ui;max-width:960px;margin:40px auto;padding:20px;color:#162035}section{padding:24px 0;border-bottom:1px solid #ddd}img,video{max-width:100%;height:auto}a{color:#5457c9}nav{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0}nav a{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;padding:0 8px}.position{color:#444746}section:focus-visible,nav a:focus-visible{outline:2px solid #7478f0;outline-offset:2px}</style><main id="top"><h1>' + e(data["title"]) + '</h1><p>Reviewed static walkthrough. This does not control a live customer browser.</p>' + ''.join(sections) + '</main></html>'
 
 
 def execution_note(data: dict) -> str:

@@ -1,0 +1,71 @@
+/* ContextQA Demo Builder — design tokens (source: spec Section 6).
+   Use these variables only. Do not hard-code colors in components. */
+:root {
+  /* Color */
+  --cqa-brand-primary: #5457C9;
+  --cqa-brand-primary-hover: #6B6ED6;
+  --cqa-brand-accent: #7478F0;
+  --cqa-brand-tint: #EEEFFB;
+  --cqa-surface-page: #FAFAFC;
+  --cqa-surface-card: #FFFFFF;
+  --cqa-navy-900: #2A2E58;
+  --cqa-navy-800: #30355F;
+  --cqa-navy-700: #3E4373;
+  --cqa-text-primary: #1B1D33; /* proposed: confirm with brand owner */
+  --cqa-text-secondary: #444746;
+  --cqa-status-success: #137333;
+  --cqa-border: #E4E5F2;
+  --cqa-overlay: rgba(42, 46, 88, 0.55);
+
+  /* Type */
+  --cqa-font-sans: Inter, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --cqa-font-display: "Instrument Serif", Georgia, serif;
+  --cqa-text-display: 48px;        /* line-height 56px; mobile 34/40 */
+  --cqa-text-h2: 28px;             /* line-height 34px */
+  --cqa-text-eyebrow: 12px;        /* line-height 16px, 0.08em, uppercase, 600 */
+  --cqa-text-tooltip-title: 15px;  /* line-height 22px, 600 */
+  --cqa-text-tooltip-body: 14px;   /* line-height 21px, 400 */
+  --cqa-text-button: 14px;         /* line-height 20px, 600 */
+  --cqa-text-caption: 12px;        /* line-height 16px, 500 */
+
+  /* Space */
+  --cqa-space-1: 4px;
+  --cqa-space-2: 8px;
+  --cqa-space-3: 12px;
+  --cqa-space-4: 16px;
+  --cqa-space-5: 24px;
+  --cqa-space-6: 32px;
+  --cqa-space-7: 48px;
+  --cqa-space-8: 64px;
+
+  /* Radius */
+  --cqa-radius-control: 6px;  /* buttons, inputs */
+  --cqa-radius-card: 12px;    /* tooltips, cards, screenshot frame */
+  --cqa-radius-modal: 16px;   /* modals, brand panel */
+
+  /* Elevation */
+  --cqa-shadow-overlay: 0 8px 24px rgba(42, 46, 88, 0.16);
+
+  /* Motion */
+  --cqa-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --cqa-duration-step: 200ms;
+  --cqa-duration-zoom: 400ms;
+  --cqa-duration-tooltip: 180ms;
+  --cqa-duration-pulse: 1600ms;
+
+  /* Component sizes */
+  --cqa-hotspot-size: 16px;
+  --cqa-hotspot-hit-area: 44px;
+  --cqa-tooltip-max-width: 320px;
+  --cqa-modal-max-width: 560px;
+  --cqa-progress-height: 3px;
+  --cqa-focus-ring: 2px solid var(--cqa-brand-accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --cqa-duration-step: 0ms;
+    --cqa-duration-zoom: 0ms;
+    --cqa-duration-tooltip: 0ms;
+  }
+}

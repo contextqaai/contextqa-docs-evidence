@@ -3,6 +3,11 @@ WORKDIR /build
 COPY apps/web/package*.json apps/web/
 RUN npm ci --prefix apps/web --ignore-scripts
 COPY apps/web apps/web
+COPY docs/continuous-documentation/demo-evidence/editor-complete.jpg docs/continuous-documentation/demo-evidence/editor-reader-mobile.mp4 docs/continuous-documentation/demo-evidence/
+COPY docs/continuous-documentation/m03-evidence/repository-preview.jpg docs/continuous-documentation/m03-evidence/import-articles.mp4 docs/continuous-documentation/m03-evidence/
+COPY docs/continuous-documentation/m05-evidence/article-draft.jpg docs/continuous-documentation/m05-evidence/writing-desktop.mp4 docs/continuous-documentation/m05-evidence/
+COPY docs/continuous-documentation/m07-evidence/accept-request.jpg docs/continuous-documentation/m07-evidence/review-desktop.mp4 docs/continuous-documentation/m07-evidence/
+COPY docs/continuous-documentation/studio-evidence/guide-reader.jpg docs/continuous-documentation/studio-evidence/training-export.mp4 docs/continuous-documentation/studio-evidence/
 COPY cqa_artifacts/loop_ui cqa_artifacts/loop_ui
 RUN npm run build --prefix apps/web
 
