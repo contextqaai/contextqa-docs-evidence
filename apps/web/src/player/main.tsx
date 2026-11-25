@@ -1,5 +1,17 @@
+import {useState} from 'react';
 import {createRoot} from 'react-dom/client';
 import {Player, type PlayerScene} from './Player';
+
+function ReviewedScreenshot({src, alt}: {src: string; alt: string}) {
+  const [status, setStatus] = useState<'loading' | 'ready' | 'failed'>('loading');
+  return <figure aria-label="Reviewed screenshot" aria-busy={status === 'loading'}>
+    {status === 'failed'
+      ? <figcaption role="alert">This screenshot could not be loaded.</figcaption>
+      : <img src={src} alt={alt}
+          onLoad={event => setStatus(event.currentTarget.naturalWidth > 0 ? 'ready' : 'failed')}
+          onError={() => setStatus('failed')} />}
+  </figure>;
+}
 
 async function loadGuide(): Promise<PlayerScene[]> {
   const response = await fetch('/product-guide.html');
@@ -16,7 +28,7 @@ async function loadGuide(): Promise<PlayerScene[]> {
     if (!src || !title || !instruction || !image) return [];
     const url=new URL(src,response.url);
     if(url.origin!==location.origin) return [];
-    return [{title,instruction,chapter:['import','write','review'].includes(section.id)?'Prepare and review':'Share the guide',hotspot:points[section.id],media:<img src={url.href} alt={image.alt}/> }];
+    return [{title,instruction,chapter:['import','write','review'].includes(section.id)?'Prepare and review':'Share the guide',hotspot:points[section.id],media:<ReviewedScreenshot key={url.href} src={url.href} alt={image.alt}/> }];
   });
   if (!scenes.length) throw Error('No reviewed screenshots are available for this guide.');
   return scenes;
